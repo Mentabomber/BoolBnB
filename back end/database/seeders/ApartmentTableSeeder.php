@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 Use App\Models\Apartment;
 Use App\Models\User;
+Use App\Models\Service;
 
 class ApartmentTableSeeder extends Seeder
 {
@@ -43,10 +44,15 @@ class ApartmentTableSeeder extends Seeder
             ]);
             
             $user = User::inRandomOrder() -> first();
-
+            
             $apartment -> user_id = $user -> id;
             $apartment -> save();
 
+            $services = Service::inRandomOrder() -> limit(rand(1, 6)) -> get();
+
+            $apartment -> services() -> attach($services);
+
+            
 
         }
 

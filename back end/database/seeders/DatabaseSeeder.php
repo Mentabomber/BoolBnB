@@ -18,12 +18,14 @@ class DatabaseSeeder extends Seeder
         $this -> call([
 
             UserTableSeeder :: class,
+            ServiceTableSeeder :: class,
+            SponsorshipTableSeeder :: class,
             ApartmentTableSeeder :: class,
             AddressTableSeeder :: class,
-            // MessageTableSeeder :: class,
+            MessageTableSeeder :: class,
             // VisitTableSeeder :: class,
-            // ServiceTableSeeder :: class,
-            // SponsorshipTableSeeder :: class
+            
+            
 
         ]);
 
