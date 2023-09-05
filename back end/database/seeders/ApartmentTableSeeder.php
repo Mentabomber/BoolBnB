@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use Carbon\Carbon;
+
 Use App\Models\Apartment;
 Use App\Models\User;
 Use App\Models\Service;
@@ -17,8 +19,9 @@ class ApartmentTableSeeder extends Seeder
      *
      * @return void
      */
+   
     public function run(){
-
+       
         $apartments = [
             [
     
@@ -53,7 +56,18 @@ class ApartmentTableSeeder extends Seeder
             $apartment -> services() -> attach($services);
 
             $sponsorships = Sponsorship::inRandomOrder() -> limit(rand(1, 1)) -> get();
-            $apartment -> sponsorships() -> attach($sponsorships);
+
+            $date = ["2021-10-05","2022-05-03","2023-01-20"];
+
+            $randomDate = $date[array_rand($date)];
+
+            $numbers = [1, 3, 6];
+
+            $rngNumber = $numbers[array_rand($numbers)]; 
+
+            $startSponsorshipDate = Carbon::parse($randomDate);
+            $endSponsorshipDate = $startSponsorshipDate -> copy() -> addDays($rngNumber);
+            $apartment -> sponsorships() -> attach($sponsorships, ['start_date'=> $startSponsorshipDate, 'end_date' => $endSponsorshipDate]);
 
             
 

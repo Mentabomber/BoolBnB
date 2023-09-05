@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             ServiceTableSeeder :: class,
             SponsorshipTableSeeder :: class,
             ApartmentTableSeeder :: class,
-            ApartmentSponsorshipTableSeeder :: class,
             AddressTableSeeder :: class,
             MessageTableSeeder :: class,
             // VisitTableSeeder :: class,
