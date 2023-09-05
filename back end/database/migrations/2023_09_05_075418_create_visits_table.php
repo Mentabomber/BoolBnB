@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->date('visit_date')->nullable(false);
-            $table->varChar('ip_address', 15)->nullable(false);
+            $table->string('ip_address', 15)->nullable(false);
 
             $table->timestamps();
         });

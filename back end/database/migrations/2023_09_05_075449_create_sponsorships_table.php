@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sponsorships', function (Blueprint $table) {
             $table->id();
 
-            $table->varChar('type', 32)->nullable(false);
+            $table->string('type', 32)->nullable(false);
             $table->decimal('cost', 6,2)->nullable(false);
             $table->integer('duration')->nullable(false);
 

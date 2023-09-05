@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
 
             $table->text('message')->nullable(false);
-            $table->varChar('name', 32)->nullable(false);
-            $table->varChar('surname', 32)->nullable(false);
-            $table->varChar('email', 64)->nullable(false);
+            $table->string('name', 32)->nullable(false);
+            $table->string('surname', 32)->nullable(false);
+            $table->string('email', 64)->nullable(false);
 
             
             $table->timestamps();
