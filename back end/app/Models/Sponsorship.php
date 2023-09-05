@@ -10,7 +10,8 @@ class Sponsorship extends Model
     use HasFactory;
     protected $fillable = [
         "type",            
-        "cost",       
+        "cost",
+        "duration"       
 ];
     public function apartments() {
         return $this -> belongsToMany(Apartment :: class);
