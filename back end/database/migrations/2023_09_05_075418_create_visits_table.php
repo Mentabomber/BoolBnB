@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
+
+            $table->date('visit_date')->nullable(false);
+            $table->varChar('ip_address', 15)->nullable(false);
+
             $table->timestamps();
         });
     }

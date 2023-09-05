@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('apartment_sponsorship', function (Blueprint $table) {
             $table->id();
+
+            $table->date('start_date')->nullable(false);
+            $table->date('end_date')->nullable(false);
+
             $table->timestamps();
         });
     }
