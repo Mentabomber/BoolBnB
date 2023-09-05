@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
 
         $this -> call([
 
-            AddressTableSeeder :: class,
+            UserTableSeeder :: class,
             ApartmentTableSeeder :: class,
-            // UserTableSeeder :: class,
+            AddressTableSeeder :: class,
             // MessageTableSeeder :: class,
             // VisitTableSeeder :: class,
             // ServiceTableSeeder :: class,

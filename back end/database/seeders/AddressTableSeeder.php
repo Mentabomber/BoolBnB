@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use App\Models\Address;
+use App\Models\Apartment;
 
 class AddressTableSeeder extends Seeder
 {
@@ -32,7 +33,7 @@ class AddressTableSeeder extends Seeder
         ];
         foreach ($addresses as $address) {
 
-            Address :: create([
+            $adress = Address :: make([
                 "latitude" => $address["latitude"],
                 "longitude" => $address["longitude"],
                 "street" => $address["street"],
@@ -42,6 +43,12 @@ class AddressTableSeeder extends Seeder
                 "province" => $address["province"],
                 "floor" => $address["floor"]
             ]);
+
+                 
+            $apartment = Apartment::inRandomOrder() -> first();
+
+            $adress -> apartment_id = $apartment -> id;
+            $adress -> save();
 
         }
     }
