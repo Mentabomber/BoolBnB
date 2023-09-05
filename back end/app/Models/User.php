@@ -19,10 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
         'surname',
-        'date_of_birth'
+        'email',
+        'date_of_birth',
+        'password',
+
     ];
 
     public function apartments() {
