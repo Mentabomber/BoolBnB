@@ -24,6 +24,10 @@ Route :: get('/myapartments', [LoggedController :: class, 'show'])
 Route :: get('/edit/{id}', [LoggedController :: class, 'edit'])
 ->middleware(['auth', 'verified'])-> name('auth.user-crud.edit-apartment');
 
+Route :: put('/update/{id}', [LoggedController :: class, 'update'])
+    -> middleware(['auth'])
+    -> name('guest.show-apartment');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

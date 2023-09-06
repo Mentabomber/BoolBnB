@@ -4,10 +4,10 @@
         <div class="text-center">
 
         <h1>Modifica dettagli Appartamento</h1>
-            <form method="GET" action="{{ route('auth.user-crud.edit-apartment', '$apartment->id') }}" enctype='multipart/form-data'>
+            <form method="POST" action="{{ route('guest.show-apartment', $apartment->id) }}" enctype='multipart/form-data'>
 
                 @csrf
-                @method('GET')
+                @method('PUT')
 
                 <label for="title">Descrizione</label>
                 <br>
@@ -73,7 +73,7 @@
                 <input type="number" name="floor" id="floor" value="{{ $address->floor }}">
                 <br>
 
-                <input class="my-3" type="submit" value="edit">
+                <input class="my-3" type="submit" value="update">
             </form>
             <a href="">Back to Dashboard</a>
         </div>
