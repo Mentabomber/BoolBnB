@@ -38,7 +38,40 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="mb-4 row">
+                            <label for="surname"
+                                class="col-md-4 col-form-label text-md-right">{{ ('Surname') }}</label>
 
+                            <div class="col-md-6">
+                                <input id="surname" type="text"
+                                    class="form-control @error('surname') is-invalid @enderror" name="surname"
+                                    value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+
+                                @error('surname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-4 row">
+                            <label for="date_of_birth"
+                                class="col-md-4 col-form-label text-md-right">{{ ('Birth date') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="date_of_birth" type="date"
+                                    class="form-control @error('date_of_birth') is-invalid @enderror"
+                                    name="date_of_birth" value="{{ old('date_of_birth') }}" required
+                                    autocomplete="email">
+
+                                @error('date_of_birth')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="mb-4 row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 

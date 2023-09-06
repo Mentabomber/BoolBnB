@@ -18,6 +18,7 @@ class Apartment extends Model
         "image",
         "visible",
         "user_id",
+        
         ];
 public function user() {
         return $this -> belongsTo(User :: class);
