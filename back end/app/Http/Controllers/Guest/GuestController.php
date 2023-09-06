@@ -19,6 +19,6 @@ class GuestController extends Controller
 
         $apartment = Apartment :: findOrFail($id);
 
-        return view('show', compact('apartment'));
+        return view('guest.show-apartment', compact('apartment'));
     }
 }
