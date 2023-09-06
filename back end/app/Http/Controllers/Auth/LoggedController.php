@@ -15,44 +15,57 @@ class LoggedController extends Controller
 {
     public function create() {
 
+        // Richiama tutti i servizi
+
         $services = Service :: all();
-        $addresses = Address :: all();
         
-        return view('auth.user-crud.create-apartment', compact('services','addresses'));
+        return view('auth.user-crud.create-apartment', compact('services'));
     }
     public function store(Request $request) {
+
+        // Validazione dei dati inviati dall'utente
         
-        $data = $request -> validate([
-            "title" => "required|string",
-            "rooms" => "required|integer",
-            "beds" => "required|integer",
-            "bathrooms" => "required|integer",
-            "square_meters" => "required|integer",
-            "image" => "required|file|image|mimes:jpg,jpeg,png",
+        $apartment = $request -> validate([
+            "title" => "required | string | min:3 | max:64",
+            "rooms" => "required | integer",
+            "beds" => "required | integer",
+            "bathrooms" => "required | integer",
+            "square_meters" => "required | integer",
+            "image" => "required | mimes:jpg,jpeg,png",
             "visible" => "boolean",
-            "user_id" => "required|integer",
-            "services" => "nullable|array",
+            "services" => "required | array",
         ]);
 
-        $img_path = Storage :: put('uploads', $data['image']);
-        
-        $data['image'] = $img_path;
+        // Validazione dei dati inviati dall'utente
 
-        $data['visible'] = false;
+        $address = $request -> validate([
+            "latitude" => "decimal",
+            "longitude" => "decimal",
+            "street" => "required | string",
+            "street_number" => "required | integer",
+            "cap" => "required | integer",
+            "city" => "required | string",
+            "province" => "required | string",
+            "floor" => "required | integer",
+        ]);
+
+        // Salvataggio dell'immagine dell'appartamento nella directory uploads
+
+        $img_path = Storage :: put('uploads', $apartment['image']);
+        $apartment['image'] = $img_path;
+
+        // Assegnazione dell'ID dell'utente al record dell'appartamento
 
         $userId = auth()->user()->id;
         $data['user_id'] = $userId;
 
         $apartment = Apartment :: create($data);
-
-        
-        $address = Address :: create($data);
-
-        $apartment -> services() -> attach($data['service_id']);
+        $apartment -> services() -> attach($data['services']);
         $apartment -> addresses() -> attach($data['addresses']);
-    
-        return redirect() -> route('apartment.show', $apartment -> id);
+        var_dump($data);
+        // return redirect() -> route('apartment.show', $apartment -> id);
     }
+
 
     // public function edit($id) {
 
