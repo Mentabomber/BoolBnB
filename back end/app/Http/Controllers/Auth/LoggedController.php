@@ -13,6 +13,15 @@ use App\Models\Address;
 
 class LoggedController extends Controller
 {
+
+    public function show() {
+
+        $apartments = Apartment :: all();
+
+        return view('auth.my-apartments', compact('apartments'));
+    }
+
+
     public function create() {
 
         // Richiama tutti i servizi
@@ -72,48 +81,59 @@ class LoggedController extends Controller
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
         
-        return redirect() -> route('apartment.show', $user_apartment -> id);
+        return redirect() -> route('guest.show-apartment', $user_apartment -> id);
     }
 
 
-    // public function edit($id) {
+    public function edit($id) {
 
-    //     $types = Type :: all();
-    //     $technologies = Technology :: all();
+        $apartment = Apartment :: findOrFail($id);
 
-    //     $project = Project :: findOrFail($id);
+        $address = Address :: findOrFail($apartment->id);
+        $services = Service :: all();
 
-    //     return view('edit', compact('types', 'technologies', 'project'));
-    // }
-    // public function update(Request $request, $id) {
+        return view('auth.user-crud.edit-apartment', compact('address', 'services', 'apartment'));
+    }
+    public function update(Request $request, $id) {
 
-    //     $data = $request -> all();
+        $data = $request -> all();
 
-    //     $project = Project :: findOrFail($id);
+        $apartment = Apartment :: findOrFail($id);
 
-    //     if (!array_key_exists('picture', $data)) {
-    //         $data['picture'] = $project -> picture;
-    //     } else {
+        if (!array_key_exists('image', $data)) {
+            $data['image'] = $apartment -> image;
+        } else {
 
-    //         $oldImgPath = $project -> picture;
+            $oldImgPath = $apartment -> image;
 
-    //         if ($oldImgPath) {
+            if ($oldImgPath) {
 
-    //             Storage :: delete($oldImgPath);
-    //         }
+                Storage :: delete($oldImgPath);
+            }
 
-    //         $img_path = Storage :: put('uploads', $data['picture']);
-    //         $data['picture'] = $img_path;
-    //     }
+            $img_path = Storage :: put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
 
-    //     $project -> update($data);
+        $apartment -> update($data);
 
-    //     $project -> technologies() -> sync(
-    //         array_key_exists('technologies', $data)
-    //         ? $data['technologies']
-    //         : []);
+        $apartment -> services() -> sync(
+            array_key_exists('services', $data)
+            ? $data['services']
+            : []);
 
 
-    //     return redirect() -> route('project.show', $project -> id);
+        return redirect() -> route('guest.show-apartment', $apartment -> id);
+    }
+ 
+    // public function destroy($id) {
+
+
+
+    //     $comic = Comic :: findOrFail($id);
+
+    //     $comic -> delete();
+
+    //     return redirect() -> route("comic.index");
     // }
 }
