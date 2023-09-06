@@ -24,7 +24,6 @@ class ApartmentTableSeeder extends Seeder
        
         $apartments = [
             [
-    
                 "title" => "Appartamento rustico con giardino e Wi-fi",          
                 "rooms"=> 5,      
                 "beds"=> 2,       
@@ -32,7 +31,17 @@ class ApartmentTableSeeder extends Seeder
                 "square_meters"=> 150,
                 "image"=> "1d13ba24-41ae-4349-b23d-5215385ff683.jpg",
                 "visible"=> false
-            ]
+            ],
+            [
+                "title" => "Appartamento 2",          
+                "rooms"=> 3,      
+                "beds"=> 1,       
+                "bathrooms"=> 1,
+                "square_meters"=> 50,
+                "image"=> "b91aca7ab95315233e1b7c1582259cbd--modern-design-pictures-modern-exterior.jpg",
+                "visible"=> false
+            ],
+
         ];
 
         foreach ($apartments as $apartment) {
@@ -44,7 +53,7 @@ class ApartmentTableSeeder extends Seeder
                 "bathrooms" => $apartment["bathrooms"],
                 "square_meters" => $apartment["square_meters"],
                 "image" => 'storage/' . $apartment["image"],
-                "visible" => $apartment["visible"],
+                "visible" => $apartment["visible"]
             ]);
             
             $user = User::inRandomOrder() -> first();

@@ -23,10 +23,7 @@ class DatabaseSeeder extends Seeder
             ApartmentTableSeeder :: class,
             AddressTableSeeder :: class,
             MessageTableSeeder :: class,
-            // VisitTableSeeder :: class,
-            
-            
-
+            VisitTableSeeder :: class
         ]);
 
     }
