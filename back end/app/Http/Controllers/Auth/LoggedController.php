@@ -21,14 +21,14 @@ class LoggedController extends Controller
         return view('auth.user-crud.create-apartment', compact('services','addresses'));
     }
     public function store(Request $request) {
-
+        
         $data = $request -> validate([
-            "title" => "required|string|min:3|max:64",
+            "title" => "required|string",
             "rooms" => "required|integer",
             "beds" => "required|integer",
             "bathrooms" => "required|integer",
             "square_meters" => "required|integer",
-            "image" => "required|mimes:jpg,jpeg,png",
+            "image" => "required|file|image|mimes:jpg,jpeg,png",
             "visible" => "boolean",
             "user_id" => "required|integer",
             "services" => "nullable|array",
@@ -44,10 +44,14 @@ class LoggedController extends Controller
         $data['user_id'] = $userId;
 
         $apartment = Apartment :: create($data);
-        $apartment -> services() -> attach($data['services']);
+
+        
+        $address = Address :: create($data);
+
+        $apartment -> services() -> attach($data['service_id']);
         $apartment -> addresses() -> attach($data['addresses']);
-        var_dump($data);
-        // return redirect() -> route('apartment.show', $apartment -> id);
+    
+        return redirect() -> route('apartment.show', $apartment -> id);
     }
 
     // public function edit($id) {
