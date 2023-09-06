@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Apartment;
+use App\Models\Address;
+
 
 class GuestController extends Controller
 {
@@ -19,6 +21,8 @@ class GuestController extends Controller
 
         $apartment = Apartment :: findOrFail($id);
 
-        return view('guest.show-apartment', compact('apartment'));
+        $address = Address :: findOrFail($apartment->id);
+
+        return view('guest.show-apartment', compact('apartment', 'address'));
     }
 }

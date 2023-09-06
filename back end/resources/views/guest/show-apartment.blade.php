@@ -17,6 +17,18 @@
             <br>
             <span>Metri Quadri:{{ $apartment->square_meters }}</span>
             <br>
+            <span>Piano:{{ $address->floor }}</span>
+            <br>
+            <span>Via:{{ $address->street }}</span>
+            <br>
+            <span>Numero Civico:{{ $address->street_number }}</span>
+            <br>
+            <span>CAP:{{ $address->cap }}</span>
+            <br>
+            <span>Città:{{ $address->city }}</span>
+            <br>
+            <span>Provincia:{{ $address->province }}</span>
+            <br>
             <span>Servizi:
                 <ul>
                         @foreach ($apartment->services as $service)

@@ -11,9 +11,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route :: get('/show/{id}', [GuestController :: class, 'show'])
-    -> name('guest.show-apartment');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -21,11 +18,7 @@ Route::get('/dashboard', function () {
 Route :: get('/myapartments', [LoggedController :: class, 'show'])
 ->middleware(['auth', 'verified'])-> name('auth.my-apartments');
 
-Route :: get('/edit/{id}', [LoggedController :: class, 'edit'])
-->middleware(['auth', 'verified'])-> name('auth.user-crud.edit-apartment');
-
-Route :: put('/update/{id}', [LoggedController :: class, 'update'])
-    -> middleware(['auth'])
+Route :: get('/apartments/{id}', [GuestController :: class, 'show'])
     -> name('guest.show-apartment');
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/apartment/create', [LoggedController::class, 'create'])->name('auth.user-crud.create-apartment');
     Route::post('/apartment', [LoggedController::class, 'store'])->name('apartment.store');
+    Route :: get('/apartments/{id}/edit', [LoggedController :: class, 'edit'])
+        ->middleware(['auth', 'verified'])-> name('auth.user-crud.edit-apartment');
+
+    Route :: put('/apartments/{id}', [LoggedController :: class, 'update'])
+        -> middleware(['auth'])
+        -> name('guest.show-apartment');
 });
 
 require __DIR__.'/auth.php';

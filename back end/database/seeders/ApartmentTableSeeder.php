@@ -52,7 +52,7 @@ class ApartmentTableSeeder extends Seeder
                 "beds" => $apartment["beds"],
                 "bathrooms" => $apartment["bathrooms"],
                 "square_meters" => $apartment["square_meters"],
-                "image" => 'storage/' . $apartment["image"],
+                "image" => $apartment["image"],
                 "visible" => $apartment["visible"]
             ]);
             

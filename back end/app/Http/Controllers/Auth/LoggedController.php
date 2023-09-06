@@ -18,6 +18,7 @@ class LoggedController extends Controller
 
         $apartments = Apartment :: all();
 
+
         return view('auth.my-apartments', compact('apartments'));
     }
 
