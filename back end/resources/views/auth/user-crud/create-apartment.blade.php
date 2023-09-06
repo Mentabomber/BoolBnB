@@ -34,14 +34,15 @@
                 <br>
                 <label for="">Servizi</label>
                 <br>
-                <select name="service_id" id="service_id">
-
-                    @foreach ($services as $service)
-                        <option value="{{ $service->id }}">
+                @foreach ($services as $service)
+                    <div class="form-check mx-auto" style="max-width: 300px">
+                        <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
+                            id="service{{ $service->id }}">
+                        <label class="form-check-label" for="service{{ $service->id }}">
                             {{ $service->name }}
-                        </option>
-                    @endforeach
-                </select>
+                        </label>
+                    </div>
+                @endforeach
                 <br>
                 <h2>Indirizzo</h2>
                 <label for="street">Via / Località</label>
@@ -68,7 +69,7 @@
                 <br>
                 <input type="number" name="floor" id="floor">
                 <br>
-                
+
                 <input class="my-3" type="submit" value="create">
             </form>
             <a href="">Back to Dashboard</a>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('bathrooms')->nullable(false);
             $table->integer('square_meters')->nullable(false);
             $table->text('image')->nullable(false);
-            $table->boolean('visible')->nullable(false);
+            $table->boolean('visible')->nullable(false)->default(false);
 
             $table->timestamps();
 
