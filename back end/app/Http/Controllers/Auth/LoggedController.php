@@ -57,13 +57,22 @@ class LoggedController extends Controller
         // Assegnazione dell'ID dell'utente al record dell'appartamento
 
         $userId = auth()->user()->id;
-        $data['user_id'] = $userId;
+        $apartment['user_id'] = $userId;
 
-        $apartment = Apartment :: create($data);
-        $apartment -> services() -> attach($data['services']);
-        $apartment -> addresses() -> attach($data['addresses']);
-        var_dump($data);
-        // return redirect() -> route('apartment.show', $apartment -> id);
+        // Creazione del record dell'appartamento nel database
+
+        $user_apartment = Apartment :: create($apartment);
+
+        // Creazione delle relazioni tra l'appartamento e i servizi
+
+        $user_apartment -> services() -> attach($apartment['services']);
+
+        // Creazione del record dell'indirizzo
+
+        $address['apartment_id'] = $user_apartment['id'];
+        $address = Address :: create($address);
+        
+        return redirect() -> route('apartment.show', $user_apartment -> id);
     }
 
 
