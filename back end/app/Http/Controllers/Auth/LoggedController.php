@@ -41,10 +41,16 @@ class LoggedController extends Controller
             "beds" => "required | integer",
             "bathrooms" => "required | integer",
             "square_meters" => "required | integer",
-            "image" => "required | mimes:jpg,jpeg,png",
+            "image" => "required | image | mimes:jpg,jpeg,png,svg",
             "visible" => "boolean",
             "services" => "required | array",
         ]);
+        // Salvataggio immagini nel db
+
+        $fileName = time() . '.' . $request-> image -> extension();
+        $request -> image -> storeAs('images', $fileName);
+
+        $apartment['image'] = $fileName;
 
         // Validazione dei dati inviati dall'utente
 
@@ -61,8 +67,8 @@ class LoggedController extends Controller
 
         // Salvataggio dell'immagine dell'appartamento nella directory uploads
 
-        $img_path = Storage :: put('uploads', $apartment['image']);
-        $apartment['image'] = $img_path;
+        // $img_path = Storage :: put('uploads', $apartment['image']);
+        // $apartment['image'] = $img_path;
 
         // Assegnazione dell'ID dell'utente al record dell'appartamento
 
@@ -123,8 +129,10 @@ class LoggedController extends Controller
                 Storage :: delete($oldImgPath);
             }
 
-            $img_path = Storage :: put('uploads', $data['image']);
-            $data['image'] = $img_path;
+            $fileName = time() . '.' . $request-> image -> extension();
+            $request -> image -> storeAs('images', $fileName);
+    
+            $data['image'] = $fileName;
         }
 
         $apartment -> update($data);

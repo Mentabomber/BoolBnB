@@ -19,9 +19,9 @@ Route :: get('/myapartments', [LoggedController :: class, 'index'])  // show
 ->middleware(['auth', 'verified'])-> name('auth.apartments.show');  // auth.my-apartments
 
 Route::get('/apartments/create', [LoggedController::class, 'create'])
-->name('auth.apartments.create');  // auth.user-crud.create-apartment
+->middleware(['auth'])->name('auth.apartments.create');  // auth.user-crud.create-apartment
 
-Route::post('/apartments', [LoggedController::class, 'store'])->name('apartment.store');
+Route::post('/apartments', [LoggedController::class, 'store'])->middleware(['auth'])->name('apartment.store');
 
 Route :: get('/apartments/{id}', [LoggedController :: class, 'show'])
     -> name('guest.apartments.show');  // guest.show-apartment

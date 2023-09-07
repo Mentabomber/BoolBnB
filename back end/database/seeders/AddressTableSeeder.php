@@ -29,6 +29,16 @@ class AddressTableSeeder extends Seeder
                 "province"=> "Trieste",
                 "floor"=> 0,
             ],
+            [    
+                "latitude" => 23.62784,
+                "longitude" => 10.78451,
+                "street"=> "Via Gianni Morandi",
+                "street_number" => 6,      
+                "cap"=> "37002",
+                "city"=> "Bologna",
+                "province"=> "Bologna",
+                "floor"=> 1,
+            ],
 
         ];
         foreach ($addresses as $address) {

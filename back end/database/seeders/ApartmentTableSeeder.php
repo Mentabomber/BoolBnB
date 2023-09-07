@@ -29,7 +29,7 @@ class ApartmentTableSeeder extends Seeder
                 "beds"=> 2,       
                 "bathrooms"=> 1,
                 "square_meters"=> 150,
-                "image"=> "1d13ba24-41ae-4349-b23d-5215385ff683.jpg",
+                "image"=> "1694076851.jpg",
                 "visible"=> false
             ],
             [
@@ -38,7 +38,7 @@ class ApartmentTableSeeder extends Seeder
                 "beds"=> 1,       
                 "bathrooms"=> 1,
                 "square_meters"=> 50,
-                "image"=> "b91aca7ab95315233e1b7c1582259cbd--modern-design-pictures-modern-exterior.jpg",
+                "image"=> "1694076905.jpg",
                 "visible"=> false
             ],
 
