@@ -11,13 +11,9 @@
                 <div class="card-header">{{ __('User Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    <a href="{{ route('auth.apartments.create') }}"> Crea Nuovo Appartamento </a>
+                    <br>
+                    <a href="{{ route('auth.apartments.show') }}"> I miei appartamenti </a>
                 </div>
             </div>
         </div>

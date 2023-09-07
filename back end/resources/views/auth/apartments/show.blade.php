@@ -11,12 +11,24 @@
                     @if ($apartment->user_id == auth()->user()->id)
                         <li>
                             <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
-                            <a href=""> Edit</a>
+                            <a href="{{ route('auth.apartments.edit', $apartment->id) }}"> Modifica</a>
+                            <form
+                            class="d-inline"
+                            method="POST"
+                            action="{{ route('auth.apartments.delete', $apartment -> id) }}"
+                            >
+
+                                @csrf
+                                @method("DELETE")
+
+                                <input class="btn btn-primary" type="submit" value="Elimina">
+                            </form>
+                          
                         </li>
                     @endif
                 @endforeach
             </ul>
-
+            <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
 @endsection

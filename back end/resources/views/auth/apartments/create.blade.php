@@ -72,7 +72,7 @@
 
                 <input class="my-3" type="submit" value="create">
             </form>
-            <a href="">Back to Dashboard</a>
+            <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
 @endsection

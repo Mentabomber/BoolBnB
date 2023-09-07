@@ -74,8 +74,20 @@
                 <br>
 
                 <input class="my-3" type="submit" value="update">
+
             </form>
-            <a href="">Back to Dashboard</a>
+            <form
+            class="d-inline"
+            method="POST"
+            action="{{ route('auth.apartments.delete', $apartment -> id) }}"
+            >
+
+            @csrf
+            @method("DELETE")
+
+            <input class="btn btn-primary" type="submit" value="DELETE">
+            </form>
+            <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
 @endsection

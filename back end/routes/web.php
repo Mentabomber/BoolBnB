@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\LoggedController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+}) ->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,6 +32,9 @@ Route :: get('/apartments/{id}/edit', [LoggedController :: class, 'edit'])
 Route :: put('/apartments/{id}', [LoggedController :: class, 'update'])
     -> middleware(['auth'])
     -> name('guest.apartments.update');  // guest.show-apartment
+
+Route :: delete('/apartments/{id}', [LoggedController :: class, 'delete'])
+    ->middleware(['auth', 'verified'])-> name('auth.apartments.delete');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

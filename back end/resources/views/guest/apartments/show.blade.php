@@ -39,7 +39,7 @@
                 </ul>
             </span>
             <br>
-            <a href="">Back to Home</a>
+            <a href="{{ route('welcome') }}">Ritorna alla Home</a>
 
         </div>
     </div>

@@ -104,12 +104,20 @@ class LoggedController extends Controller
     public function edit($id) {
 
         $apartment = Apartment :: findOrFail($id);
+        $userId = auth()->user()->id;
+        if($apartment->user_id == $userId){
+            $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
+            $services = Service :: all();
 
-        // $address = Address :: findOrFail($apartment->id);
-        $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
-        $services = Service :: all();
+            return view('auth.apartments.edit', compact('address', 'services', 'apartment'));
+        }
+        else{
+            return redirect() -> route('welcome');
+        }
 
-        return view('auth.apartments.edit', compact('address', 'services', 'apartment'));
+
+
+
     }
     public function update(Request $request, $id) {
 
@@ -130,7 +138,7 @@ class LoggedController extends Controller
             }
 
             $fileName = time() . '.' . $request-> image -> extension();
-            $request -> image -> storeAs('images', $fileName);
+            $request -> image -> storeAs('uploads', $fileName);
     
             $data['image'] = $fileName;
         }
@@ -148,14 +156,27 @@ class LoggedController extends Controller
         return redirect() -> route('guest.apartments.show', $apartment -> id);
     }
 
-    // public function destroy($id) {
+    public function delete($id)
+    {
+        $apartment = Apartment::findOrFail($id);
+        foreach($apartment->messages as $message){
+            $message->delete();
+        }
+        foreach($apartment->visits as $visit){
+            $visit->delete();
+        }
+        
+        $apartment->sponsorships()->detach(); // Rimuovi tutte le sponsorizzazioni associate all'appartamento
+        $apartment->services()->detach(); // Rimuovi tutti i servizi associati all'appartamento
+        $apartment->address()->delete(); // Elimina l'indirizzo associato all'appartamento
 
+        $oldImgPath = $apartment -> image;
+        Storage::delete($oldImgPath);
+  
 
+        $apartment->delete(); // Elimina l'appartamento stesso
 
-    //     $comic = Comic :: findOrFail($id);
+        return redirect() -> route('auth.apartments.show');
+    }
 
-    //     $comic -> delete();
-
-    //     return redirect() -> route("comic.index");
-    // }
 }
