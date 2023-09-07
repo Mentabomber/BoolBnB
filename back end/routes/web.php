@@ -4,12 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoggedController;
-// use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\Guest\GuestController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-}) ->name('welcome');
+Route::get('/', [GuestController :: class, 'index']) ->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

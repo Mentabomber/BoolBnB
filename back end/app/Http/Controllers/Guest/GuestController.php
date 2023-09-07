@@ -6,17 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Apartment;
-use App\Models\Address;
 
 
 class GuestController extends Controller
 {
-    // public function show($id) {
+    public function index() {
 
-    //     $apartment = Apartment :: findOrFail($id);
+        $apartments = Apartment :: all();
 
-    //     $address = Address :: findOrFail($apartment->id);
-
-    //     return view('guest.show-apartment', compact('apartment', 'address'));
-    // }
+        return view('welcome', compact('apartments'));
+    }
 }

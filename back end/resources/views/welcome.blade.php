@@ -11,11 +11,18 @@
             </svg>
         </div>
         <h1 class="display-5 fw-bold">
-            Welcome to Laravel+Bootstrap 5
+            Benvenuto in BoolBnb
         </h1>
 
-        <p class="col-md-8 fs-4">This a preset package with Bootstrap 5 views for laravel projects including laravel breeze/blade. It works from laravel 9.x to the latest release 10.x</p>
-        <a href="https://packagist.org/packages/pacificdev/laravel_9_preset" class="btn btn-primary btn-lg" type="button">Documentation</a>
+       <div>
+            @foreach($apartments as $apartment)
+                <div>
+                    <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
+                    <br>
+                    <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
+                </div>
+            @endforeach
+       </div>
     </div>
 </div>
 

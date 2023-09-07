@@ -30,7 +30,7 @@
                 <input type="number" name="square_meters" id="square_meters" value="{{ $apartment->square_meters }}">
                 <br>
                 <label for="image">Immagine Appartamento</label>
-                <img src="{{ asset('storage/images/' . $apartment->image) }}" alt="">
+                <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
                 <input type="file" name="image" id="image">
                 <br>
                 <label for="">Servizi</label>
