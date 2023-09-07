@@ -14,12 +14,12 @@ use App\Models\Address;
 class LoggedController extends Controller
 {
 
-    public function show() {
+    public function index() {
 
         $apartments = Apartment :: all();
 
 
-        return view('auth.my-apartments', compact('apartments'));
+        return view('auth.apartments.show', compact('apartments'));
     }
 
 
@@ -28,13 +28,13 @@ class LoggedController extends Controller
         // Richiama tutti i servizi
 
         $services = Service :: all();
-        
-        return view('auth.user-crud.create-apartment', compact('services'));
+
+        return view('auth.apartments.create', compact('services'));
     }
     public function store(Request $request) {
 
         // Validazione dei dati inviati dall'utente
-        
+
         $apartment = $request -> validate([
             "title" => "required | string | min:3 | max:64",
             "rooms" => "required | integer",
@@ -81,25 +81,36 @@ class LoggedController extends Controller
 
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
-        
-        return redirect() -> route('guest.show-apartment', $user_apartment -> id);
+
+        return redirect() -> route('guest.apartments.show', $user_apartment -> id);
     }
 
+    public function show($id) {
+
+        $apartment = Apartment :: findOrFail($id);
+
+        // $address = Address :: findOrFail($apartment->id);
+        $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
+
+        return view('guest.apartments.show', compact('apartment', 'address'));
+    }
 
     public function edit($id) {
 
         $apartment = Apartment :: findOrFail($id);
 
-        $address = Address :: findOrFail($apartment->id);
+        // $address = Address :: findOrFail($apartment->id);
+        $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
         $services = Service :: all();
 
-        return view('auth.user-crud.edit-apartment', compact('address', 'services', 'apartment'));
+        return view('auth.apartments.edit', compact('address', 'services', 'apartment'));
     }
     public function update(Request $request, $id) {
 
         $data = $request -> all();
 
         $apartment = Apartment :: findOrFail($id);
+        $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
 
         if (!array_key_exists('image', $data)) {
             $data['image'] = $apartment -> image;
@@ -123,10 +134,12 @@ class LoggedController extends Controller
             ? $data['services']
             : []);
 
+        $address -> update($data);
 
-        return redirect() -> route('guest.show-apartment', $apartment -> id);
+
+        return redirect() -> route('guest.apartments.show', $apartment -> id);
     }
- 
+
     // public function destroy($id) {
 
 

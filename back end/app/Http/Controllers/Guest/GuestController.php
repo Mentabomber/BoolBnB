@@ -11,18 +11,12 @@ use App\Models\Address;
 
 class GuestController extends Controller
 {
-    public function index(){
+    // public function show($id) {
 
-        $apartments = Apartment:: all();
+    //     $apartment = Apartment :: findOrFail($id);
 
-        return view("guest.index", compact('apartments'));
-    }
-    public function show($id) {
+    //     $address = Address :: findOrFail($apartment->id);
 
-        $apartment = Apartment :: findOrFail($id);
-
-        $address = Address :: findOrFail($apartment->id);
-
-        return view('guest.show-apartment', compact('apartment', 'address'));
-    }
+    //     return view('guest.show-apartment', compact('apartment', 'address'));
+    // }
 }

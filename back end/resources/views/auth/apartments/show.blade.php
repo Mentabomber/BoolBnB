@@ -10,7 +10,7 @@
                 @foreach ($apartments as $apartment)
                     @if ($apartment->user_id == auth()->user()->id)
                         <li>
-                            <a href="{{ route('guest.show-apartment', $apartment->id) }}">{{ $apartment->title }}</a>
+                            <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                             <a href=""> Edit</a>
                         </li>
                     @endif

@@ -3,8 +3,8 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div class="text-center">
 
-        <h1>Modifica dettagli Appartamento</h1>
-            <form method="POST" action="{{ route('guest.show-apartment', $apartment->id) }}" enctype='multipart/form-data'>
+            <h1>Modifica dettagli Appartamento</h1>
+            <form method="POST" action="{{ route('guest.apartments.show', $apartment->id) }}" enctype='multipart/form-data'>
 
                 @csrf
                 @method('PUT')
@@ -37,10 +37,9 @@
                 @foreach ($services as $service)
                     <div class="form-check mx-auto" style="max-width: 300px">
                         <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                            id="service{{ $service->id }}" 
+                            id="service{{ $service->id }}"
                             @foreach ($apartment->services as $apartmentServices)
-                                @checked($apartmentServices -> id === $service -> id) 
-                            @endforeach>
+                                @checked($apartmentServices -> id === $service -> id) @endforeach>
                         <label class="form-check-label" for="service{{ $service->id }}">
                             {{ $service->name }}
                         </label>
