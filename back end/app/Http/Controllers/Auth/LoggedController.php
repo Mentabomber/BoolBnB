@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
-
 use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Address;
@@ -18,6 +17,8 @@ class LoggedController extends Controller
 {
 
     public function index() {
+
+        // Richiama tutti gli appartamenti
 
         $apartments = Apartment :: all();
 
@@ -48,11 +49,11 @@ class LoggedController extends Controller
             "visible" => "boolean",
             "services" => "required | array",
         ]);
+
         // Salvataggio immagini nel db
 
         $fileName = time() . '.' . $request-> image -> extension();
         $request -> image -> storeAs('uploads', $fileName);
-
         $apartment['image'] = $fileName;
 
         // Validazione dei dati inviati dall'utente
@@ -67,26 +68,34 @@ class LoggedController extends Controller
             "province" => "required | string",
             "floor" => "required | integer",
         ]);
+
+        // Creazione dell'URL per la chiamata all'API di tomtom
+
         $street = str_replace(' ', '%20', $address['street']);
         $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
+
+        // Non richiede la verifica del certificato SSL quando viene effetuata la chiamata all'API
 
         $client = new Client([
             RequestOptions::VERIFY => false,
         ]);
 
+        // Salva la risposta dell'API di tomtom e ne decodifica il body
+
         $response = $client->get($url);
 
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
-
         $data = json_decode($response->getBody(), true);
+
+        // Acquistice i valori di latitudie e longitudine da tomtom e li attribuisce ai campi dell'indirizzo utente
+
         $latitude = $data['results'][0]['position']['lat'];
         $longitude = $data['results'][0]['position']['lon'];
 
         $address['latitude'] = $latitude;
         
         $address['longitude'] = $longitude;
-
 
 
         // Assegnazione dell'ID dell'utente al record dell'appartamento
@@ -110,20 +119,24 @@ class LoggedController extends Controller
         return redirect() -> route('guest.apartments.show', $user_apartment -> id);
     }
 
+    // Mostra i dettagli di un appartamento
     public function show($id) {
 
         $apartment = Apartment :: findOrFail($id);
 
-        // $address = Address :: findOrFail($apartment->id);
         $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
 
         return view('guest.apartments.show', compact('apartment', 'address'));
     }
 
+    // Permette di accedere alla modifica dell'appartamento
     public function edit($id) {
 
         $apartment = Apartment :: findOrFail($id);
         $userId = auth()->user()->id;
+
+        // Controlla che l'utente che prova ad effettuare l'accesso sia il proprietario dell'appartamento
+
         if($apartment->user_id == $userId){
             $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
             $services = Service :: all();
@@ -134,16 +147,17 @@ class LoggedController extends Controller
             return redirect() -> route('welcome');
         }
 
-
-
-
     }
+
+    // Permette l'aggiornamento dei dati di un appartamento
     public function update(Request $request, $id) {
 
         $data = $request -> all();
 
         $apartment = Apartment :: findOrFail($id);
         $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
+
+        // Controlla se è gia presente un immagine nel db e in caso affermativo elimina la vecchia immagine
 
         if (!array_key_exists('image', $data)) {
             $data['image'] = $apartment -> image;
@@ -162,38 +176,62 @@ class LoggedController extends Controller
             $data['image'] = $fileName;
         }
 
+        //  Aggiorna i dati dell'appartamento
+
         $apartment -> update($data);
+
+        // Se la chiave "services" esiste sincronizza i servizi dell'appartamento con i servizi nell'array altrimenti li sincronizza con un array vuoto
 
         $apartment -> services() -> sync(
             array_key_exists('services', $data)
             ? $data['services']
             : []);
 
-        $address -> update($data);
+        //  Aggiorna i dati dell'indirizzo
 
+        $address -> update($data);
 
         return redirect() -> route('guest.apartments.show', $apartment -> id);
     }
 
+    // Permette la rimozione di un appartamento
     public function delete($id)
     {
+
         $apartment = Apartment::findOrFail($id);
+
+        // Elimina tutti i messagi riferiti all'appartamento
+
         foreach($apartment->messages as $message){
             $message->delete();
         }
+
+        // Elimina tutte le visite riferite all'appartamento
+
         foreach($apartment->visits as $visit){
             $visit->delete();
         }
 
-        $apartment->sponsorships()->detach(); // Rimuovi tutte le sponsorizzazioni associate all'appartamento
-        $apartment->services()->detach(); // Rimuovi tutti i servizi associati all'appartamento
-        $apartment->address()->delete(); // Elimina l'indirizzo associato all'appartamento
+        // Rimuovi tutte le sponsorizzazioni associate all'appartamento
+
+        $apartment->sponsorships()->detach();
+
+        // Rimuovi tutti i servizi associati all'appartamento
+
+        $apartment->services()->detach();
+
+        // Elimina l'indirizzo associato all'appartamento
+
+        $apartment->address()->delete();
+
+        // Elimina l'immagine dell'appartamento
 
         $oldImgPath = $apartment -> image;
-        Storage::delete($oldImgPath);
+        Storage::delete($oldImgPath); 
 
+        // Elimina l'appartamento
 
-        $apartment->delete(); // Elimina l'appartamento stesso
+        $apartment->delete(); 
 
         return redirect() -> route('auth.apartments.show');
     }
