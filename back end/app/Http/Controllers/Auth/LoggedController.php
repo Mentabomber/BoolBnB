@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 
 use App\Models\Apartment;
@@ -64,12 +65,30 @@ class LoggedController extends Controller
             "province" => "required | string",
             "floor" => "required | integer",
         ]);
+        $street = str_replace(' ', '%20', $address['street']);
+        // $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
 
-        // Salvataggio dell'immagine dell'appartamento nella directory uploads
+        // $url = "https://api.tomtom.com/search/2/geocode/" . $address['street'] . " " .  $address['street_number'] . ", " . $address['cap'] . "AG, " . $address['city'] . ".json?key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
 
-        // $img_path = Storage :: put('uploads', $apartment['image']);
-        // $apartment['image'] = $img_path;
+        $url = 'https://api.tomtom.com/search/2/geocode/json?q=' . $street . "%20%20" . $address['city'] . '%20%20Italia&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1';
 
+
+        $response = curl_init($url);
+        dd($response);
+        curl_setopt($response, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($response);
+        curl_close($response);
+        $data = json_decode($result, true);
+       
+
+        // Decodifica la risposta
+        $data = json_decode($result, true);
+
+        // Stampa le coordinate
+        echo $data['results'][0]['position']['latitude'] . ', ' . $data['results'][0]['position']['longitude'];
+        // $data = $response -> json();
+
+        dd($data);
         // Assegnazione dell'ID dell'utente al record dell'appartamento
 
         $userId = auth()->user()->id;
@@ -88,7 +107,7 @@ class LoggedController extends Controller
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
 
-        return redirect() -> route('guest.apartments.show', $user_apartment -> id);
+        // return redirect() -> route('guest.apartments.show', $user_apartment -> id);
     }
 
     public function show($id) {
