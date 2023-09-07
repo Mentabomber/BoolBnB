@@ -48,7 +48,7 @@ class LoggedController extends Controller
         // Salvataggio immagini nel db
 
         $fileName = time() . '.' . $request-> image -> extension();
-        $request -> image -> storeAs('images', $fileName);
+        $request -> image -> storeAs('uploads', $fileName);
 
         $apartment['image'] = $fileName;
 

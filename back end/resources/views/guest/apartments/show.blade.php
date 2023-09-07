@@ -6,7 +6,7 @@
             <span>Title: {{ $apartment->title }}</span>
             <br>
             @if ($apartment->image)
-                <img src="{{ asset('storage/images/' . $apartment->image) }}" alt="">
+                <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
             @endif
             <br>
             <span>Stanze:{{ $apartment->rooms }}</span>
