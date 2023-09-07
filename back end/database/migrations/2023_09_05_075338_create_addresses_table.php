@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
 
-            $table->decimal('latitude', 8,6)->nullable();
-            $table->decimal('longitude', 9,6)->nullable();
+            $table->decimal('latitude', 8,6)->nullable(false);
+            $table->decimal('longitude', 9,6)->nullable(false);
             $table->string('street', 64)->nullable(false);
             $table->integer('street_number')->nullable(false);
             $table->char('cap', 5)->nullable(false);

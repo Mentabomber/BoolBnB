@@ -79,7 +79,13 @@ class LoggedController extends Controller
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
 
-        dd($data); // Visualizza il JSON decodificato come array associativo
+        $data = json_decode($response->getBody(), true);
+        $latitude = $data['results'][0]['position']['lat'];
+        $longitude = $data['results'][0]['position']['lon'];
+
+        $address['latitude'] = $latitude;
+        
+        $address['longitude'] = $longitude;
 
 
 
@@ -101,7 +107,7 @@ class LoggedController extends Controller
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
 
-        // return redirect() -> route('guest.apartments.show', $user_apartment -> id);
+        return redirect() -> route('guest.apartments.show', $user_apartment -> id);
     }
 
     public function show($id) {
