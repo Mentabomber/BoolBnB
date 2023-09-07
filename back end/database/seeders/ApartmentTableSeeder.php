@@ -41,6 +41,24 @@ class ApartmentTableSeeder extends Seeder
                 "image"=> "1694076905.jpg",
                 "visible"=> false
             ],
+            [
+                "title" => "Appartamento 3",          
+                "rooms"=> 3,      
+                "beds"=> 1,       
+                "bathrooms"=> 1,
+                "square_meters"=> 50,
+                "image"=> "1694076905.jpg",
+                "visible"=> false
+            ],
+            [
+                "title" => "Appartamento 4",          
+                "rooms"=> 3,      
+                "beds"=> 1,       
+                "bathrooms"=> 1,
+                "square_meters"=> 50,
+                "image"=> "1694076905.jpg",
+                "visible"=> false
+            ],
 
         ];
 

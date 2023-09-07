@@ -39,27 +39,48 @@ class AddressTableSeeder extends Seeder
                 "province"=> "Bologna",
                 "floor"=> 1,
             ],
+            [    
+                "latitude" => 23.62784,
+                "longitude" => 10.78451,
+                "street"=> "Via Giacomo Poretti",
+                "street_number" => 6,      
+                "cap"=> "32435",
+                "city"=> "Milano",
+                "province"=> "Milano",
+                "floor"=> 5,
+            ],
+            [    
+                "latitude" => 23.62784,
+                "longitude" => 10.78451,
+                "street"=> "Via Aldo Baglio",
+                "street_number" => 6,      
+                "cap"=> "37002",
+                "city"=> "Bologna",
+                "province"=> "Bologna",
+                "floor"=> 1,
+            ],
 
         ];
-        foreach ($addresses as $address) {
 
-            $adress = Address :: make([
-                "latitude" => $address["latitude"],
-                "longitude" => $address["longitude"],
-                "street" => $address["street"],
-                "street_number" => $address["street_number"],
-                "cap" => $address["cap"],
-                "city" => $address["city"],
-                "province" => $address["province"],
-                "floor" => $address["floor"]
+        for ($i=0; $i <sizeof($addresses); $i++) { 
+
+            $data = $addresses[$i];
+
+            $address = Address :: make([
+                "latitude" => $data["latitude"],
+                "longitude" => $data["longitude"],
+                "street" => $data["street"],
+                "street_number" => $data["street_number"],
+                "cap" => $data["cap"],
+                "city" => $data["city"],
+                "province" => $data["province"],
+                "floor" => $data["floor"]
             ]);
 
-                 
-            $apartment = Apartment::inRandomOrder() -> first();
+            $apartment = Apartment::findOrFail($i+1);
 
-            $adress -> apartment_id = $apartment -> id;
-            $adress -> save();
-
+            $address -> apartment_id = $apartment -> id;
+            $address -> save();
         }
     }
 }
