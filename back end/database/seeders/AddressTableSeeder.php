@@ -53,7 +53,7 @@ class AddressTableSeeder extends Seeder
             $address = Address :: make([
                 "latitude" => $data["latitude"],
                 "longitude" => $data["longitude"],
-                "address" => $data["street"],
+                "address" => $data["address"],
                 "floor" => $data["floor"]
             ]);
 

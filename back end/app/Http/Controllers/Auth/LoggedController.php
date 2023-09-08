@@ -61,18 +61,17 @@ class LoggedController extends Controller
         $address = $request -> validate([
             "latitude" => "decimal",
             "longitude" => "decimal",
-            "street" => "required | string",
-            "street_number" => "required | integer",
-            "cap" => "required | integer",
-            "city" => "required | string",
-            "province" => "required | string",
+            "address" => "required | string",
             "floor" => "required | integer",
         ]);
 
         // Creazione dell'URL per la chiamata all'API di tomtom
 
-        $street = str_replace(' ', '%20', $address['street']);
-        $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
+        // $street = str_replace(' ', '%20', $address['street']);
+        // $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
+
+        $street = str_replace(' ', '%20', $address['address']);
+        $url = "https://api.tomtom.com/search/2/geocode/" . $street . ".json?storeResult=false&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
 
         // Non richiede la verifica del certificato SSL quando viene effetuata la chiamata all'API
 

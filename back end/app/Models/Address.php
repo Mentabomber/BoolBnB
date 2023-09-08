@@ -12,11 +12,7 @@ class Address extends Model
     protected $fillable = [
         "latitude",           
         "longitude",      
-        "street",
-        "street_number",      
-        "cap",
-        "city",
-        "province",
+        "address",
         "floor",
         "apartment_id",
 ];
