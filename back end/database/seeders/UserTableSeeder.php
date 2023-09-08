@@ -24,7 +24,28 @@ class UserTableSeeder extends Seeder
                 'email'=> "mario.rossi@mail.com",
                 'date_of_birth'=> "1990-06-15",
                 'password'=> "gianmarco292",
-            ]
+            ],
+            [
+                'name'=> "Franco",
+                'surname'=> "Santini",
+                'email'=> "franco.santini@mail.com",
+                'date_of_birth'=> "1982-01-22",
+                'password'=> "ballandoconilupi23",
+            ],
+            [
+                'name'=> "Patrizio",
+                'surname'=> "Marrone",
+                'email'=> "patrick.brown@mail.com",
+                'date_of_birth'=> "1976-02-05",
+                'password'=> "patmar029",
+            ],
+            [
+                'name'=> "Davide",
+                'surname'=> "Bassi",
+                'email'=> "piccolodavide@mail.com",
+                'date_of_birth'=> "1992-09-29",
+                'password'=> "bassettoforlife",
+            ],
         ];
 
         foreach ($users as $user) {

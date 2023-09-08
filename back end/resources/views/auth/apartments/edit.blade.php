@@ -48,7 +48,15 @@
                 @endforeach
                 <br>
                 <h2>Indirizzo</h2>
-                <label for="street">Via / Località</label>
+
+
+                <label for="address">Indirizzo</label>
+                <br>
+                <input type="text" name="address" id="address" value="{{ $address->street }}">
+                <br>
+
+
+                <!-- <label for="street">Via / Località</label>
                 <br>
                 <input type="text" name="street" id="street" value="{{ $address->street }}">
                 <br>
@@ -67,7 +75,7 @@
                 <label for="province">Provincia</label>
                 <br>
                 <input type="text" name="province" id="province" value="{{ $address->province }}">
-                <br>
+                <br> -->
                 <label for="floor">Piano</label>
                 <br>
                 <input type="number" name="floor" id="floor" value="{{ $address->floor }}">
