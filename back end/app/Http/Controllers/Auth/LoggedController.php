@@ -88,7 +88,7 @@ class LoggedController extends Controller
         $data = json_decode($body, true);
         $data = json_decode($response->getBody(), true);
 
-        // Acquistice i valori di latitudie e longitudine da tomtom e li attribuisce ai campi dell'indirizzo utente
+        // Acquisisce i valori di latitudie e longitudine da tomtom e li attribuisce ai campi dell'indirizzo utente
 
         $latitude = $data['results'][0]['position']['lat'];
         $longitude = $data['results'][0]['position']['lon'];

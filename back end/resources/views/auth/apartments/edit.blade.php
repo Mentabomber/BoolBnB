@@ -85,7 +85,7 @@
             @csrf
             @method("DELETE")
 
-            <input class="btn btn-primary" type="submit" value="DELETE">
+            <input class="btn btn-primary" type="submit" value="DELETE" onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
             </form>
             <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>

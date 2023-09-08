@@ -21,7 +21,7 @@
                                 @csrf
                                 @method("DELETE")
 
-                                <input class="btn btn-primary" type="submit" value="Elimina">
+                                <input class="btn btn-primary" type="submit" value="Elimina" onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
                             </form>
                           
                         </li>
