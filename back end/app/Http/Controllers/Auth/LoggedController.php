@@ -39,6 +39,8 @@ class LoggedController extends Controller
 
         // Validazione dei dati inviati dall'utente
 
+        $data = $request->only(['latitude', 'longitude']);
+
         $apartment = $request -> validate([
             "title" => "required | string | min:3 | max:64",
             "rooms" => "required | integer",
@@ -59,8 +61,8 @@ class LoggedController extends Controller
         // Validazione dei dati inviati dall'utente
 
         $address = $request -> validate([
-            "latitude" => "decimal",
-            "longitude" => "decimal",
+            "latitude" => 'required | decimal:2,7',
+            "longitude" => 'required | decimal:2,7',
             "address" => "required | string",
             "floor" => "required | integer",
         ]);
@@ -70,30 +72,30 @@ class LoggedController extends Controller
         // $street = str_replace(' ', '%20', $address['street']);
         // $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
 
-        $street = str_replace(' ', '%20', $address['address']);
-        $url = "https://api.tomtom.com/search/2/geocode/" . $street . ".json?storeResult=false&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
+        // $street = str_replace(' ', '%20', $address['address']);
+        // $url = "https://api.tomtom.com/search/2/geocode/" . $street . ".json?storeResult=false&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
 
-        // Non richiede la verifica del certificato SSL quando viene effetuata la chiamata all'API
+        // // Non richiede la verifica del certificato SSL quando viene effetuata la chiamata all'API
 
-        $client = new Client([
-            RequestOptions::VERIFY => false,
-        ]);
+        // $client = new Client([
+        //     RequestOptions::VERIFY => false,
+        // ]);
 
-        // Salva la risposta dell'API di tomtom e ne decodifica il body
+        // // Salva la risposta dell'API di tomtom e ne decodifica il body
 
-        $response = $client->get($url);
+        // $response = $client->get($url);
 
-        $body = $response->getBody()->getContents();
-        $data = json_decode($body, true);
-        $data = json_decode($response->getBody(), true);
+        // $body = $response->getBody()->getContents();
+        // $data = json_decode($body, true);
+        // $data = json_decode($response->getBody(), true);
 
         // Acquisisce i valori di latitudie e longitudine da tomtom e li attribuisce ai campi dell'indirizzo utente
 
-        $latitude = $data['results'][0]['position']['lat'];
-        $longitude = $data['results'][0]['position']['lon'];
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
 
         $address['latitude'] = $latitude;
-        
+
         $address['longitude'] = $longitude;
 
 
@@ -226,11 +228,11 @@ class LoggedController extends Controller
         // Elimina l'immagine dell'appartamento
 
         $oldImgPath = $apartment -> image;
-        Storage::delete($oldImgPath); 
+        Storage::delete($oldImgPath);
 
         // Elimina l'appartamento
 
-        $apartment->delete(); 
+        $apartment->delete();
 
         return redirect() -> route('auth.apartments.show');
     }
