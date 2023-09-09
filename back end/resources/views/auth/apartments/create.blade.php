@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id='map' class='map'></div>
+                    <div id='map' class='map' style=""></div>
                 </div>
 
                 <script>
@@ -153,9 +153,9 @@
                         userLocation: null
                     };
 
-                    map.addControl(new tt.FullscreenControl({
-                        container: document.querySelector('body')
-                    }));
+                    // map.addControl(new tt.FullscreenControl({
+                    //     container: document.querySelector('body')
+                    // }));
                     map.addControl(new tt.NavigationControl());
                     new SidePanel('.tt-side-panel', map);
 
