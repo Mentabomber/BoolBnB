@@ -190,7 +190,10 @@ class LoggedController extends Controller
 
         //  Aggiorna i dati dell'indirizzo
 
-        $address -> update($data);
+        if($data['address'] != null) {
+            $address -> update($data);
+        }
+
 
         return redirect() -> route('guest.apartments.show', $apartment -> id);
     }

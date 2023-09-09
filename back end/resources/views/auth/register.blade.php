@@ -18,7 +18,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        value="{{ old('name') }}" required minlength="3" autocomplete="name" autofocus>
                                     <span id="name-error" class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <input id="surname" type="text"
                                         class="form-control @error('surname') is-invalid @enderror" name="surname"
-                                        value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+                                        value="{{ old('surname') }}" required minlength="3" autocomplete="surname" autofocus>
                                     <span id="surname-error" class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
