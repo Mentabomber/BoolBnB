@@ -137,7 +137,13 @@
                     isValid = false;
                     document.getElementById("name-error").innerHTML = "Il campo 'Name' è obbligatorio.";
                     nameField.classList.add("is-invalid");
-                } else {
+                } 
+                else if (nameValue.length < 3){
+                    isValid = false;
+                    document.getElementById("name-error").innerHTML = "Il campo 'Name' deve contenere almeno 3 caratteri";
+                    nameField.classList.add("is-invalid");
+                }
+                else {
                     document.getElementById("name-error").innerHTML = "";
                     nameField.classList.remove("is-invalid");
                 }
@@ -163,7 +169,13 @@
                     isValid = false;
                     document.getElementById("surname-error").innerHTML = "Il campo 'Surname' è obbligatorio.";
                     surnameField.classList.add("is-invalid");
-                } else {
+                } 
+                else if(surnameValue.length < 3){
+                    isValid = false;
+                    document.getElementById("surname-error").innerHTML = "Il campo 'Surname' deve contenere almeno 3 caratteri";
+                    surnameField.classList.add("is-invalid");
+                }
+                else {
                     document.getElementById("surname-error").innerHTML = "";
                     surnameField.classList.remove("is-invalid");
                 }
