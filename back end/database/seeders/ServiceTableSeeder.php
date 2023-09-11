@@ -48,8 +48,8 @@ class ServiceTableSeeder extends Seeder
                 "description" => "Ascensore presente nel condominio", 
             ],
             [
-                "name" => "Vista Mare",           
-                "description" => "Appartamento con balcone rivolto verso il mare", 
+                "name" => "Donna delle pulizie",           
+                "description" => "Disponibilità pulizia appartamente 1 volta al giorno di mattina", 
             ],
             [
                 "name" => "Check-in autonomo",           
