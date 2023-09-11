@@ -34,7 +34,8 @@ searchInput.addEventListener('input', function() {
                     latitudine.value = address.position.lat;
                     longitudine.value = address.position.lon;
                     suggestionsList.style.display = 'none';
-                    console.log(latitudine.value , longitudine.value ,"siamo qui");
+                    const risultatiAppartamenti = intorno(latitudine.value , longitudine.value , 20);
+                    console.log(risultatiAppartamenti , "risultato ricerca",  latitudine.value , longitudine.value);
                 });
 
                 suggestionsList.appendChild(suggestion);
@@ -44,3 +45,15 @@ searchInput.addEventListener('input', function() {
             console.error(error);
         });
 });
+
+function intorno(lat, lon, raggio) {
+    const lat_min = lat - raggio / 6371 * Math.PI;
+    const lat_max = lat + raggio / 6371 * Math.PI;
+    const lon_min = lon - raggio / 6371 * Math.PI / Math.cos(lat);
+    const lon_max = lon + raggio / 6371 * Math.PI / Math.cos(lat);
+  
+    return [lat_min, lat_max, lon_min, lon_max];
+}
+
+
+  
