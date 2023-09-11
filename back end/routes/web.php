@@ -24,7 +24,7 @@ Route :: get('/myapartments', [LoggedController :: class, 'index'])
 // Rotta che porta alla creazione di un appartamento
 
 Route::get('/apartments/create', [LoggedController::class, 'create'])
-->middleware(['auth'])->name('auth.apartments.create'); 
+->middleware(['auth'])->name('auth.apartments.create');
 
 // Rotta che porta alla dashbord dell'utente
 
@@ -49,6 +49,8 @@ Route :: put('/apartments/{id}', [LoggedController :: class, 'update'])
 
 Route :: delete('/apartments/{id}', [LoggedController :: class, 'delete'])
     ->middleware(['auth', 'verified'])-> name('auth.apartments.delete');
+
+Route::post('/apartments/search', [GuestController::class, 'cercaAppartamenti'])->name('apartment.search');
 
 // Gruppo di rotte che modificano, aggiornano ed eliminano il profilo dell'utente
 

@@ -194,6 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
 
     ],
 
@@ -209,6 +210,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'GeoIP' => Torann\GeoIP\Facades\GeoIP::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

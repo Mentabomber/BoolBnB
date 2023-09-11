@@ -15,12 +15,24 @@
         </h1>
 
        <div>
+        <form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
+            @csrf
+            @method('POST')
+
+            <br>
+            <h2>Indirizzo</h2>
             <input type="hidden" name="address" id="resultField">
             <input type="hidden" name="latitude" id="resultFieldLA">
             <input type="hidden" name="longitude" id="resultFieldLO">
             <br>
+            <label for="address">Indirizzo</label>
+            <br>
             <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
             <ul style="list-style-type: none;"id="suggestions"></ul>
+            <input class="my-3" type="submit" value="create">
+        </form>
+
+
             @foreach($apartments as $apartment)
                 <div>
                     <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>

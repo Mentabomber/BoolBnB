@@ -51,9 +51,6 @@ function intorno(lat, lon, raggio) {
     const lat_max = lat + raggio / 6371 * Math.PI;
     const lon_min = lon - raggio / 6371 * Math.PI / Math.cos(lat);
     const lon_max = lon + raggio / 6371 * Math.PI / Math.cos(lat);
-  
+
     return [lat_min, lat_max, lon_min, lon_max];
 }
-
-
-  
