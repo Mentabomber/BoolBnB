@@ -179,7 +179,7 @@
                     document.getElementById("surname-error").innerHTML = "";
                     surnameField.classList.remove("is-invalid");
                 }
-
+                console.log(dateOfBirthField.value);
                 const dateOfBirthValue = dateOfBirthField.value.trim();
                 if (dateOfBirthValue === "") {
                     isValid = false;
@@ -195,10 +195,6 @@
                         month = "0" + month;
                     }
                     var day = currentDate.getDay();
-
-                    if (day < 10) {
-                        day = "0" + day;
-                    }
 
                     const formattedDate = `${year}-${month}-${day}`;
 

@@ -4,7 +4,7 @@
         <div class="text-center">
 
             <h1>Aggiungi nuov Appartamento</h1>
-            <form method="POST" action="{{ route('apartment.store') }}" enctype='multipart/form-data'>
+            <form method="POST" action="{{ route('apartment.store') }}" enctype='multipart/form-data' style="position: relative;">
 
                 @csrf
                 @method('POST')
@@ -45,41 +45,71 @@
                 @endforeach
                 <br>
                 <h2>Indirizzo</h2>
-
-                <label for="address">Indirizzo</label>
-                <br>
-                {{-- <input type="text" name="address" id="address" value="{{ $address->street }}"> --}}
                 <input type="hidden" name="address" id="resultField">
                 <input type="hidden" name="latitude" id="resultFieldLA">
                 <input type="hidden" name="longitude" id="resultFieldLO">
                 <br>
 
-                {{-- <label for="address">Indirizzo</label>
-                <br>
-                <input type="text" name="address" id="address">
-                <br> --}}
 
-                <!-- <label for="street">Via / Località</label>
-                    <br>
-                    <input type="text" name="street" id="street">
-                    <br>
-                    <label for="street_number">Numero Civico</label>
-                    <br>
-                    <input type="number" name="street_number" id="street_number">
-                    <br>
-                    <label for="cap">CAP</label>
-                    <br>
-                    <input type="number" name="cap" id="cap">
-                    <br>
-                    <label for="city">Città</label>
-                    <br>
-                    <input type="text" name="city" id="city">
-                    <br>
-                    <label for="province">Provincia</label>
-                    <br>
-                    <input type="text" name="province" id="province">
-                    <br> -->
-                <label for="floor">Piano</label>
+
+                <label for="address">Indirizzo</label>
+                <br>
+                <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
+                <ul style="list-style-type: none;"id="suggestions"></ul>
+
+
+                <script>
+                  const searchInput = document.getElementById('searchInput');
+                  const suggestionsList = document.getElementById('suggestions');
+
+                  searchInput.addEventListener('input', function() {
+                    const inputValue = this.value;
+
+                    fetch(`https://api.tomtom.com/search/2/search/${encodeURIComponent(inputValue)}.json?key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1&countrySet=IT`)
+                      .then(function(response) {
+                        return response.json();
+                      })
+                      .then(function(data) {
+                        const addresses = data.results;
+                       console.log(addresses);
+
+                        // Rimuovi i suggerimenti precedenti
+                        suggestionsList.innerHTML = '';
+
+                        // Mostra gli indirizzi suggeriti nell'autocompletamento
+                        addresses.forEach(function(address) {
+                            suggestionsList.style.display = 'block';
+                          const suggestion = document.createElement('li');
+                          suggestion.textContent = address.address.freeformAddress;
+                            const floor = document.getElementById('floor');
+                            const floorLabel = document.getElementById('floor-label');
+                            floor.style.display = "none";
+                            floorLabel.style.display = "none";
+                          suggestion.addEventListener('click', function() {
+                            // Aggiungi il valore dell'indirizzo selezionato all'input di ricerca
+                            searchInput.value = address.address.freeformAddress;
+                            const indirizzo = document.getElementById('resultField');
+                            const latitudine = document.getElementById('resultFieldLA');
+                            const longitudine = document.getElementById('resultFieldLO');
+                            floor.style.display = "inline";
+                            floorLabel.style.display = "inline";
+                            indirizzo.value = address.address.freeformAddress;
+                            latitudine.value = address.position.lat;
+                            longitudine.value = address.position.lon;
+                            suggestionsList.style.display = 'none';
+
+                          });
+
+                          suggestionsList.appendChild(suggestion);
+                        });
+                      })
+                      .catch(function(error) {
+                        console.error(error);
+                      });
+                  });
+                </script>
+                <br>
+                <label for="floor" id="floor-label">Piano</label>
                 <br>
                 <input type="number" name="floor" id="floor">
                 <br>
@@ -87,11 +117,10 @@
                 <input class="my-3" type="submit" value="create">
             </form>
             <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
-            <div>
+            <!-- <div>
                 <div class='map-view'>
                     <div class='tt-side-panel'>
-                        <header class='tt-side-panel__header'>
-                        </header>
+
                         <div class='tt-tabs js-tabs'>
                             <div class='tt-tabs__panel'>
                                 <div class='js-results' hidden='hidden'></div>
@@ -103,9 +132,9 @@
                         </div>
                     </div>
                     <div id='map' class='map' style=""></div>
-                </div>
+                </div> -->
 
-                <script>
+                <!-- <script>
                     tt.setProductInfo('[BoolBnB]', '[6]');
 
                     var selectedResult = [];
@@ -387,8 +416,8 @@
                         });
                         resultsManager.append(resultList);
                     }
-                </script>
-            </div>
+                </script> -->
+            <!-- </div> -->
         </div>
     </div>
 @endsection
