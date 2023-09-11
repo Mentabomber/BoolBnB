@@ -226,3 +226,5 @@ function fillResultsList(results) {
     });
     resultsManager.append(resultList);
 }
+
+

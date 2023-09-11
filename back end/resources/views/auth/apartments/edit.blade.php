@@ -56,62 +56,6 @@
                 <br>
                 <input type="text" name="address" id="searchInput" value="{{ $address->address }}">
                 <ul style="list-style-type: none;"id="suggestions"></ul>
-
-                <script>
-                    const searchInput = document.getElementById('searchInput');
-                    const suggestionsList = document.getElementById('suggestions');
-                    console.log(searchInput);
-
-                    searchInput.addEventListener('input', function() {
-                        const inputValue = this.value;
-
-                        fetch(
-                                `https://api.tomtom.com/search/2/search/${encodeURIComponent(inputValue)}.json?key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1&countrySet=IT`
-                            )
-                            .then(function(response) {
-                                return response.json();
-                            })
-                            .then(function(data) {
-                                const addresses = data.results;
-                                console.log(addresses);
-
-                                // Rimuovi i suggerimenti precedenti
-                                suggestionsList.innerHTML = '';
-
-                                // Mostra gli indirizzi suggeriti nell'autocompletamento
-                                addresses.forEach(function(address) {
-                                    suggestionsList.style.display = 'block';
-                                    const suggestion = document.createElement('li');
-                                    suggestion.textContent = address.address.freeformAddress;
-                                    const floor = document.getElementById('floor');
-                                    const floorLabel = document.getElementById('floor-label');
-                                    console.log(addresses.length);
-                                    floor.style.display = "none";
-                                    floorLabel.style.display = "none";
-
-                                    suggestion.addEventListener('click', function() {
-                                        // Aggiungi il valore dell'indirizzo selezionato all'input di ricerca
-                                        searchInput.value = address.address.freeformAddress;
-                                        const indirizzo = document.getElementById('resultField');
-                                        const latitudine = document.getElementById('resultFieldLA');
-                                        const longitudine = document.getElementById('resultFieldLO');
-                                        floor.style.display = "inline";
-                                        floorLabel.style.display = "block";
-                                        indirizzo.value = address.address.freeformAddress;
-                                        latitudine.value = address.position.lat;
-                                        longitudine.value = address.position.lon;
-                                        suggestionsList.style.display = 'none';
-
-                                    });
-
-                                    suggestionsList.appendChild(suggestion);
-                                });
-                            })
-                            .catch(function(error) {
-                                console.error(error);
-                            });
-                    });
-                </script>
                 <label for="floor" id="floor-label" style="display: block;">Piano</label>
                 <input type="number" name="floor" id="floor" value="{{ $address->floor }}">
                 <br>
@@ -129,4 +73,5 @@
             <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
+    <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
 @endsection

@@ -15,6 +15,12 @@
         </h1>
 
        <div>
+            <input type="hidden" name="address" id="resultField">
+            <input type="hidden" name="latitude" id="resultFieldLA">
+            <input type="hidden" name="longitude" id="resultFieldLO">
+            <br>
+            <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
+            <ul style="list-style-type: none;"id="suggestions"></ul>
             @foreach($apartments as $apartment)
                 <div>
                     <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
@@ -31,4 +37,5 @@
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora temporibus, dicta nemo aliquam totam nisi deserunt soluta quas voluptatum ab beatae praesentium necessitatibus minus, facilis illum rerum officiis accusamus dolores!</p>
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
 @endsection
