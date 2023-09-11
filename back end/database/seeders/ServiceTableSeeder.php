@@ -43,6 +43,22 @@ class ServiceTableSeeder extends Seeder
                 "name" => "Vista Mare",           
                 "description" => "Appartamento con balcone rivolto verso il mare", 
             ],
+            [
+                "name" => "Ascensore",           
+                "description" => "Ascensore presente nel condominio", 
+            ],
+            [
+                "name" => "Vista Mare",           
+                "description" => "Appartamento con balcone rivolto verso il mare", 
+            ],
+            [
+                "name" => "Check-in autonomo",           
+                "description" => "Possibilità di accedere all'appartamento attraverso codice online", 
+            ],
+            [
+                "name" => "Cucina",           
+                "description" => "Cucina disponibile in appartamento", 
+            ],
         ];
 
         foreach ($services as $service) {

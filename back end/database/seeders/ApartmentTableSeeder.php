@@ -79,7 +79,7 @@ class ApartmentTableSeeder extends Seeder
             $apartment -> user_id = $user -> id;
             $apartment -> save();
 
-            $services = Service::inRandomOrder() -> limit(rand(1, 6)) -> get();
+            $services = Service::inRandomOrder() -> limit(rand(1, 10)) -> get();
             $apartment -> services() -> attach($services);
 
             $sponsorships = Sponsorship::inRandomOrder() -> limit(rand(1, 1)) -> get();
