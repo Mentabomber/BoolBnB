@@ -52,6 +52,10 @@ Route :: delete('/apartments/{id}', [LoggedController :: class, 'delete'])
 
 Route::post('/apartments/search', [GuestController::class, 'cercaAppartamenti'])->name('apartment.search');
 
+//Rotta che manda i dati dei filtri in ricerca avanzata
+
+Route::post('/apartments/messages/{id}', [GuestController::class, 'message'])->name('apartment.messages');
+
 // Gruppo di rotte che modificano, aggiornano ed eliminano il profilo dell'utente
 
 Route::middleware('auth')->group(function () {

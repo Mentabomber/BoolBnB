@@ -77,7 +77,25 @@
                 </ul>
             </span>
             <br>
-
+            <form method="POST" action="{{ route('apartment.messages', $apartment->id) }}" enctype='multipart/form-data'>
+            @csrf
+            @method('POST')
+            <label for="name">Nome: </label>
+            <input type="text" name="name">
+            <br>
+            <label for="surname">Cognome: </label>
+            <input type="text" name="surname">
+            <br>
+            
+            <label for="email">E-mail: </label>
+            <input type="text" name="email" value="@auth {{ auth()->user()->email }} @else  @endauth">
+            <br>
+            <label for="message">Messaggio: </label>
+            <input type="text" name="message">
+            <br>
+            <input type="submit" value="Spedisci">
+            <br>
+            </form>
             <div style="height: 400px; margin-left: 25%;">
                 <div id='map' class='map'>
 

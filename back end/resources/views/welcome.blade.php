@@ -29,7 +29,7 @@
             <br>
             <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
             <ul style="list-style-type: none;"id="suggestions"></ul>
-            <input class="my-3" type="submit" value="create">
+            <input class="my-3" type="submit" value="Cerca">
         </form>
 
 
