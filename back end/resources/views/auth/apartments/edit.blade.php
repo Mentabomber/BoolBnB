@@ -48,42 +48,96 @@
                 @endforeach
                 <br>
                 <h2>Indirizzo</h2>
-
-
-                <label for="address">Indirizzo</label>
-                <br>
-                {{-- <input type="text" name="address" id="address" value="{{ $address->street }}"> --}}
                 <input type="hidden" name="address" id="resultField">
                 <input type="hidden" name="latitude" id="resultFieldLA">
                 <input type="hidden" name="longitude" id="resultFieldLO">
                 <br>
+                <label for="address">Indirizzo</label>
+                <br>
+                <input type="text" name="address" id="searchInput" value="{{ $address->address }}">
+                <ul style="list-style-type: none;"id="suggestions"></ul>
+
+                <script>
+                    const searchInput = document.getElementById('searchInput');
+                    const suggestionsList = document.getElementById('suggestions');
+                    console.log(searchInput);
+
+                    searchInput.addEventListener('input', function() {
+                        const inputValue = this.value;
+
+                        fetch(
+                                `https://api.tomtom.com/search/2/search/${encodeURIComponent(inputValue)}.json?key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1&countrySet=IT`
+                            )
+                            .then(function(response) {
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                const addresses = data.results;
+                                console.log(addresses);
+
+                                // Rimuovi i suggerimenti precedenti
+                                suggestionsList.innerHTML = '';
+
+                                // Mostra gli indirizzi suggeriti nell'autocompletamento
+                                addresses.forEach(function(address) {
+                                    suggestionsList.style.display = 'block';
+                                    const suggestion = document.createElement('li');
+                                    suggestion.textContent = address.address.freeformAddress;
+                                    const floor = document.getElementById('floor');
+                                    const floorLabel = document.getElementById('floor-label');
+                                    console.log(addresses.length);
+                                    floor.style.display = "none";
+                                    floorLabel.style.display = "none";
+
+                                    suggestion.addEventListener('click', function() {
+                                        // Aggiungi il valore dell'indirizzo selezionato all'input di ricerca
+                                        searchInput.value = address.address.freeformAddress;
+                                        const indirizzo = document.getElementById('resultField');
+                                        const latitudine = document.getElementById('resultFieldLA');
+                                        const longitudine = document.getElementById('resultFieldLO');
+                                        floor.style.display = "inline";
+                                        floorLabel.style.display = "block";
+                                        indirizzo.value = address.address.freeformAddress;
+                                        latitudine.value = address.position.lat;
+                                        longitudine.value = address.position.lon;
+                                        suggestionsList.style.display = 'none';
+
+                                    });
+
+                                    suggestionsList.appendChild(suggestion);
+                                });
+                            })
+                            .catch(function(error) {
+                                console.error(error);
+                            });
+                    });
+                </script>
 
 
                 <!-- <label for="street">Via / Località</label>
-                    <br>
-                    <input type="text" name="street" id="street" value="{{ $address->street }}">
-                    <br>
-                    <label for="street_number">Numero Civico</label>
-                    <br>
-                    <input type="number" name="street_number" id="street_number" value="{{ $address->street_number }}">
-                    <br>
-                    <label for="cap">CAP</label>
-                    <br>
-                    <input type="number" name="cap" id="cap" value="{{ $address->cap }}">
-                    <br>
-                    <label for="city">Città</label>
-                    <br>
-                    <input type="text" name="city" id="city" value="{{ $address->city }}">
-                    <br>
-                    <label for="province">Provincia</label>
-                    <br>
-                    <input type="text" name="province" id="province" value="{{ $address->province }}">
-                    <br> -->
-                <label for="floor">Piano</label>
-                <br>
+                                                        <br>
+                                                        <input type="text" name="street" id="street" value="{{ $address->street }}">
+                                                        <br>
+                                                        <label for="street_number">Numero Civico</label>
+                                                        <br>
+                                                        <input type="number" name="street_number" id="street_number" value="{{ $address->street_number }}">
+                                                        <br>
+                                                        <label for="cap">CAP</label>
+                                                        <br>
+                                                        <input type="number" name="cap" id="cap" value="{{ $address->cap }}">
+                                                        <br>
+                                                        <label for="city">Città</label>
+                                                        <br>
+                                                        <input type="text" name="city" id="city" value="{{ $address->city }}">
+                                                        <br>
+                                                        <label for="province">Provincia</label>
+                                                        <br>
+                                                        <input type="text" name="province" id="province" value="{{ $address->province }}">
+                                                        <br> -->
+
+                <label for="floor" id="floor-label" style="display: block;">Piano</label>
                 <input type="number" name="floor" id="floor" value="{{ $address->floor }}">
                 <br>
-
                 <input class="my-3" type="submit" value="update">
 
             </form>
@@ -97,7 +151,7 @@
             </form>
             <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
 
-            <div>
+            {{-- <div>
                 <div class='map-view'>
                     <div class='tt-side-panel'>
                         <header class='tt-side-panel__header'>
@@ -398,7 +452,7 @@
                         resultsManager.append(resultList);
                     }
                 </script>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
