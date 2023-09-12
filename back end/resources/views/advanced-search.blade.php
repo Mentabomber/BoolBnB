@@ -14,13 +14,10 @@
         <label for="address">Indirizzo</label>
         <br>
         <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
-        <ul style="list-style-type: none;"id="suggestions"></ul>
+        <ul style="list-style-type: none;" id="suggestions"></ul>
         <input class="my-3" type="submit" value="Cerca">
     </form>
     <br>
-    {{-- <form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
-@csrf
-@method('POST') --}}
 
     <label for="km-radius">Raggio Kilometri</label>
     <input type="text" id="km-radius" name="km-radius">
@@ -46,9 +43,8 @@
     <br>
     <div>
         <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
-        {{-- </form> --}}
         @foreach ($apartments as $apartment)
-            <div class="apartment_card">
+            <div id="apartment_card" data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}">
                 <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                 <br>
                 <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
@@ -69,50 +65,36 @@
         submit.addEventListener("click", function() {
             const beds = document.getElementById("available-beds");
             const rooms = document.getElementById("available-rooms");
-            var apartment_card = document.querySelectorAll(".apartment_card");
+            const apartmentCards = document.querySelectorAll("#apartment_card");
+
             const bedsValue = parseInt(beds.value);
             const roomsValue = parseInt(rooms.value);
 
-            <?php
-            if (isset($apartment)) {
-            ?>
-                var beds_of_apartment = {!! json_encode($apartment->beds) !!};
-                var rooms_of_apartment = {!! json_encode($apartment->rooms) !!};
+            apartmentCards.forEach((apartmentCard) => {
+                const bedsOfApartment = parseInt(apartmentCard.dataset.beds);
+                const roomsOfApartment = parseInt(apartmentCard.dataset.rooms);
 
-                apartment_card.forEach(function(apartment) {
-
-                    if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
-
-                        if (!(bedsValue <= beds_of_apartment) || !(roomsValue <= rooms_of_apartment)) {
-                            apartment.classList.add('hidden');
-
-                        } else if ((bedsValue <= beds_of_apartment) && (roomsValue <= rooms_of_apartment)) {
-                            apartment.classList.remove('hidden');
-
-                        }
-                    } else if (!isNaN(bedsValue)) {
-                        if (!(bedsValue <= beds_of_apartment)) {
-                            apartment.classList.add('hidden');
-
-                        } else if (bedsValue <= beds_of_apartment) {
-                            apartment.classList.remove('hidden');
-
-                        }
-                    } else if (!isNaN(roomsValue)) {
-                        console.log(rooms_of_apartment);
-                        if (!(roomsValue <= rooms_of_apartment)) {
-                            apartment.classList.add('hidden');
-
-                        } else if (roomsValue <= rooms_of_apartment) {
-                            apartment.classList.remove('hidden');
-
-                        }
+                if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
+                    if (!(bedsValue <= bedsOfApartment) || !(roomsValue <= roomsOfApartment)) {
+                        apartmentCard.classList.add('hidden');
+                    } else {
+                        
+                        apartmentCard.classList.remove('hidden');
                     }
-                });
-
-            <?php
-            }
-            ?>
+                } else if (!isNaN(bedsValue)) {
+                    if (!(bedsValue <= bedsOfApartment)) {
+                        apartmentCard.classList.add('hidden');
+                    } else {
+                        apartmentCard.classList.remove('hidden');
+                    }
+                } else if (!isNaN(roomsValue)) {
+                    if (!(roomsValue <= roomsOfApartment)) {
+                        apartmentCard.classList.add('hidden');
+                    } else {
+                        apartmentCard.classList.remove('hidden');
+                    }
+                }
+            });
         });
     </script>
 
@@ -121,4 +103,4 @@
             display: none;
         }
     </style>
-    @endsection
+@endsection
