@@ -33,7 +33,7 @@
     @foreach ($services as $service)
         <div class="form-check" style="max-width: 300px">
             <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                id="service{{ $service->id }}">
+                id="service{{ $service->id }}" onchange="handleCheckboxChange(this, {{$service->id}})">
 
             <label class="form-check-label" for="service{{ $service->id }}">
                 {{ $service->name }}
@@ -96,6 +96,17 @@
                 }
             });
         });
+        function handleCheckboxChange(checkbox,id){
+            
+            <?php dd($apartment->services);?>
+            console.log(apartmentService);
+            if (checkbox.checked) {
+                console.log(id);
+                array.forEach(element => {
+                    
+                });
+            }
+        }
     </script>
 
     <style>

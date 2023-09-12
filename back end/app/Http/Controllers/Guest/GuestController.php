@@ -46,6 +46,7 @@ class GuestController extends Controller
             ->orderBy('distance', 'asc')
             ->get();
 
+        
         return view('advanced-search', compact('apartments', 'services'));
     }
 
