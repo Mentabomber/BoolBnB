@@ -48,7 +48,7 @@
         <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
         {{-- </form> --}}
         @foreach ($apartments as $apartment)
-            <div id="apartment_card">
+            <div class="apartment_card">
                 <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                 <br>
                 <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
@@ -69,46 +69,50 @@
         submit.addEventListener("click", function() {
             const beds = document.getElementById("available-beds");
             const rooms = document.getElementById("available-rooms");
-            const apartment_card = document.getElementById("apartment_card");
+            var apartment_card = document.querySelectorAll(".apartment_card");
             const bedsValue = parseInt(beds.value);
             const roomsValue = parseInt(rooms.value);
 
             <?php
-            if (isset($apartment)) { ?>
-            var beds_of_apartment = {!! json_encode($apartment->beds) !!};
-            var rooms_of_apartment = {!! json_encode($apartment->rooms) !!};
+            if (isset($apartment)) {
+            ?>
+                var beds_of_apartment = {!! json_encode($apartment->beds) !!};
+                var rooms_of_apartment = {!! json_encode($apartment->rooms) !!};
 
-            // applica i filtri sul numero di stanze e\o letti disponibili nell'appartamento
+                apartment_card.forEach(function(apartment) {
 
-            if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
+                    if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
 
-                if (!(bedsValue <= beds_of_apartment) || !(roomsValue <= rooms_of_apartment)) {
-                    apartment_card.classList.add('hidden');
+                        if (!(bedsValue <= beds_of_apartment) || !(roomsValue <= rooms_of_apartment)) {
+                            apartment.classList.add('hidden');
 
-                } else if ((bedsValue <= beds_of_apartment) && (roomsValue <= rooms_of_apartment)) {
-                    apartment_card.classList.remove('hidden');
+                        } else if ((bedsValue <= beds_of_apartment) && (roomsValue <= rooms_of_apartment)) {
+                            apartment.classList.remove('hidden');
 
-                }
-            } else if (!isNaN(bedsValue)) {
-                if (!(bedsValue <= beds_of_apartment)) {
-                    apartment_card.classList.add('hidden');
+                        }
+                    } else if (!isNaN(bedsValue)) {
+                        if (!(bedsValue <= beds_of_apartment)) {
+                            apartment.classList.add('hidden');
 
-                } else if (bedsValue <= beds_of_apartment) {
-                    apartment_card.classList.remove('hidden');
+                        } else if (bedsValue <= beds_of_apartment) {
+                            apartment.classList.remove('hidden');
 
-                }
-            } else if (!isNaN(roomsValue)) {
-                console.log(rooms_of_apartment);
-                if (!(roomsValue <= rooms_of_apartment)) {
-                    apartment_card.classList.add('hidden');
+                        }
+                    } else if (!isNaN(roomsValue)) {
+                        console.log(rooms_of_apartment);
+                        if (!(roomsValue <= rooms_of_apartment)) {
+                            apartment.classList.add('hidden');
 
-                } else if (roomsValue <= rooms_of_apartment) {
-                    apartment_card.classList.remove('hidden');
+                        } else if (roomsValue <= rooms_of_apartment) {
+                            apartment.classList.remove('hidden');
 
-                }
+                        }
+                    }
+                });
+
+            <?php
             }
-            <?php } ?>
-
+            ?>
         });
     </script>
 
@@ -117,4 +121,4 @@
             display: none;
         }
     </style>
-@endsection
+    @endsection
