@@ -71,25 +71,36 @@
         const apartment_card = document.getElementById("apartment_card");
         const bedsValue = parseInt(beds.value);
         const roomsValue = parseInt(rooms.value);
-        console.log(bedsValue);
-        console.log(roomsValue);
 
         var beds_of_apartment = {!! json_encode($apartment->beds) !!};
         var rooms_of_apartment = {!! json_encode($apartment->rooms) !!};
-        console.log(beds_of_apartment);
-        console.log(rooms_of_apartment);
-        if (!(bedsValue <= beds_of_apartment))  {
-            apartment_card.classList.add('hidden');
-            console.log("log primo if");
-        } else if (bedsValue <= beds_of_apartment) {
-            apartment_card.classList.remove('hidden');
-            console.log("log secondo if");
-        } else if (!(roomsValue <= rooms_of_apartment)) {
-            apartment_card.classList.add('hidden');
-            console.log("log terzo if");
-        } else if (roomsValue <= rooms_of_apartment) {
-            apartment_card.classList.remove('hidden');
-            console.log("log ultimo if");
+
+        if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
+
+            if (!(bedsValue <= beds_of_apartment) || !(roomsValue <= rooms_of_apartment)) {
+                apartment_card.classList.add('hidden');
+
+            } else if ((bedsValue <= beds_of_apartment) && (roomsValue <= rooms_of_apartment)) {
+                apartment_card.classList.remove('hidden');
+
+            }
+        } else if (!isNaN(bedsValue)) {
+            if (!(bedsValue <= beds_of_apartment)) {
+                apartment_card.classList.add('hidden');
+
+            } else if (bedsValue <= beds_of_apartment) {
+                apartment_card.classList.remove('hidden');
+
+            }
+        } else if (!isNaN(roomsValue)) {
+
+            if (!(roomsValue <= rooms_of_apartment)) {
+                apartment_card.classList.add('hidden');
+
+            } else if (roomsValue <= rooms_of_apartment) {
+                apartment_card.classList.remove('hidden');
+
+            }
         }
     });
 
