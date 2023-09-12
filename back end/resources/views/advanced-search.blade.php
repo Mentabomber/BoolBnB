@@ -19,10 +19,10 @@
     <input class="my-3" type="submit" value="Cerca">
 </form>
 <br>
-<form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
+{{-- <form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
 @csrf
-@method('POST')
-    
+@method('POST') --}}
+
     <label for="km-radius">Raggio Kilometri</label>
     <input type="text" id="km-radius" name="km-radius">
     <br>
@@ -32,12 +32,13 @@
     <label for="available-rooms">Stanze Disponibili</label>
     <input type="text" id="available-rooms" name="available-rooms">
     <br>
+
     <h3>Servizi Disponibili</h3>
     @foreach ($services as $service)
         <div class="form-check" style="max-width: 300px">
             <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
                 id="service{{ $service->id }}">
-            
+
             <label class="form-check-label" for="service{{ $service->id }}">
                 {{ $service->name }}
             </label>
@@ -45,10 +46,10 @@
     @endforeach
     <br>
     <div>
-    <input class="my-3" type="submit" value="Cerca">
-</form>
+    <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
+{{-- </form> --}}
     @foreach($apartments as $apartment)
-        <div>
+        <div id="apartment_card">
             <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
             <br>
             <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
@@ -62,4 +63,42 @@
     </div>
 </div>
 <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
+<script>
+    const submit = document.getElementById("bottoneInvio");
+    submit.addEventListener("click", function() {
+        const beds = document.getElementById("available-beds");
+        const rooms = document.getElementById("available-rooms");
+        const apartment_card = document.getElementById("apartment_card");
+        const bedsValue = parseInt(beds.value);
+        const roomsValue = parseInt(rooms.value);
+        console.log(bedsValue);
+        console.log(roomsValue);
+
+        var beds_of_apartment = {!! json_encode($apartment->beds) !!};
+        var rooms_of_apartment = {!! json_encode($apartment->rooms) !!};
+        console.log(beds_of_apartment);
+        console.log(rooms_of_apartment);
+        if (!(bedsValue <= beds_of_apartment))  {
+            apartment_card.classList.add('hidden');
+            console.log("log primo if");
+        } else if (bedsValue <= beds_of_apartment) {
+            apartment_card.classList.remove('hidden');
+            console.log("log secondo if");
+        } else if (!(roomsValue <= rooms_of_apartment)) {
+            apartment_card.classList.add('hidden');
+            console.log("log terzo if");
+        } else if (roomsValue <= rooms_of_apartment) {
+            apartment_card.classList.remove('hidden');
+            console.log("log ultimo if");
+        }
+    });
+
+
+</script>
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 @endsection
