@@ -12,7 +12,7 @@
                         <li>
                             <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                             <a href="{{ route('auth.apartments.edit', $apartment->id) }}"> Modifica</a>
-                            <a href="">Lista Messaggi Appartamento</a>
+                            <a href="{{ route('auth.apartments.show-messages', $apartment->id) }}">Lista Messaggi Appartamento</a>
                             <form
                             class="d-inline"
                             method="POST"

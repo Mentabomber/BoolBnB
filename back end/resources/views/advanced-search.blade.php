@@ -4,11 +4,25 @@
 <h1 class="display-5 fw-bold">
     Ricerca Avanzata
 </h1>
-<br>
-<form method="POST" action="{{ route('apartment.advanced-search') }}" enctype='multipart/form-data'>
+<form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
 @csrf
 @method('POST')
-
+    <br>
+    <input type="hidden" name="address" id="resultField">
+    <input type="hidden" name="latitude" id="resultFieldLA">
+    <input type="hidden" name="longitude" id="resultFieldLO">
+    <br>
+    <label for="address">Indirizzo</label>
+    <br>
+    <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
+    <ul style="list-style-type: none;"id="suggestions"></ul>
+    <input class="my-3" type="submit" value="Cerca">
+</form>
+<br>
+<form method="POST" action="{{ route('apartment.search') }}" enctype='multipart/form-data'>
+@csrf
+@method('POST')
+    
     <label for="km-radius">Raggio Kilometri</label>
     <input type="text" id="km-radius" name="km-radius">
     <br>

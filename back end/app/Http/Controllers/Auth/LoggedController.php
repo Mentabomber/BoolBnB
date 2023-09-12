@@ -12,6 +12,8 @@ use GuzzleHttp\RequestOptions;
 use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Address;
+use App\Models\Message;
+use App\Models\User;
 
 class LoggedController extends Controller
 {
@@ -67,27 +69,6 @@ class LoggedController extends Controller
             "floor" => "required | integer",
         ]);
 
-        // Creazione dell'URL per la chiamata all'API di tomtom
-
-        // $street = str_replace(' ', '%20', $address['street']);
-        // $url = "https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=IT&streetNumber=" . $address['street_number'] . "&streetName=" . $street . "&municipality=" . $address['city'] . "&countrySecondarySubdivision=Italia&postalCode=" . $address['cap'] . "&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
-
-        // $street = str_replace(' ', '%20', $address['address']);
-        // $url = "https://api.tomtom.com/search/2/geocode/" . $street . ".json?storeResult=false&view=Unified&key=tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1";
-
-        // // Non richiede la verifica del certificato SSL quando viene effetuata la chiamata all'API
-
-        // $client = new Client([
-        //     RequestOptions::VERIFY => false,
-        // ]);
-
-        // // Salva la risposta dell'API di tomtom e ne decodifica il body
-
-        // $response = $client->get($url);
-
-        // $body = $response->getBody()->getContents();
-        // $data = json_decode($body, true);
-        // $data = json_decode($response->getBody(), true);
 
         // Acquisisce i valori di latitudie e longitudine da tomtom e li attribuisce ai campi dell'indirizzo utente
 
@@ -239,5 +220,17 @@ class LoggedController extends Controller
 
         return redirect() -> route('auth.apartments.show');
     }
-
+    // Mostra tutti i messaggi corrispondendti all'appartamento in pagina
+    public function showMessages($id) {
+        $apartment = Apartment :: findOrFail($id);
+        $user = User :: where('id', $apartment->user_id)->firstOrFail();
+        $userId = auth()->user()->id;
+        $messages = Message::where('apartment_id', $id)->get();
+        if ($userId == $user->id) {
+            return view('auth.apartments.show-messages', compact('messages','apartment'));
+        }
+        else {
+            return redirect()-> route('welcome');
+        }
+    }
 }
