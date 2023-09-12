@@ -33,7 +33,8 @@
     @foreach ($services as $service)
         <div class="form-check" style="max-width: 300px">
             <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                id="service{{ $service->id }}" onchange="handleCheckboxChange(this, {{$service->id}})">
+                id="service{{ $service->id }}">
+                {{-- onchange="handleCheckboxChange(this, {{$service->id}})" --}}
 
             <label class="form-check-label" for="service{{ $service->id }}">
                 {{ $service->name }}
@@ -43,11 +44,18 @@
     <br>
     <div>
         <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
+
         @foreach ($apartments as $apartment)
-            <div id="apartment_card" data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}">
+            <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}">
                 <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                 <br>
                 <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
+            </div>
+
+            <div class="apartment_service">
+                <ul data-services="{{ json_encode($apartment->services) }}" data-apartment-id="{{ $apartment->id }}" id="{{ $apartment->id }}">
+                    @foreach ($apartment->services as $service) @endforeach
+                </ul>
             </div>
         @endforeach
     </div>
@@ -59,18 +67,20 @@
                 accusamus dolores!</p>
         </div>
     </div>
+
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
         const submit = document.getElementById("bottoneInvio");
         submit.addEventListener("click", function() {
             const beds = document.getElementById("available-beds");
             const rooms = document.getElementById("available-rooms");
-            const apartmentCards = document.querySelectorAll("#apartment_card");
+            const apartmentCards = document.querySelectorAll(".apartment_card");
+            const apartmentServices = document.querySelectorAll(".apartment_service");
 
             const bedsValue = parseInt(beds.value);
             const roomsValue = parseInt(rooms.value);
 
-            apartmentCards.forEach((apartmentCard) => {
+            apartmentCards.forEach(function(apartmentCard) {
                 const bedsOfApartment = parseInt(apartmentCard.dataset.beds);
                 const roomsOfApartment = parseInt(apartmentCard.dataset.rooms);
 
@@ -78,7 +88,7 @@
                     if (!(bedsValue <= bedsOfApartment) || !(roomsValue <= roomsOfApartment)) {
                         apartmentCard.classList.add('hidden');
                     } else {
-                        
+
                         apartmentCard.classList.remove('hidden');
                     }
                 } else if (!isNaN(bedsValue)) {
@@ -95,23 +105,23 @@
                     }
                 }
             });
-        });
-        function handleCheckboxChange(checkbox,id){
-            
-            <?php dd($apartment->services);?>
-            console.log(apartmentService);
-            if (checkbox.checked) {
-                console.log(id);
-                array.forEach(element => {
-                    
-                });
-            }
-        }
-    </script>
 
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+            apartmentServices.forEach(function(apartmentCardService) {
+                var servicesData = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
+                var apartmentService = document.querySelector('.apartment_service');
+                var ulElement = apartmentService.querySelector('ul');
+                var apartmentId = ulElement.dataset.apartmentId;
+
+                servicesData.forEach(function(service) {
+                    console.log(service.id, apartmentId);
+                });
+            });
+        });
+</script>
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 @endsection
