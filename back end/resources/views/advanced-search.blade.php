@@ -171,7 +171,7 @@
             let apartmentService = [];
             var serviceId = [];
             var apartmentId = [];
-            
+
             console.log(checkbox);
             if (checkbox.checked) {
                 activeCheckboxes.push(id);
@@ -206,7 +206,7 @@
                 apartmentCards.forEach(element => {
                     // se l'elemento non ha classe hidden entro
                     if (!(element.classList.contains('hidden'))) {
-                        // 
+                        //
                         for (let i = 0; i < apartmentService.length; i++) {
                                 // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
                                 if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
@@ -218,15 +218,20 @@
                                     i += apartmentService.length;
 
                                 }
-                            
+
 
                         }
-                    } 
+                    }
                 });
-            } 
+            }
             else {
 
-                activeCheckboxes.splice(id - 1, 1);
+                var elementoDaRimuovere = id;
+
+                var indice = activeCheckboxes.indexOf(elementoDaRimuovere);
+                if (indice > -1) {
+                    activeCheckboxes.splice(indice, 1);
+                }
                 console.log(activeCheckboxes);
 
 
