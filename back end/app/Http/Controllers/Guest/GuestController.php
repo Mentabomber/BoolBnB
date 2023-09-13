@@ -24,13 +24,13 @@ class GuestController extends Controller
 
     public function cercaAppartamenti(Request $request) {
         $data = $request -> all();
-
+        
         $services = Service :: all();
         // dd($data);
 
         $latitudeSt = $data['latitude'];
         $longitudeSt = $data['longitude'];
-        $radius = 20; // in chilometri
+        $radius = 50; // in chilometri
 
         $apartments = Apartment::select('*')
             ->selectRaw(
@@ -45,9 +45,10 @@ class GuestController extends Controller
             ->having('distance', '<=', $radius)
             ->orderBy('distance', 'asc')
             ->get();
-
+       
+               
         
-        return view('advanced-search', compact('apartments', 'services'));
+        return view('advanced-search', compact('apartments', 'services','latitudeSt','longitudeSt'));
     }
 
     public function message(Request $request, $id) {

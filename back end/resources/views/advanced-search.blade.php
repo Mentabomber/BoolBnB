@@ -8,8 +8,8 @@
         @method('POST')
         <br>
         <input type="hidden" name="address" id="resultField">
-        <input type="hidden" name="latitude" id="resultFieldLA">
-        <input type="hidden" name="longitude" id="resultFieldLO">
+        <input type="text" name="latitude" id="resultFieldLA" value="{{$latitudeSt}}">
+        <input type="text" name="longitude" id="resultFieldLO" value="{{$longitudeSt}}">
         <br>
         <label for="address">Indirizzo</label>
         <br>
@@ -62,7 +62,7 @@
     @endforeach
     <br>
     <div>
-        <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
+        <input class="my-3" type="submit" value="Cerca" id="bottoneInvio" onclick="maxDistanceShowingApartment()" >
 
         @foreach ($apartments as $apartment)
             <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}" id="{{ $apartment->id }}" data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}">
@@ -78,6 +78,16 @@
                     @endforeach
                 </ul>
             </div>
+            <div class="apartment_address">
+                <ul data-address="{{ json_encode($apartment->address) }}" data-apartment-id="{{ $apartment->id }}"
+                    id="{{ $apartment->id }}" data-latitude="{{ json_encode($apartment->latitude) }}" data-longitude="{{ json_encode($apartment->longitude) }}">
+
+                    {{ $apartment->latitude }}
+                    {{ $apartment->longitude }}
+                </ul>
+            </div>
+            <input type="text" name="latitude" class="apartmentLA" value="{{$apartment->latitude}}" >
+            <input type="text" name="longitude" class="apartmentLO" value="{{$apartment->longitude }}" >
         @endforeach
     </div>
 
@@ -91,6 +101,36 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
+
+        function maxDistanceShowingApartment(){
+            const latitude = parseFloat(document.getElementById("resultFieldLA").value);
+            const longitude = parseFloat(document.getElementById("resultFieldLO").value);
+
+            // console.log(latitude,longitude);
+            const apartmentCards = document.querySelectorAll(".apartment_card");
+            // console.log(apartmentCards);
+            const apartmentAddress= document.querySelectorAll(".apartment_address");
+            apartmentAddress.forEach(function(apartmentCardAddress) {
+                    var latitudeData = JSON.parse(apartmentCardAddress.querySelector('ul').dataset.latitude);
+                    var longitudeData = JSON.parse(apartmentCardAddress.querySelector('ul').dataset.longitude);
+                    console.log(latitudeData,longitudeData);
+                    var distance =    
+                    (6371 * Math.acos(Math.cos(Math.radians(latitude))
+                    * Math.cos(Math.radians(latitudeData))
+                    * Math.cos(Math.radians(longitudeData)
+                    - Math.radians(longitude))
+                    + Math.sin(Math.radians(latitude))
+                    * Math.sin(Math.radians(latitudeData))))
+                    console.log(distance);
+
+                 
+                });
+       
+               
+            
+         
+        }
+
         function bedsAndRoomsControl(){
             // const beds = document.querySelector('input[name="available.beds"]:checked');
             // const rooms = document.querySelector('input[name="available.rooms"]:checked');
