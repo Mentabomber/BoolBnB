@@ -102,6 +102,7 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
+       
         function maxDistanceShowingApartment() {
 
             var slider = document.getElementById("myRange");
@@ -158,15 +159,13 @@
             });
 
 
-
-
         }
-
+        
         function bedsAndRoomsControl() {
             // const beds = document.querySelector('input[name="available.beds"]:checked');
             // const rooms = document.querySelector('input[name="available.rooms"]:checked');
             const apartmentCards = document.querySelectorAll(".apartment_card");
-
+            
 
             // Seleziona i radiobutton per il numero di stanze
             const rooms = document.querySelector("input[name='available-rooms']:checked") ?? 0;
@@ -227,13 +226,12 @@
                 }
             });
 
-
         }
-        const submit = document.getElementById("bottoneInvio");
-        submit.addEventListener("click", () => {
-            bedsAndRoomsControl();
-            handleCheckboxChange(checkbox, id);
-        });
+        // const submit = document.getElementById("bottoneInvio");
+        // submit.addEventListener("click", () => {
+        //     bedsAndRoomsControl();
+        //     handleCheckboxChange(checkbox, id);
+        // });
 
         function createServiceApartmentRelationship(apartmentId, serviceId) {
             return {
@@ -361,6 +359,7 @@
                     }
                 });
                 bedsAndRoomsControl();
+                maxDistanceShowingApartment();
             }
         }
     </script>
