@@ -163,6 +163,29 @@
                 service_id: serviceId,
             };
         };
+        let apartmentServiceProva = [];
+        var serviceIdProva = [];
+        var apartmentIdProva = [];
+        const apartmentServicesProva = document.querySelectorAll(".apartment_service");
+        apartmentServicesProva.forEach(function(apartmentCardService) {
+                    var servicesDataProva = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
+                  
+                    var ulElementProva = apartmentCardService.querySelector('ul');
+                 
+                    servicesDataProva.forEach(function(service) {
+                        apartmentIdProva = ulElementProva.dataset.apartmentId;
+                        serviceIdProva = service.id;
+                        // console.log(ulElementProva.dataset.apartmentId);
+                        // console.log(apartmentIdProva, "id appartamento" , serviceIdProva, "id servizio");
+                        const provaProva = createServiceApartmentRelationship(apartmentIdProva, serviceIdProva);
+                        
+                        apartmentServiceProva.push(provaProva);
+                        // console.log(apartmentServiceProva);
+                      
+                    });
+                });
+
+
         var activeCheckboxes = [];
         function handleCheckboxChange(checkbox, id) {
             const apartmentServices = document.querySelectorAll(".apartment_service");
@@ -171,27 +194,24 @@
             let apartmentService = [];
             var serviceId = [];
             var apartmentId = [];
-
-            console.log(checkbox);
+            
             if (checkbox.checked) {
                 activeCheckboxes.push(id);
                 console.log(activeCheckboxes);
                 apartmentServices.forEach(function(apartmentCardService) {
                     var servicesData = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
-                    // console.log(servicesData);
+                  
                     var ulElement = apartmentCardService.querySelector('ul');
-                    // console.log(ulElement);
+                 
                     servicesData.forEach(function(service) {
                         apartmentId = ulElement.dataset.apartmentId;
                         serviceId = service.id;
 
                         const prova = createServiceApartmentRelationship(apartmentId, serviceId);
-                        // console.log(prova);
+                        
                         apartmentService.push(prova);
-                        // console.log(typeof(apartmentService), "2");
-                        // console.log(apartmentService);
-                        // console.log(serviceId, apartmentId);
-                        // console.log(apartmentService, "array con id app e servizio");
+                        // console.log(apartmentService, "APARTMENT SERVICE dentro if");
+                      
                     });
                 });
 
@@ -202,16 +222,15 @@
                 //             element1.classList.add('hidden');
                 //         });
                 //     }
-                console.log(apartmentService);
                 apartmentCards.forEach(element => {
                     // se l'elemento non ha classe hidden entro
                     if (!(element.classList.contains('hidden'))) {
                         //
-                        for (let i = 0; i < apartmentService.length; i++) {
+                        for (let i = 1; i < apartmentService.length; i++) {
                                 // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
-                                if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
-                                        parseInt(apartmentService[i]['apartment_id']))) {
-                                    if (parseInt(element.id) === parseInt(apartmentService[i]['apartment_id']))
+                                if (!(id === parseInt(apartmentService[i - 1]['service_id']) && parseInt(element.id) ===
+                                        parseInt(apartmentService[i - 1]['apartment_id']))) {
+                                    if (parseInt(element.id) === parseInt(apartmentService[i - 1]['apartment_id']))
                                         element.classList.add('hidden');
                                 } else {
                                     element.classList.remove('hidden');
@@ -227,14 +246,55 @@
             else {
 
                 var elementoDaRimuovere = id;
-
+                let selectedElementApId; 
                 var indice = activeCheckboxes.indexOf(elementoDaRimuovere);
                 if (indice > -1) {
                     activeCheckboxes.splice(indice, 1);
                 }
-                console.log(activeCheckboxes);
+                console.log(activeCheckboxes, "active checkboxes");
+                // console.log(apartmentCards, "apartmentCards");
+                apartmentCards.forEach(element => {
+                    // controllo se il div contenente i dati degli appartamenti ha la classe hidden
+                    if ((element.classList.contains('hidden'))) {
+                        // metto l'id dell'appartamento con classe hidden dentro la variabile selectedElementApId
+                        selectedElementApId = element.id;
+                        // console.log(selectedElementApId, "selectedElementApId");
+                        const confrontServices = [];
+                        //ciclo con la lunghezza dell'array che contiene tutti gli appartamenti in risultato con la ricerca iniziale
+                        for (let i = 1; i <= apartmentServiceProva.length; i++) {
+                            // controllo se l'id dell'appartamento selezionato in principio combacia con un id all'interno dell'array di tutti gli appartamenti ricercati in pagina 
+                            if (selectedElementApId === apartmentServiceProva[i - 1]['apartment_id']) {
+                                // estraggo il numero del servizio corelato all'appartamento e lo metto in idContainer
+                                let idContainer = apartmentServiceProva[i - 1]['service_id'];
+                                // pusho l'id dentro all'array che 
+                                confrontServices.push(idContainer);
+                                console.log(confrontServices, "confrontServices");
+                            }
+
+                        }
+                        
+                        console.log(confrontServices, "array confrontServices");
+                    }
+                    if (activeCheckboxes.every(item => confrontServices.includes(item))) {
+                                element.classList.remove('hidden');
+                    }  
+                        // for (let i = 0; i < activeCheckboxes.length; i++) {
+                        //             // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
+                        //             console.log(apartmentServiceProva, "prova dentro else");
+                        //             if ((activeCheckboxes[i] === parseInt(apartmentServiceProva[i]['service_id']) && parseInt(element.id) === parseInt(apartmentServiceProva[i]['apartment_id']))) {
+                        //                 if (parseInt(element.id) === parseInt(apartmentServiceProva[i]['apartment_id']))
+                        //                     element.classList.add('hidden');
+                        //             } else {
+                        //                 element.classList.remove('hidden');
+                        //                 i += activeCheckboxes.length;
+
+                        //             }
 
 
+                        //     }
+                    
+
+                });
                 // console.log("entro nel secondo else e rimuovo hidden");
                 // apartmentCards.forEach(element => {
                 //     // se il div ha la classe hidden entro
