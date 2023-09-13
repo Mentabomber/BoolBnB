@@ -22,11 +22,30 @@
     <label for="km-radius">Raggio Kilometri</label>
     <input type="text" id="km-radius" name="km-radius">
     <br>
-    <label for="available-beds">Letti disponibili</label>
-    <input type="text" id="available-beds" name="available-beds">
+    <h3>Letti disponibili</h3>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="1" checked>
+    <label for="1">1</label>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="2">
+    <label for="2">2</label>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="3">
+    <label for="3">3</label>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="4">
+    <label for="4">4</label>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="5">
+    <label for="5">5+</label>
     <br>
-    <label for="available-rooms">Stanze Disponibili</label>
-    <input type="text" id="available-rooms" name="available-rooms">
+    <h3>Stanze Disponibili</h3>
+    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="1" checked>
+    <label for="1">1</label>
+    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="2">
+    <label for="2">2</label>
+    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="3">
+    <label for="3">3</label>
+    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="4">
+    <label for="4">4</label>
+    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="5">
+    <label for="5">5+</label>
+    <br>
     <br>
 
     <h3>Servizi Disponibili</h3>
@@ -73,12 +92,21 @@
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
         function bedsAndRoomsControl(){
-            const beds = document.getElementById("available-beds");
-            const rooms = document.getElementById("available-rooms");
+            // const beds = document.querySelector('input[name="available.beds"]:checked');
+            // const rooms = document.querySelector('input[name="available.rooms"]:checked');
             const apartmentCards = document.querySelectorAll(".apartment_card");
 
-            const bedsValue = parseInt(beds.value);
-            const roomsValue = parseInt(rooms.value);
+
+            // Seleziona i radiobutton per il numero di stanze
+            const roomsValue = parseInt(document.querySelector("input[name='available-rooms']:checked").value);
+
+
+            // Seleziona i radiobutton per il numero di letti
+            const bedsValue = parseInt(document.querySelector("input[name='available-beds']:checked").value);
+   
+
+            // Stampa i valori
+            console.log(roomsValue, bedsValue);
 
             apartmentCards.forEach(function(apartmentCard) {
                 const bedsOfApartment = parseInt(apartmentCard.dataset.beds);
@@ -108,10 +136,10 @@
 
         }
         const submit = document.getElementById("bottoneInvio");
-        submit.addEventListener("click", () => {
-            bedsAndRoomsControl();
-            handleCheckboxChange(checkbox, id);
-        });
+        // submit.addEventListener("click", () => {
+        //     bedsAndRoomsControl();
+        //     handleCheckboxChange(checkbox, id);
+        // });
         
         function createServiceApartmentRelationship(apartmentId, serviceId) {
             return {
