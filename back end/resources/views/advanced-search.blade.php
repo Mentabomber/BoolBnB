@@ -46,7 +46,7 @@
         <input class="my-3" type="submit" value="Cerca" id="bottoneInvio">
 
         @foreach ($apartments as $apartment)
-            <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}" id="{{ $apartment->id }}">
+            <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}" id="{{ $apartment->id }}" data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}">
                 <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                 <br>
                 <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
@@ -72,56 +72,7 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
-        // const submit = document.getElementById("bottoneInvio");
-        // submit.addEventListener("click", function() {
-        //     const beds = document.getElementById("available-beds");
-        //     const rooms = document.getElementById("available-rooms");
-        //     const apartmentCards = document.querySelectorAll(".apartment_card");
-        //     const apartmentServices = document.querySelectorAll(".apartment_service");
-
-        //     const bedsValue = parseInt(beds.value);
-        //     const roomsValue = parseInt(rooms.value);
-
-        //     apartmentCards.forEach(function(apartmentCard) {
-        //         const bedsOfApartment = parseInt(apartmentCard.dataset.beds);
-        //         const roomsOfApartment = parseInt(apartmentCard.dataset.rooms);
-
-        //         if (!isNaN(bedsValue) && !isNaN(roomsValue)) {
-        //             if (!(bedsValue <= bedsOfApartment) || !(roomsValue <= roomsOfApartment)) {
-        //                 apartmentCard.classList.add('hidden');
-        //             } else {
-
-        //                 apartmentCard.classList.remove('hidden');
-        //             }
-        //         } else if (!isNaN(bedsValue)) {
-        //             if (!(bedsValue <= bedsOfApartment)) {
-        //                 apartmentCard.classList.add('hidden');
-        //             } else {
-        //                 apartmentCard.classList.remove('hidden');
-        //             }
-        //         } else if (!isNaN(roomsValue)) {
-        //             if (!(roomsValue <= roomsOfApartment)) {
-        //                 apartmentCard.classList.add('hidden');
-        //             } else {
-        //                 apartmentCard.classList.remove('hidden');
-        //             }
-        //         }
-        //     });
-
-        //     apartmentServices.forEach(function(apartmentCardService) {
-        //         var servicesData = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
-        //         var apartmentService = document.querySelector('.apartment_service');
-        //         var ulElement = apartmentService.querySelector('ul');
-
-        //         servicesData.forEach(function(service) {
-        //             var apartmentId = ulElement.dataset.apartmentId;
-        //             console.log(service.id, apartmentId);
-        //         });
-        //     });
-        // });
-
-        const submit = document.getElementById("bottoneInvio");
-        submit.addEventListener("click", function() {
+        function bedsAndRoomsControl(){
             const beds = document.getElementById("available-beds");
             const rooms = document.getElementById("available-rooms");
             const apartmentCards = document.querySelectorAll(".apartment_card");
@@ -155,8 +106,13 @@
             });
 
 
+        }
+        const submit = document.getElementById("bottoneInvio");
+        submit.addEventListener("click", () => {
+            bedsAndRoomsControl();
+            handleCheckboxChange(checkbox, id);
         });
-
+        
         function createServiceApartmentRelationship(apartmentId, serviceId) {
             return {
                 apartment_id: apartmentId,
@@ -226,11 +182,11 @@
                     // se l'elemento non ha classe hidden entro
                     if (!(element.classList.contains('hidden'))) {
                         //
-                        for (let i = 1; i < apartmentService.length; i++) {
+                        for (let i = 0; i < apartmentService.length; i++) {
                                 // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
-                                if (!(id === parseInt(apartmentService[i - 1]['service_id']) && parseInt(element.id) ===
-                                        parseInt(apartmentService[i - 1]['apartment_id']))) {
-                                    if (parseInt(element.id) === parseInt(apartmentService[i - 1]['apartment_id']))
+                                if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
+                                        parseInt(apartmentService[i]['apartment_id']))) {
+                                    if (parseInt(element.id) === parseInt(apartmentService[i]['apartment_id']))
                                         element.classList.add('hidden');
                                 } else {
                                     element.classList.remove('hidden');
@@ -244,7 +200,6 @@
                 });
             }
             else {
-
                 var elementoDaRimuovere = id;
                 let selectedElementApId; 
                 var indice = activeCheckboxes.indexOf(elementoDaRimuovere);
@@ -253,73 +208,37 @@
                 }
                 console.log(activeCheckboxes, "active checkboxes");
                 // console.log(apartmentCards, "apartmentCards");
+                let confrontServices = [];
                 apartmentCards.forEach(element => {
                     // controllo se il div contenente i dati degli appartamenti ha la classe hidden
                     if ((element.classList.contains('hidden'))) {
                         // metto l'id dell'appartamento con classe hidden dentro la variabile selectedElementApId
                         selectedElementApId = element.id;
                         // console.log(selectedElementApId, "selectedElementApId");
-                        const confrontServices = [];
+                        confrontServices = [];
                         //ciclo con la lunghezza dell'array che contiene tutti gli appartamenti in risultato con la ricerca iniziale
-                        for (let i = 1; i <= apartmentServiceProva.length; i++) {
+                        for (let i = 0; i < apartmentServiceProva.length; i++) {
                             // controllo se l'id dell'appartamento selezionato in principio combacia con un id all'interno dell'array di tutti gli appartamenti ricercati in pagina 
-                            if (selectedElementApId === apartmentServiceProva[i - 1]['apartment_id']) {
+                            if (selectedElementApId === apartmentServiceProva[i]['apartment_id']) {
                                 // estraggo il numero del servizio corelato all'appartamento e lo metto in idContainer
-                                let idContainer = apartmentServiceProva[i - 1]['service_id'];
+                                let idContainer = apartmentServiceProva[i]['service_id'];
                                 // pusho l'id dentro all'array che 
-                                confrontServices.push(idContainer);
                                 console.log(confrontServices, "confrontServices");
+                                confrontServices.push(idContainer);
+                                
                             }
 
                         }
                         
                         console.log(confrontServices, "array confrontServices");
                     }
+                    console.log(confrontServices, "fuori");
                     if (activeCheckboxes.every(item => confrontServices.includes(item))) {
+                        
                                 element.classList.remove('hidden');
                     }  
-                        // for (let i = 0; i < activeCheckboxes.length; i++) {
-                        //             // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
-                        //             console.log(apartmentServiceProva, "prova dentro else");
-                        //             if ((activeCheckboxes[i] === parseInt(apartmentServiceProva[i]['service_id']) && parseInt(element.id) === parseInt(apartmentServiceProva[i]['apartment_id']))) {
-                        //                 if (parseInt(element.id) === parseInt(apartmentServiceProva[i]['apartment_id']))
-                        //                     element.classList.add('hidden');
-                        //             } else {
-                        //                 element.classList.remove('hidden');
-                        //                 i += activeCheckboxes.length;
-
-                        //             }
-
-
-                        //     }
-                    
-
                 });
-                // console.log("entro nel secondo else e rimuovo hidden");
-                // apartmentCards.forEach(element => {
-                //     // se il div ha la classe hidden entro
-                //     if (element.classList.contains('hidden')) {
-                //         console.log("entro nel primo if");
-                //         for (let i = 0; i < apartmentService.length; i++) {
-                //                 // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
-                //                 if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
-                //                         parseInt(apartmentService[i]['apartment_id']))) {
-                //                             console.log("entro nel secondo if");
-                //                     if (parseInt(element.id) === parseInt(apartmentService[i]['apartment_id']))
-                //                         element.classList.add('hidden');
-                //                     console.log("entro in if e addo hidden");
-                //                 } else {
-                //                     console.log("entro nel secondo else e rimuovo hidden");
-                //                     element.classList.remove('hidden');
-                //                     i += apartmentService.length;
-
-                //                 }
-                //         }
-                //     }
-                //     else{
-                //         element.classList.remove('hidden');
-                //     }
-                // });
+                bedsAndRoomsControl();
             }
         }
     </script>
