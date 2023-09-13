@@ -8,8 +8,8 @@
         @method('POST')
         <br>
         <input type="hidden" name="address" id="resultField">
-        <input type="text" name="latitude" id="resultFieldLA" value="{{$latitudeSt}}">
-        <input type="text" name="longitude" id="resultFieldLO" value="{{$longitudeSt}}">
+        <input type="text" name="latitude" id="resultFieldLA" value="{{ $latitudeSt }}">
+        <input type="text" name="longitude" id="resultFieldLO" value="{{ $longitudeSt }}">
         <br>
         <label for="address">Indirizzo</label>
         <br>
@@ -20,10 +20,12 @@
     <br>
 
     <label for="km-radius">Raggio Kilometri</label>
-    <input type="text" id="km-radius" name="km-radius">
+    <input type="range" min="1" max="50" value="25" class="slider" id="myRange"
+        onchange="maxDistanceShowingApartment()">
+    <p>Km: <span id="demo">25</span></p>
     <br>
     <h3>Letti disponibili</h3>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="1" checked>
+    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="1">
     <label for="1">1</label>
     <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="2">
     <label for="2">2</label>
@@ -35,15 +37,20 @@
     <label for="5">5+</label>
     <br>
     <h3>Stanze Disponibili</h3>
-    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="1" checked>
+    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
+        value="1">
     <label for="1">1</label>
-    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="2">
+    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
+        value="2">
     <label for="2">2</label>
-    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="3">
+    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
+        value="3">
     <label for="3">3</label>
-    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="4">
+    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
+        value="4">
     <label for="4">4</label>
-    <br><input type="radio" class="available-rooms"  onchange="bedsAndRoomsControl()" name="available-rooms" value="5">
+    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
+        value="5">
     <label for="5">5+</label>
     <br>
     <br>
@@ -62,10 +69,14 @@
     @endforeach
     <br>
     <div>
-        <input class="my-3" type="submit" value="Cerca" id="bottoneInvio" onclick="maxDistanceShowingApartment()" >
+        <input class="my-3" type="submit" value="Cerca" id="bottoneInvio" onclick="maxDistanceShowingApartment()">
 
         @foreach ($apartments as $apartment)
-            <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}" id="{{ $apartment->id }}" data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}">
+            <div class="apartment_card" data-apartment="{{ json_encode($apartment) }}" id="{{ $apartment->id }}"
+                data-beds="{{ $apartment->beds }}" data-rooms="{{ $apartment->rooms }}"
+                data-address="{{ json_encode($apartment->address) }}" data-apartment-id="{{ $apartment->id }}"
+                data-latitude="{{ json_encode($apartment->latitude) }}"
+                data-longitude="{{ json_encode($apartment->longitude) }}">
                 <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                 <br>
                 <img src="{{ asset('storage/uploads/' . $apartment->image) }}" alt="">
@@ -78,16 +89,6 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="apartment_address">
-                <ul data-address="{{ json_encode($apartment->address) }}" data-apartment-id="{{ $apartment->id }}"
-                    id="{{ $apartment->id }}" data-latitude="{{ json_encode($apartment->latitude) }}" data-longitude="{{ json_encode($apartment->longitude) }}">
-
-                    {{ $apartment->latitude }}
-                    {{ $apartment->longitude }}
-                </ul>
-            </div>
-            <input type="text" name="latitude" class="apartmentLA" value="{{$apartment->latitude}}" >
-            <input type="text" name="longitude" class="apartmentLO" value="{{$apartment->longitude }}" >
         @endforeach
     </div>
 
@@ -101,49 +102,102 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
+        function maxDistanceShowingApartment() {
 
-        function maxDistanceShowingApartment(){
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            output.innerHTML = slider.value;
+
+            // Update the current slider value (each time you drag the slider handle)
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+
+            let radius = slider.value;
+            console.log(radius, 'raggio');
+
+
             const latitude = parseFloat(document.getElementById("resultFieldLA").value);
             const longitude = parseFloat(document.getElementById("resultFieldLO").value);
 
             // console.log(latitude,longitude);
             const apartmentCards = document.querySelectorAll(".apartment_card");
             // console.log(apartmentCards);
-            const apartmentAddress= document.querySelectorAll(".apartment_address");
-            apartmentAddress.forEach(function(apartmentCardAddress) {
-                    var latitudeData = JSON.parse(apartmentCardAddress.querySelector('ul').dataset.latitude);
-                    var longitudeData = JSON.parse(apartmentCardAddress.querySelector('ul').dataset.longitude);
-                    console.log(latitudeData,longitudeData);
-                    var distance =    
-                    (6371 * Math.acos(Math.cos(Math.radians(latitude))
-                    * Math.cos(Math.radians(latitudeData))
-                    * Math.cos(Math.radians(longitudeData)
-                    - Math.radians(longitude))
-                    + Math.sin(Math.radians(latitude))
-                    * Math.sin(Math.radians(latitudeData))))
-                    console.log(distance);
+            // const apartmentAddress = document.querySelectorAll(".apartment_address");
 
-                 
-                });
-       
-               
-            
-         
+            apartmentCards.forEach(function(apartmentCardAddress) {
+
+                var latitudeData = apartmentCardAddress.dataset.latitude;
+                var longitudeData = apartmentCardAddress.dataset.longitude;
+
+                var latiditeValue = parseFloat(latitudeData.slice(1, -1));
+                var longitudeValue = parseFloat(longitudeData.slice(1, -1));
+
+                // let latitudeValue = parseInt(latitudeData);
+                // longitudeData = parseFloat(longitudeData);
+                console.log(latiditeValue, longitudeValue, 'ciao');
+                // var latitudeData = JSON.parse(apartmentCardAddress.querySelector('.long-lat').dataset.latitude);
+                // var longitudeData = JSON.parse(apartmentCardAddress.querySelector('.long-lat').dataset.longitude);
+
+                // console.log(typeof(latitudeValue), typeof(longitudeData));
+                // console.log(latitudeValue, longitudeData);
+                var distance =
+                    (6371 * Math.acos(Math.cos(Math.radians(latitude)) *
+                        Math.cos(Math.radians(latiditeValue)) *
+                        Math.cos(Math.radians(longitudeValue) -
+                            Math.radians(longitude)) +
+                        Math.sin(Math.radians(latitude)) *
+                        Math.sin(Math.radians(latiditeValue))))
+                console.log(distance);
+                if (distance >= radius) {
+                    apartmentCardAddress.classList.add('hidden');
+                } else {
+                    apartmentCardAddress.classList.remove('hidden');
+
+                }
+            });
+
+
+
+
         }
 
-        function bedsAndRoomsControl(){
+        function bedsAndRoomsControl() {
             // const beds = document.querySelector('input[name="available.beds"]:checked');
             // const rooms = document.querySelector('input[name="available.rooms"]:checked');
             const apartmentCards = document.querySelectorAll(".apartment_card");
 
 
             // Seleziona i radiobutton per il numero di stanze
-            const roomsValue = parseInt(document.querySelector("input[name='available-rooms']:checked").value);
+            const rooms = document.querySelector("input[name='available-rooms']:checked") ?? 0;
+
+            // console.log(rooms, 'prova');
+
+            let roomsValue = 0;
+            let bedsValue = 0;
+
+            if (rooms === 0) {
+                console.log('sono if di rooms');
+                roomsValue = 0;
+            } else {
+                roomsValue = parseInt(document.querySelector("input[name='available-rooms']:checked").value);
+            }
+
+            console.log(roomsValue, 'prova');
 
 
             // Seleziona i radiobutton per il numero di letti
-            const bedsValue = parseInt(document.querySelector("input[name='available-beds']:checked").value);
-   
+            const beds = document.querySelector("input[name='available-beds']:checked") ?? 0;
+
+            if (beds === 0) {
+                console.log('sono if di beds');
+                bedsValue = 0;
+            } else {
+                console.log('sono else di beds');
+                console.log(parseInt(document.querySelector("input[name='available-beds']:checked").value));
+                bedsValue = parseInt(document.querySelector("input[name='available-beds']:checked").value);
+                console.log(bedsValue, 'valore selezionato');
+            }
 
             // Stampa i valori
             console.log(roomsValue, bedsValue);
@@ -176,11 +230,11 @@
 
         }
         const submit = document.getElementById("bottoneInvio");
-        // submit.addEventListener("click", () => {
-        //     bedsAndRoomsControl();
-        //     handleCheckboxChange(checkbox, id);
-        // });
-        
+        submit.addEventListener("click", () => {
+            bedsAndRoomsControl();
+            handleCheckboxChange(checkbox, id);
+        });
+
         function createServiceApartmentRelationship(apartmentId, serviceId) {
             return {
                 apartment_id: apartmentId,
@@ -192,25 +246,26 @@
         var apartmentIdProva = [];
         const apartmentServicesProva = document.querySelectorAll(".apartment_service");
         apartmentServicesProva.forEach(function(apartmentCardService) {
-                    var servicesDataProva = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
-                  
-                    var ulElementProva = apartmentCardService.querySelector('ul');
-                 
-                    servicesDataProva.forEach(function(service) {
-                        apartmentIdProva = ulElementProva.dataset.apartmentId;
-                        serviceIdProva = service.id;
-                        // console.log(ulElementProva.dataset.apartmentId);
-                        // console.log(apartmentIdProva, "id appartamento" , serviceIdProva, "id servizio");
-                        const provaProva = createServiceApartmentRelationship(apartmentIdProva, serviceIdProva);
-                        
-                        apartmentServiceProva.push(provaProva);
-                        // console.log(apartmentServiceProva);
-                      
-                    });
-                });
+            var servicesDataProva = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
+
+            var ulElementProva = apartmentCardService.querySelector('ul');
+
+            servicesDataProva.forEach(function(service) {
+                apartmentIdProva = ulElementProva.dataset.apartmentId;
+                serviceIdProva = service.id;
+                // console.log(ulElementProva.dataset.apartmentId);
+                // console.log(apartmentIdProva, "id appartamento" , serviceIdProva, "id servizio");
+                const provaProva = createServiceApartmentRelationship(apartmentIdProva, serviceIdProva);
+
+                apartmentServiceProva.push(provaProva);
+                // console.log(apartmentServiceProva);
+
+            });
+        });
 
 
         var activeCheckboxes = [];
+
         function handleCheckboxChange(checkbox, id) {
             const apartmentServices = document.querySelectorAll(".apartment_service");
             const apartmentCards = document.querySelectorAll(".apartment_card");
@@ -218,24 +273,24 @@
             let apartmentService = [];
             var serviceId = [];
             var apartmentId = [];
-            
+
             if (checkbox.checked) {
                 activeCheckboxes.push(id);
                 console.log(activeCheckboxes);
                 apartmentServices.forEach(function(apartmentCardService) {
                     var servicesData = JSON.parse(apartmentCardService.querySelector('ul').dataset.services);
-                  
+
                     var ulElement = apartmentCardService.querySelector('ul');
-                 
+
                     servicesData.forEach(function(service) {
                         apartmentId = ulElement.dataset.apartmentId;
                         serviceId = service.id;
 
                         const prova = createServiceApartmentRelationship(apartmentId, serviceId);
-                        
+
                         apartmentService.push(prova);
                         // console.log(apartmentService, "APARTMENT SERVICE dentro if");
-                      
+
                     });
                 });
 
@@ -251,25 +306,24 @@
                     if (!(element.classList.contains('hidden'))) {
                         //
                         for (let i = 0; i < apartmentService.length; i++) {
-                                // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
-                                if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
-                                        parseInt(apartmentService[i]['apartment_id']))) {
-                                    if (parseInt(element.id) === parseInt(apartmentService[i]['apartment_id']))
-                                        element.classList.add('hidden');
-                                } else {
-                                    element.classList.remove('hidden');
-                                    i += apartmentService.length;
+                            // se l'id del servizio è diverso dall'id del servizio dell'appartamento e l'id dell'appartamento del div è uguale all'id dell'appartamento entro
+                            if (!(id === parseInt(apartmentService[i]['service_id']) && parseInt(element.id) ===
+                                    parseInt(apartmentService[i]['apartment_id']))) {
+                                if (parseInt(element.id) === parseInt(apartmentService[i]['apartment_id']))
+                                    element.classList.add('hidden');
+                            } else {
+                                element.classList.remove('hidden');
+                                i += apartmentService.length;
 
-                                }
+                            }
 
 
                         }
                     }
                 });
-            }
-            else {
+            } else {
                 var elementoDaRimuovere = id;
-                let selectedElementApId; 
+                let selectedElementApId;
                 var indice = activeCheckboxes.indexOf(elementoDaRimuovere);
                 if (indice > -1) {
                     activeCheckboxes.splice(indice, 1);
@@ -293,18 +347,18 @@
                                 // pusho l'id dentro all'array che 
                                 console.log(confrontServices, "confrontServices");
                                 confrontServices.push(idContainer);
-                                
+
                             }
 
                         }
-                        
+
                         console.log(confrontServices, "array confrontServices");
                     }
                     console.log(confrontServices, "fuori");
                     if (activeCheckboxes.every(item => confrontServices.includes(item))) {
-                        
-                                element.classList.remove('hidden');
-                    }  
+
+                        element.classList.remove('hidden');
+                    }
                 });
                 bedsAndRoomsControl();
             }
