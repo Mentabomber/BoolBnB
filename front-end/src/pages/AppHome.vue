@@ -85,11 +85,9 @@ export default {
             // });
         },
 
-        changeAddress(div, suggestion) {
+        changeAddress(suggestion) {
             this.isActive = true;
             this.search = suggestion.freeformAddress;
-            console.log(div);
-            // div.classList.add('hidden');
 
         }
 
@@ -120,9 +118,11 @@ export default {
                 @input="searchbar()">
 
         </div>
-        <div v-for="suggestion in suggestions" @click="changeAddress(this, suggestion)">
-            {{ suggestion.freeformAddress }}
-            <br>
+        <div :class="[isActive ? 'hidden' : '']">
+            <span v-for="(suggestion, i) in suggestions" :key="i" @click="changeAddress(suggestion)">
+                {{ suggestion.freeformAddress }}
+                <br>
+            </span>
         </div>
         <input class="my-3" type="submit" value="Cerca">
     </form>
