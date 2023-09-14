@@ -15,6 +15,11 @@ const router = createRouter({
             name: 'aprtment-show',
             component: () => import('./pages/AppShowApartment.vue')
         },
+        {
+            path: '/advanced-search/:',
+            name: 'advanced-search',
+            component: () => import('./pages/AppShowApartment.vue')
+        },
         // // MATCH EVERYTHING ELSE
         // { 
         //     path: '/:pathMatch(.)', 
