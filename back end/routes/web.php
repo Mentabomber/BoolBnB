@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoggedController;
 use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\SponsorshipController;
+use App\Http\Controllers\PaymentController;
+
 
 // Rotta che porta alla home del sito
 
@@ -34,6 +37,9 @@ Route::post('/apartments', [LoggedController::class, 'store'])->middleware(['aut
 
 Route :: get('/apartments/{id}', [LoggedController :: class, 'show'])
     -> name('guest.apartments.show');
+
+    Route::get('/sponsor_plans/{id}', [SponsorshipController::class, 'index'])->name('sponsor_plans');
+    Route::post('/payment', 'PaymentController@createTransaction');
 
 // Rotta che porta alla modifica di un appartamento
 
