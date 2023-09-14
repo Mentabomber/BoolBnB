@@ -24,6 +24,7 @@ export default {
 
 <template>
   <AppHelloWorld />
+  <router-view></router-view>
 </template>
 
 <style lang="scss">

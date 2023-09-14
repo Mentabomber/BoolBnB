@@ -12,7 +12,7 @@ use App\Models\Address;
 class ApiController extends Controller
 {
     public function apartmentIndex() {
-        $apartments = Apartment :: with('services, address')->paginate(10);
+        $apartments = Apartment :: all();
         return response()->json([
             'apartments' => $apartments
         ]);

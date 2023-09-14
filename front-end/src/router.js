@@ -8,7 +8,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            // component: () => import('./pages/AppHome.vue')
+            component: () => import('./pages/AppHome.vue')
         },
         // // MATCH EVERYTHING ELSE
         // { 

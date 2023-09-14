@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\ApiController;
 
 Route :: prefix('/v1') -> group(function() {
 
-    Route :: get('/test-api', [ApiController::class, 'apartmentIndex']);
+    Route :: get('/apartment-index', [ApiController::class, 'apartmentIndex']);
 });
 
 
