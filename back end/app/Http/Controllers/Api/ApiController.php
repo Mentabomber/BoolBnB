@@ -27,9 +27,6 @@ class ApiController extends Controller
     public function showApartment($id) {
         
         $apartment = Apartment :: where('id', $id)->with(["services","address"])->get();
-        // if (empty($apartment)){
-        //     return response()->json(["message"=>"Nessun appartamento trovato con questo nome"]);
-        // }
         return response()->json([
             'apartment' => $apartment
         ]);

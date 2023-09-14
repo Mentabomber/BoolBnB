@@ -7,11 +7,9 @@ export default {
     name: 'AppHome',
     data() {
         return {
-            apartment: {},
+            apartment: [],
+            address: [],
         }
-    },
-    methods: {
-
     },
     mounted() {
         const apartmentId = this.$route.params.id;
@@ -19,11 +17,11 @@ export default {
         axios.get(API_URL + "/apartment/" + apartmentId)
             .then(res => {
 
-            const data = res.data.apartment;
-            console.log(data);
-            
-            this.apartment = data;
-            console.log(this.apartment);
+                const dataApartment = res.data.apartment[0];
+
+                this.apartment = dataApartment;
+                console.log(this.apartment.image);
+                this.address = dataApartment.address;
             })
             .catch(err => console.error(err));
     }
@@ -31,29 +29,26 @@ export default {
 </script>
 
 <template>
-    <h1>Hello from HOME</h1>
+    <!-- <h1>Hello from HOME</h1> -->
     <!-- <h2>Go to 
         <router-link :to="{ name: 'about' }">ABOUT</router-link>
     </h2>
     <br><br> -->
-    <h1>Appartamenti</h1>
-    <ul>
-        <li>
-        
-            <!-- {{ apartment.id }}
-                {{ apartment.title }}
+    <h1>Appartamento</h1>
 
-                {{ apartment.address.address }}
+    {{ apartment.id }}
+    <br>
+    {{ apartment.title }}
 
-                <div v-for="(apartmentService, index) in apartment.services" :key="index">
-                    <div>
-                        {{ apartmentService.name }}
-                    </div>
-                </div> -->
-                
+    {{ address.address }}
 
-            
-        </li>
-    </ul>
+    <img :src="'http://localhost:8000/storage/' + apartment.image" alt="">
+
+    <div v-for="(apartmentService, index) in apartment.services" :key="index">
+        <div>
+            {{ apartmentService.name }}
+
+        </div>
+    </div>
 </template>
 

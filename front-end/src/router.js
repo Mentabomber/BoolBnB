@@ -12,7 +12,7 @@ const router = createRouter({
         },
         {
             path: '/apartment/:id',
-            name: 'show-apartment',
+            name: 'aprtment-show',
             component: () => import('./pages/AppShowApartment.vue')
         },
         // // MATCH EVERYTHING ELSE
