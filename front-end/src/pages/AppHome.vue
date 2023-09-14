@@ -12,9 +12,7 @@ export default {
         }
     },
     methods: {
-
         getApartments() {
-
             axios.get(API_URL + "/apartment-index")
                 .then(res => {
 
@@ -26,7 +24,7 @@ export default {
                     // this.pages = data.apartments.links;
                 })
                 .catch(err => console.error(err));
-        }
+        },
     },
     mounted() {
         this.getApartments();
@@ -35,7 +33,6 @@ export default {
 </script>
 
 <template>
-    <h1>Hello from HOME</h1>
     <!-- <h2>Go to 
         <router-link :to="{ name: 'about' }">ABOUT</router-link>
     </h2>
@@ -43,14 +40,16 @@ export default {
     <h1>Appartamenti</h1>
     <ul>
         <li v-for="apartment in apartments" :key="apartment.id">
+            {{ apartment.id }}
+            -
             <router-link :to="{
-                title: 'apartment-show',
+                name: 'apartment-show',
                 params: { id: apartment.id }
             }">
-                {{ apartment.title }}
+                {{ apartment.title }}  
             </router-link>
-
-            {{ apartment.id }}
+            <br>
+          
             {{ apartment.address.address }}
 
             <div v-for="(apartmentService, index) in apartment.services" :key="index">
