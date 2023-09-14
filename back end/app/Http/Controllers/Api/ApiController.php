@@ -32,7 +32,7 @@ class ApiController extends Controller
     }
 
     public function userEmail() {
-        
+        //se utente è loggato
         if (auth()->check()) {
             $user = auth()->user();
             $email = $user->email;
