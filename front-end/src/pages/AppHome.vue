@@ -52,7 +52,18 @@ export default {
                     params: { id: apartment.id }
                 }"
             >
+            {{ apartment.id }}
                 {{ apartment.title }}
+
+                {{ apartment.address.address }}
+
+                <div v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <div>
+                        {{ apartmentService.name }}
+                    </div>
+                </div>
+                
+
             </router-link>
         </li>
     </ul>

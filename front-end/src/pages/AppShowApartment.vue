@@ -1,0 +1,59 @@
+<script>
+import axios from 'axios';
+
+const API_URL = 'http://127.0.0.1:8000/api/v1';
+
+export default {
+    name: 'AppHome',
+    data() {
+        return {
+            apartment: {},
+        }
+    },
+    methods: {
+
+    },
+    mounted() {
+        const apartmentId = this.$route.params.id;
+
+        axios.get(API_URL + "/apartment/" + apartmentId)
+            .then(res => {
+
+            const data = res.data.apartment;
+            console.log(data);
+            
+            this.apartment = data;
+            console.log(this.apartment);
+            })
+            .catch(err => console.error(err));
+    }
+}
+</script>
+
+<template>
+    <h1>Hello from HOME</h1>
+    <!-- <h2>Go to 
+        <router-link :to="{ name: 'about' }">ABOUT</router-link>
+    </h2>
+    <br><br> -->
+    <h1>Appartamenti</h1>
+    <ul>
+        <li>
+        
+            <!-- {{ apartment.id }}
+                {{ apartment.title }}
+
+                {{ apartment.address.address }}
+
+                <div v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <div>
+                        {{ apartmentService.name }}
+                    </div>
+                </div> -->
+                
+
+            
+        </li>
+    </ul>
+</template>
+

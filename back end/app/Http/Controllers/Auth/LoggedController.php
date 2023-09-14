@@ -18,15 +18,15 @@ use App\Models\User;
 class LoggedController extends Controller
 {
 
-    public function index() {
+    // public function index() {
 
-        // Richiama tutti gli appartamenti
+    //     // Richiama tutti gli appartamenti
 
-        $apartments = Apartment :: all();
+    //     $apartments = Apartment :: all();
 
 
-        return view('auth.apartments.show', compact('apartments'));
-    }
+    //     return view('auth.apartments.show', compact('apartments'));
+    // }
 
 
     public function create() {

@@ -12,9 +12,27 @@ use App\Models\Address;
 class ApiController extends Controller
 {
     public function apartmentIndex() {
-        $apartments = Apartment :: all();
+        $apartments = Apartment :: with('address', 'services')->get();
         return response()->json([
             'apartments' => $apartments
         ]);
+    }
+
+    public function receiveMessage() {
+        // axios.get... 
+        // then
+        // $message = Message :: create($...);
+    }
+
+    public function showApartment($id) {
+        
+        $apartment = Apartment :: where('id', $id)->with(["services","address"])->get();
+        // if (empty($apartment)){
+        //     return response()->json(["message"=>"Nessun appartamento trovato con questo nome"]);
+        // }
+        return response()->json([
+            'apartment' => $apartment
+        ]);
+       
     }
 }

@@ -10,6 +10,11 @@ const router = createRouter({
             name: 'home',
             component: () => import('./pages/AppHome.vue')
         },
+        {
+            path: '/apartment/:id',
+            name: 'show-apartment',
+            component: () => import('./pages/AppShowApartment.vue')
+        },
         // // MATCH EVERYTHING ELSE
         // { 
         //     path: '/:pathMatch(.)', 

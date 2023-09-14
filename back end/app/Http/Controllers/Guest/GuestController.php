@@ -14,13 +14,13 @@ use GeoIP;
 
 class GuestController extends Controller
 {
-    // Restituisce la lista di tutti gli appartamenti presenti nel db
-    public function index() {
+    // // Restituisce la lista di tutti gli appartamenti presenti nel db
+    // public function index() {
 
-        $apartments = Apartment :: all();
+    //     $apartments = Apartment :: all();
 
-        return view('welcome', compact('apartments'));
-    }
+    //     return view('welcome', compact('apartments'));
+    // }
 
     public function cercaAppartamenti(Request $request) {
         $data = $request -> all();
@@ -32,7 +32,7 @@ class GuestController extends Controller
         $longitudeSt = $data['longitude'];
         $radius = 50; // in chilometri
 
-        $apartments = Apartment::select('*')
+        $apartments = Apartment::where('*')
             ->selectRaw(
                 '(6371 * acos(cos(radians(' . $latitudeSt . '))
                 * cos(radians(addresses.latitude))
