@@ -15,6 +15,7 @@ const router = createRouter({
             name: 'apartment-show',
             component: () => import('./pages/AppShowApartment.vue')
         },
+   
         // // MATCH EVERYTHING ELSE
         // { 
         //     path: '/:pathMatch(.)', 

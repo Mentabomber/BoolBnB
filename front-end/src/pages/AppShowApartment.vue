@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { store } from '../store';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1';
 
@@ -10,6 +11,7 @@ export default {
             apartment: [],
             address: [],
             email: {},
+            store
         }
     },
     mounted() {
@@ -24,16 +26,7 @@ export default {
                 this.address = dataApartment.address;
             })
             .catch(err => console.error(err));
-
-        axios.get(API_URL + "/api/get-email")
-        .then(res => {
-
-            const dataEmail = res.data;
-
-            console.log(dataEmail);
-            this.email = dataEmail;
-        })
-        .catch(err => console.error(err));
+            
     }
 }
 </script>
@@ -71,7 +64,7 @@ export default {
             <br>
             
             <label for="email">E-mail: </label>
-            <input type="text" name="email" v-model="this.email">
+            <input type="text" name="email" v-model="store.user_email">
             <br>
             <label for="message">Messaggio: </label>
             <input type="text" name="message">

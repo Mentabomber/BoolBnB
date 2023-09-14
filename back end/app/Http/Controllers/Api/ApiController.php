@@ -31,15 +31,4 @@ class ApiController extends Controller
         return response()->json(['apartment' => $apartment]);
     }
 
-    public function userEmail() {
-        //se utente è loggato
-        if (auth()->check()) {
-            $user = auth()->user();
-            $email = $user->email;
-            
-            return response()->json(['email' => $email]);
-        } else {
-            return response()->json(['email' => '']);
-        }
-    }
 }
