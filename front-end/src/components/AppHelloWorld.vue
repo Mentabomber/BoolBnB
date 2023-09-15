@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  SONO UN HEADER
+ 
 </template>
 
 <style scoped lang="scss">

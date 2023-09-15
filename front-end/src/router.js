@@ -12,8 +12,13 @@ const router = createRouter({
         },
         {
             path: '/apartment/:id',
-            name: 'aprtment-show',
+            name: 'apartment-show',
             component: () => import('./pages/AppShowApartment.vue')
+        },
+        {
+            path: '/advanced-search',
+            name: 'advanced-search',
+            component: () => import('./pages/AppAdvancedSearch.vue')
         },
         // // MATCH EVERYTHING ELSE
         // { 

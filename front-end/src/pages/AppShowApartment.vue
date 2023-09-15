@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
-
-const API_URL = 'http://127.0.0.1:8000/api/v1';
+import { store } from '../store';
 
 export default {
     name: 'AppHome',
@@ -9,21 +8,22 @@ export default {
         return {
             apartment: [],
             address: [],
+            store
         }
     },
     mounted() {
         const apartmentId = this.$route.params.id;
 
-        axios.get(API_URL + "/apartment/" + apartmentId)
+        axios.get(store.API_URL + "/apartment/" + apartmentId)
             .then(res => {
 
                 const dataApartment = res.data.apartment[0];
 
                 this.apartment = dataApartment;
-                console.log(this.apartment.image);
                 this.address = dataApartment.address;
             })
             .catch(err => console.error(err));
+
     }
 }
 </script>
@@ -36,13 +36,13 @@ export default {
     <br><br> -->
     <h1>Appartamento</h1>
 
-    {{ apartment.id }}
     <br>
     {{ apartment.title }}
 
     {{ address.address }}
-
-    <img :src="'http://localhost:8000/storage/' + apartment.image" alt="">
+    <br>
+    <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
+    <br>
 
     <div v-for="(apartmentService, index) in apartment.services" :key="index">
         <div>
@@ -50,5 +50,24 @@ export default {
 
         </div>
     </div>
+
+    <form method="POST" action="{{ route('apartment.messages', $apartment->id) }}" enctype='multipart/form-data'>
+
+        <label for="name">Nome: </label>
+        <input type="text" name="name" v-model="store.user_name">
+        <br>
+        <label for="surname">Cognome: </label>
+        <input type="text" name="surname" v-model="store.user_surname">
+        <br>
+
+        <label for="email">E-mail: </label>
+        <input type="text" name="email" v-model="store.user_email">
+        <br>
+        <label for="message">Messaggio: </label>
+        <textarea rows="4" cols="50" name="message"></textarea>
+        <br>
+        <input type="submit" value="Spedisci">
+        <br>
+    </form>
 </template>
 
