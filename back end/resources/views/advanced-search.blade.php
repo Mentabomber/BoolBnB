@@ -19,55 +19,7 @@
     </form>
     <br>
 
-    <label for="km-radius">Raggio Kilometri</label>
-    <input type="range" min="1" max="50" value="25" class="slider" id="myRange"
-        onchange="maxDistanceShowingApartment()">
-    <p>Km: <span id="demo">25</span></p>
-    <br>
-    <h3>Letti disponibili</h3>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="1">
-    <label for="1">1</label>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="2">
-    <label for="2">2</label>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="3">
-    <label for="3">3</label>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="4">
-    <label for="4">4</label>
-    <br><input type="radio" class="available-beds" onchange="bedsAndRoomsControl()" name="available-beds" value="5">
-    <label for="5">5+</label>
-    <br>
-    <h3>Stanze Disponibili</h3>
-    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
-        value="1">
-    <label for="1">1</label>
-    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
-        value="2">
-    <label for="2">2</label>
-    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
-        value="3">
-    <label for="3">3</label>
-    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
-        value="4">
-    <label for="4">4</label>
-    <br><input type="radio" class="available-rooms" onchange="bedsAndRoomsControl()" name="available-rooms"
-        value="5">
-    <label for="5">5+</label>
-    <br>
-    <br>
 
-    <h3>Servizi Disponibili</h3>
-    @foreach ($services as $service)
-        <div class="form-check" style="max-width: 300px">
-            <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                id="service{{ $service->id }}" onchange="handleCheckboxChange(this, {{ $service->id }})">
-
-
-            <label class="form-check-label" for="service{{ $service->id }}">
-                {{ $service->name }}
-            </label>
-        </div>
-    @endforeach
-    <br>
     <div>
         <input class="my-3" type="submit" value="Cerca" id="bottoneInvio" onclick="maxDistanceShowingApartment()">
 
@@ -102,7 +54,6 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/search-bar.js') }}"></script>
     <script>
-       
         function maxDistanceShowingApartment() {
 
             var slider = document.getElementById("myRange");
@@ -160,12 +111,12 @@
 
 
         }
-        
+
         function bedsAndRoomsControl() {
             // const beds = document.querySelector('input[name="available.beds"]:checked');
             // const rooms = document.querySelector('input[name="available.rooms"]:checked');
             const apartmentCards = document.querySelectorAll(".apartment_card");
-            
+
 
             // Seleziona i radiobutton per il numero di stanze
             const rooms = document.querySelector("input[name='available-rooms']:checked") ?? 0;

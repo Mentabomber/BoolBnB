@@ -8,4 +8,10 @@ export const store = reactive({
     user_surname: undefined,
     user_message: "",
     user_email_apartment_id: "",
+    searched_address: undefined,
+    searched_latitude: undefined,
+    searched_longitude: undefined,
+    apartments_filtered: [],
+    services_list: [],
+    activeFilterServices: []
 });
