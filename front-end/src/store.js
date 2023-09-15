@@ -5,5 +5,7 @@ export const store = reactive({
     API_URL: 'http://localhost:8000/api/v1',
     user_email: undefined,
     user_name: undefined,
-    user_surname: undefined
+    user_surname: undefined,
+    user_message: "",
+    user_email_apartment_id: "",
 });

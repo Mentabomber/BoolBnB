@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
 
             $table->tinyText('title')->nullable(false);
-            $table->tinyInteger('rooms')->nullable(false);
-            $table->tinyInteger('beds')->nullable(false);
-            $table->tinyInteger('bathrooms')->nullable(false);
-            $table->integer('square_meters')->nullable(false);
+            $table->tinyInteger('rooms')->nullable(false)->unsigned();
+            $table->tinyInteger('beds')->nullable(false)->unsigned();
+            $table->tinyInteger('bathrooms')->nullable(false)->unsigned();
+            $table->integer('square_meters')->nullable(false)->unsigned();
             $table->string('image')->nullable(false);
             $table->boolean('visible')->nullable(false)->default(false);
 

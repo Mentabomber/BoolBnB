@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Address;
+use App\Models\Message;
 
 class ApiController extends Controller
 {
@@ -19,10 +20,18 @@ class ApiController extends Controller
         ]);
     }
 
-    public function receiveMessage() {
-        // axios.get... 
-        // then
-        // $message = Message :: create($...);
+    public function receiveMessage(Request $request) {
+
+        $data = [
+
+            'message' => $request['message'],
+            'name' => $request['name'],
+            'surname' => $request['surname'],
+            'email' => $request['email'],
+            'apartment_id' => $request['apartment_id'],
+        ];
+
+        Message :: create($data);
     }
 
     public function showApartment($id) {

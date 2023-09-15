@@ -12,6 +12,7 @@ Route :: prefix('/v1') -> group(function() {
     Route :: get('/apartment-index', [ApiController::class, 'apartmentIndex']);
     Route :: get('/apartment/{id}', [ApiController::class, 'showApartment']);
     Route :: get('/api/get-email', [ApiController::class, 'userEmail']);
+    Route :: post('/api/endpoint', [ApiController::class, 'receiveMessage']);
 });
 
 
