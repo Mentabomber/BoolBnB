@@ -17,34 +17,7 @@ class GuestController extends Controller
     // // Restituisce la lista di tutti gli appartamenti presenti nel db
      
    
-    public function cercaAppartamenti(Request $request) {
-        $data = $request -> all();
-        
-        $services = Service :: all();
-        // dd($data);
-
-        $latitudeSt = $data['latitude'];
-        $longitudeSt = $data['longitude'];
-        $radius = 50; // in chilometri
-
-        $apartments = Apartment::where('*')
-            ->selectRaw(
-                '(6371 * acos(cos(radians(' . $latitudeSt . '))
-                * cos(radians(addresses.latitude))
-                * cos(radians(addresses.longitude)
-                - radians(' . $longitudeSt . '))
-                + sin(radians(' . $latitudeSt . '))
-                * sin(radians(addresses.latitude)))) AS distance'
-            )
-            ->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
-            ->having('distance', '<=', $radius)
-            ->orderBy('distance', 'asc')
-            ->get();
-       
-               
-        
-        return view('advanced-search', compact('apartments', 'services','latitudeSt','longitudeSt'));
-    }
+    
 
     public function message(Request $request, $id) {
         

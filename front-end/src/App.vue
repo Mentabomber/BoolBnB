@@ -30,9 +30,18 @@ export default {
           axios.defaults.withCredentials = false;
         });
     },
+
+    getServices() {
+      console.log(this.store.activeFilterServices, 'filtri funzione');
+      axios.get(this.store.API_URL + "/services").then(res => {
+        this.store.services_list = res.data.services;
+        console.log(this.store.services_list, 'servizi');
+      })
+    }
   },
   created() {
-    this.getAuth()
+    this.getAuth();
+    this.getServices();
   }
 }
 
@@ -47,4 +56,8 @@ export default {
 @use './styles/general.scss' as *;
 @use './styles/partials/variables.scss' as *;
 @use './styles/partials/mixins.scss' as *;
+
+.hidden {
+  display: none;
+}
 </style>

@@ -5,5 +5,11 @@ export const store = reactive({
     API_URL: 'http://localhost:8000/api/v1',
     user_email: undefined,
     user_name: undefined,
-    user_surname: undefined
+    user_surname: undefined,
+    searched_address: undefined,
+    searched_latitude: undefined,
+    searched_longitude: undefined,
+    apartments_filtered: [],
+    services_list: [],
+    activeFilterServices: []
 });

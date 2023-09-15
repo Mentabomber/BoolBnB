@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
+
 
 use App\Models\Apartment;
 use App\Models\Service;
