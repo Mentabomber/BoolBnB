@@ -60,8 +60,8 @@
                 <label for="address">Indirizzo</label>
                 <br>
                 <input type="text" name="address" id="searchInput" value="{{ $address->address }}">
-                <input type="text" name="latitude" id="latitude" value="{{ $address->latitude }}">
-                <input type="text" name="longitude" id="longitude" value="{{ $address->longitude }}">
+                <input type="hidden" name="latitude" id="latitude" value="{{ $address->latitude }}">
+                <input type="hidden" name="longitude" id="longitude" value="{{ $address->longitude }}">
                 
                 <ul style="list-style-type: none;"id="suggestions"></ul>
                 <label for="floor" id="floor-label" style="display: block;">Piano</label>

@@ -1,6 +1,11 @@
 <script>
 import axios from 'axios';
 import { store } from '../store';
+// import map from '../js/map.js';
+// import mobile_or_tablet from '../js/mobile-or-tablet.js';
+// import '@../js/map.js';
+// import '@../js/mobile-or-tablet.js';
+
 
 export default {
     name: 'AppHome',
@@ -8,7 +13,9 @@ export default {
         return {
             apartment: [],
             address: [],
-            store
+            store,
+            latitude: "",
+            longitude: "",
         }
     },
     methods: {
@@ -21,8 +28,7 @@ export default {
                message: store.user_message,
                apartment_id: apartmentId,
             };
-
-            
+        
             axios.post(store.API_URL + '/api/endpoint', formData)
                 .then(response => {
                 
@@ -32,7 +38,43 @@ export default {
                 
                 console.error(error);
                 });
+        },
+        mappaTomTom() {
+            let resultFieldLO = this.longitude;
+            let resultFieldLA = this.latitude;
+
+            var map = tt.map({
+                key: 'tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1',
+                container: 'map',
+                center: [resultFieldLO, resultFieldLA],
+                zoom: 20,
+                dragPan: !isMobileOrTablet()
+            });
+            map.addControl(new tt.FullscreenControl());
+            map.addControl(new tt.NavigationControl());
+
+            function createMarker(position, color, popupText) {
+                var markerElement = document.createElement('div');
+                markerElement.className = 'marker';
+                var markerContentElement = document.createElement('div');
+                markerContentElement.className = 'marker-content';
+                markerContentElement.style.backgroundColor = color;
+                markerElement.appendChild(markerContentElement);
+                var popup = new tt.Popup({
+                    offset: 30
+                }).setText(popupText);
+
+                new tt.Marker({
+                        element: markerElement,
+                        anchor: 'bottom'
+                    })
+                    .setLngLat(position)
+                    .setPopup(popup)
+                    .addTo(map);
             }
+            createMarker([resultFieldLO, resultFieldLA], '#5327c3', 'SVG icon');
+        },
+
     },
     mounted() {
         const apartmentId = this.$route.params.id;
@@ -41,12 +83,31 @@ export default {
             .then(res => {
 
                 const dataApartment = res.data.apartment[0];
-
+                this.latitude = dataApartment.address.latitude;
+                this.longitude = dataApartment.address.longitude;
                 this.apartment = dataApartment;
                 this.address = dataApartment.address;
+                console.log(this.latitude, this.longitude);
+                this.mappaTomTom();
             })
             .catch(err => console.error(err));
 
+        let TomTomScript = document.createElement('script');
+        TomTomScript.setAttribute('src', 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js');
+        document.head.appendChild(TomTomScript);
+
+        const scripts = [
+            "../js/mobile-or-tablet.js",
+        ];
+        scripts.forEach(script => {
+            let tag = document.head.querySelector(`[src="${ script }"`);
+            if (!tag) {
+                tag = document.createElement("script");
+                tag.setAttribute("src", script);
+                tag.setAttribute("type", 'text/javascript');
+                document.head.appendChild(tag); 
+            }
+        });
     }
 }
 </script>
@@ -79,7 +140,7 @@ export default {
         <label for="name">Nome: </label>
         <input type="text" name="name" v-model="store.user_name">
         <br>
-        <label for="surname">Cognome: </label>
+        <label for="surname">Nickname: </label>
         <input type="text" name="surname" v-model="store.user_surname">
         <br>
 
@@ -92,5 +153,53 @@ export default {
         <input type="submit" value="Spedisci">
         <br>
     </form>
+
+    <div style="height: 400px; margin-left: 0%;">
+        <div id='map' class='map'>
+        </div>
+    </div>
 </template>
+
+<style >
+    .marker-icon {
+        background-position: center;
+        background-size: 22px 22px;
+        border-radius: 50%;
+        height: 22px;
+        left: 4px;
+        position: absolute;
+        text-align: center;
+        top: 3px;
+        transform: rotate(45deg);
+        width: 22px;
+    }
+
+    .marker {
+        height: 30px;
+        width: 30px;
+    }
+
+    .marker-content {
+        background: #c30b82;
+        border-radius: 50% 50% 50% 0;
+        height: 30px;
+        left: 50%;
+        margin: -15px 0 0 -15px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(-45deg);
+        width: 30px;
+    }
+
+    .marker-content::before {
+
+        border-radius: 50%;
+        content: "";
+        height: 24px;
+        margin: 3px 0 0 3px;
+        position: absolute;
+        width: 24px;
+    }
+</style>
+
 
