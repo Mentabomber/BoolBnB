@@ -1,26 +1,25 @@
 <script>
 import axios from 'axios';
+import { store } from '../store'
 
-const API_URL = 'http://127.0.0.1:8000/api/v1';
+// const API_URL = 'http://127.0.0.1:8000/api/v1';
 
 export default {
     name: 'AppHome',
     data() {
         return {
             apartments: [],
-            pages: []
+            pages: [],
+            store
         }
     },
     methods: {
         getApartments() {
-            axios.get(API_URL + "/apartment-index")
+            axios.get(store.API_URL + "/apartment-index")
                 .then(res => {
 
                     const data = res.data;
-                    console.log(data);
-
                     this.apartments = data.apartments;
-                    console.log(this.apartments);
                     // this.pages = data.apartments.links;
                 })
                 .catch(err => console.error(err));
@@ -46,10 +45,10 @@ export default {
                 name: 'apartment-show',
                 params: { id: apartment.id }
             }">
-                {{ apartment.title }}  
+                {{ apartment.title }}
             </router-link>
             <br>
-          
+
             {{ apartment.address.address }}
 
             <div v-for="(apartmentService, index) in apartment.services" :key="index">

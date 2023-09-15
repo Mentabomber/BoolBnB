@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
@@ -14,6 +15,7 @@ use App\Models\Service;
 use App\Models\Address;
 use App\Models\Message;
 use App\Models\User;
+
 
 class LoggedController extends Controller
 {
@@ -232,5 +234,9 @@ class LoggedController extends Controller
         else {
             return redirect()-> route('welcome');
         }
+    }
+
+    public function getAuth (){
+        return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403); 
     }
 }
