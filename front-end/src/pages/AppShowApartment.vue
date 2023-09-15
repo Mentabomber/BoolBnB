@@ -11,6 +11,29 @@ export default {
             store
         }
     },
+    methods: {
+        sendMessage() {
+            const apartmentId = this.$route.params.id;
+            const formData = {
+               email: store.user_email,
+               name: store.user_name,
+               surname: store.user_surname,
+               message: store.user_message,
+               apartment_id: apartmentId,
+            };
+
+            
+            axios.post(store.API_URL + '/api/endpoint', formData)
+                .then(response => {
+                
+                console.log(response.data);
+                })
+                .catch(error => {
+                
+                console.error(error);
+                });
+            }
+    },
     mounted() {
         const apartmentId = this.$route.params.id;
 
@@ -51,7 +74,7 @@ export default {
         </div>
     </div>
 
-    <form method="POST" action="{{ route('apartment.messages', $apartment->id) }}" enctype='multipart/form-data'>
+    <form @submit.prevent="sendMessage">
 
         <label for="name">Nome: </label>
         <input type="text" name="name" v-model="store.user_name">
@@ -64,7 +87,7 @@ export default {
         <input type="text" name="email" v-model="store.user_email">
         <br>
         <label for="message">Messaggio: </label>
-        <textarea rows="4" cols="50" name="message"></textarea>
+        <textarea rows="4" cols="50" name="message" v-model="store.user_message"></textarea>
         <br>
         <input type="submit" value="Spedisci">
         <br>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
@@ -20,15 +21,15 @@ use App\Models\User;
 class LoggedController extends Controller
 {
 
-    // public function index() {
+    public function index() {
 
-    //     // Richiama tutti gli appartamenti
+        // Richiama tutti gli appartamenti
 
-    //     $apartments = Apartment :: all();
+        $apartments = Apartment :: all();
 
 
-    //     return view('auth.apartments.show', compact('apartments'));
-    // }
+        return view('auth.apartments.show', compact('apartments'));
+    }
 
 
     public function create() {
@@ -136,7 +137,20 @@ class LoggedController extends Controller
     // Permette l'aggiornamento dei dati di un appartamento
     public function update(Request $request, $id) {
 
-        $data = $request -> all();
+        $validator = Validator::make($request->all(), [
+            'rooms' => 'numeric|min:0',
+            'beds' => 'numeric|min:0',
+            'bathrooms' => 'numeric|min:0',
+            'square_meters' => 'numeric|min:0',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $dataNotValidate = $request -> all();
+        $dataValidate = $validator->validated();
+        $data = array_merge($dataNotValidate, $dataValidate);
 
         $apartment = Apartment :: findOrFail($id);
         $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
