@@ -40,13 +40,37 @@ class ApiController extends Controller
         return response()->json(['apartment' => $apartment]);
     }
 
+    public function searchApartment(Request $request) {
+
+        $data = $request -> all();
+
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
+
+        $apartments = Apartment::select('*')
+            ->selectRaw(
+                '(6371 * acos(cos(radians(' . $latitude . '))
+                * cos(radians(addresses.latitude))
+                * cos(radians(addresses.longitude)
+                - radians(' . $longitude . '))
+                + sin(radians(' . $latitude . '))
+                * sin(radians(addresses.latitude)))) AS distance'
+            )->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
+            ->having('distance', '<=', 20)
+            ->orderBy('distance', 'asc')
+            ->get();
+    
+        return response()->json(['apartments' => $apartments]);
+
+    }
+
     public function filteredApartment(Request $request) {
 
         $data = $request -> all();
 
         $latitude = $data['latitude'];
         $longitude = $data['longitude'];
-        $selectedServices = [1, 3];
+        $selectedServices = $data['servicesFilter'];
         
         // if($data['servicesFilter'] == "") {
         //     $selectedServices = 0;
