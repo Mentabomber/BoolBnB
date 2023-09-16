@@ -64,38 +64,20 @@ class ApiController extends Controller
 
     }
 
+
     public function filteredApartment(Request $request) {
+
 
         $data = $request -> all();
 
         $latitude = $data['latitude'];
         $longitude = $data['longitude'];
+        $radius = $data['kmFilter'];
         $selectedServices = $data['servicesFilter'];
-        
-        // if($data['servicesFilter'] == "") {
-        //     $selectedServices = 0;
-        // }else {
-        // }
-        
-        if($data['bedsFilter'] == "") {
-            $beds = 0;
+        $filteredApartment = [];
+        // $selectedServices = [10];
 
-        } else {
-            $beds = $data['bedsFilter'];
-        }
-
-        if($data['roomsFilter'] == "") {
-            $rooms = 0;
-
-        } else {
-            $rooms = $data['roomsFilter'];
-        }
-
-        if($data['kmFilter'] == 20) {
-               $radius = 20; // in chilometri
-        } else {
-            $radius = $data['kmFilter'];
-       }
+        // $apartments = Apartment::with('address','services');
 
         $apartments = Apartment::select('*')
             ->selectRaw(
@@ -107,16 +89,102 @@ class ApiController extends Controller
                 * sin(radians(addresses.latitude)))) AS distance'
             )
             ->with('services')
-            ->join('apartment_service', 'apartments.id', '=', 'apartment_service.apartment_id')
             ->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
             ->having('distance', '<=', $radius)
-            ->having('beds', '>=', $beds)
-            ->having('rooms', '>=', $rooms)
-            ->where('apartment_service.service_id', $selectedServices)
-            ->orderBy('distance', 'asc')
-            ->get();
+            ->orderBy('distance', 'asc');
+
+        $apartments = $apartments->where('rooms', '>=', $data['roomsFilter']);
+
+        $apartments = $apartments->where('beds', '>=', $data['bedsFilter'])->get();
+
+
+        $test = false;
+        $prova2 = false;
+        $count = 0;
+        $count2 = 0;
+        $sel = [];
+        $serv = [];
+        $contains = false;
+        $length = count($selectedServices);
+        if($length > 0) {
+            $test = true;
+
+            foreach ($apartments as $apartment) {
+                $count = $count + 1;
+                foreach ($apartment['services'] as $service) {
+                    $count2 = $count2 +1;
+                    $sel = $selectedServices;
+                    array_push($serv,$service['id']);
+                    $selectedServices = [1, 2];
+                    
+                    // $function = array_diff($serv, $selectedServices);
+                    // if(in_array($service['id'], $apartment['services']['id'])) {
+
+                    //     if(!in_array($apartment,$filteredApartment)) {
     
-        return response()->json(['latitude' => $latitude, 'longitude' => $longitude, 'apartments' => $apartments]);
+                    //         array_push($filteredApartment, $apartment); 
+                    //     }
+                    // }
+                }
+                $serv = [];
+            }
+        }
+
+        if(count($filteredApartment) == 0) {
+            $filteredApartment = $apartments;
+        }
+        // $tipoarray = gettype($selectedServices);
+        // Filtra per utilities selezionate
+        // $apartments = $apartments->where('services.id','=', '1')->get();
+
+
+
+        
+        // if($data['servicesFilter'] == "") {
+        //     $selectedServices = 0;
+        // }else {
+        // }
+        
+    //     if($data['bedsFilter'] == "") {
+    //         $beds = 0;
+
+    //     } else {
+    //         $beds = $data['bedsFilter'];
+    //     }
+
+    //     if($data['roomsFilter'] == "") {
+    //         $rooms = 0;
+
+    //     } else {
+    //         $rooms = $data['roomsFilter'];
+    //     }
+
+    //     if($data['kmFilter'] == 20) {
+    //            $radius = 20; // in chilometri
+    //     } else {
+    //         $radius = $data['kmFilter'];
+    //    }
+
+    //     $apartments = Apartment::select('*')
+    //         ->selectRaw(
+    //             '(6371 * acos(cos(radians(' . $latitude . '))
+    //             * cos(radians(addresses.latitude))
+    //             * cos(radians(addresses.longitude)
+    //             - radians(' . $longitude . '))
+    //             + sin(radians(' . $latitude . '))
+    //             * sin(radians(addresses.latitude)))) AS distance'
+    //         )
+    //         ->with('services')
+    //         ->join('apartment_service', 'apartments.id', '=', 'apartment_service.apartment_id')
+    //         ->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
+    //         ->having('distance', '<=', $radius)
+    //         ->having('beds', '>=', $beds)
+    //         ->having('rooms', '>=', $rooms)
+    //         ->where('apartment_service.service_id', $selectedServices)
+    //         ->orderBy('distance', 'asc')
+    //         ->get();
+    
+        return response()->json(['latitude' => $latitude, 'longitude' => $longitude, 'apartments' => $apartments, 'test' => $test, 'prova2' => $prova2, 'leng' => $length, 'count' => $count, 'count2' => $count2, 'sel' => $sel, 'serv' => $serv, 'contains' => $contains, 'filteredApartment' => $filteredApartment, 'selectedService' => $selectedServices]);
     }
 
     public function serviceList() {
