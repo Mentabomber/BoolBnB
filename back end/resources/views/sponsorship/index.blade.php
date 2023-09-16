@@ -15,12 +15,8 @@
             </div>
         </div>
         <div class="row d-flex justify-content-between align-content-center gap-4 gap-lg-0 my-4">
-            
-            <form method="POST" action="{{ route("sponsor_plans") }}" enctype='multipart/form-data'>
-                @csrf
             @foreach ($sponsorship as $item)
 
-            
                 <div class="col-12 col-lg-4">
                     <article class="plan card_">
                         <div class="inner">
@@ -30,7 +26,7 @@
                                 </span>
                             </span>
                             <h2 class="title">{{ $item->type }}</h2>
-                         
+
                             <ul class="features">
                                 <li>
                                     <span class="icon">
@@ -67,17 +63,18 @@
                                     {{$item->id}}
                                 </li>
 
-
-                                <input type="hidden" name="sponsorships" id="{{ $item->id }}" value ="{{ $item->id }}">
-                                <input type="submit" value ="Seleziona sponsorizzazione">
-                                
+                                <form method="POST" action="{{ route('confirm_sponsor', $apartment->id) }}"  enctype='multipart/form-data'>
+                                    @csrf
+                                    <input type="hidden" name="sponsorships" id="{{ $item->id }}" value ="{{ $item->id }}">
+                                    <input type="submit" value ="Seleziona sponsorizzazione">
+                                </form>
                             </ul>
-                           
+
                         </div>
                     </article>
                 </div>
             @endforeach
-            </form>
+
 
         </div>
         <div class="row">

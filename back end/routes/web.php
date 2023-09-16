@@ -39,7 +39,7 @@ Route :: get('/apartments/{id}', [LoggedController :: class, 'show'])
     -> name('guest.apartments.show');
 
     Route::get('/sponsor_plans/{id}', [SponsorshipController::class, 'index'])->name('sponsor_plans');
-    Route::get('/sponsor_plans/{id}', [SponsorshipController::class, 'ChooseSponsorship'])->name('confirm_sponsor');
+    Route::post('/sponsor_plan/{id}', [SponsorshipController::class, 'ChooseSponsorship'])->name('confirm_sponsor');
     Route::get('/payment', [PaymentController::class, 'createTransaction']);
 
 // Rotta che porta alla modifica di un appartamento
