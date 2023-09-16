@@ -72,7 +72,7 @@ class ApiController extends Controller
 
         $latitude = $data['latitude'];
         $longitude = $data['longitude'];
-        $radius = 10000;
+        $radius = $data['kmFilter'];
         $selectedServices = $data['servicesFilter'];
         $filteredApartment = [];
         // $selectedServices = [10];
