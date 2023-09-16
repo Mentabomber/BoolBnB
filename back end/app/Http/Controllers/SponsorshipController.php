@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
+use Illuminate\Support\Facades\DB;
+
 
 use Carbon\Carbon;
 
@@ -34,7 +36,23 @@ class SponsorshipController extends Controller
 
             $sponsorship = Sponsorship::findOrFail($data['sponsorships']);
             $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
-    }
+
+        }
+
+        public function ReturnApartmentsWithValidSponsorship() {
+
+            $nowDate = Carbon::now()->toDateString();
+
+            $apartmentsWithValidSponsorship = DB::table('apartment_sponsorship')
+                ->whereDate('start_date', '<=', $nowDate)
+                ->whereDate('end_date', '>=', $nowDate)
+                ->pluck('apartment_id')
+                ->toArray();
+
+            // dd($apartmentsWithValidSponsorship);
+
+            return response()-> json(['appartamentiSponsorizzati' => $apartmentsWithValidSponsorship]);
+        }
 }
 
 

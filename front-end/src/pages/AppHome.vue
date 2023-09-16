@@ -13,11 +13,24 @@ export default {
         return {
             apartments: [],
             pages: [],
+            apartmentsId: [],
+            apartmentsIdWithSponsorship: [],
+            AppFiltered: [],
         }
     },
     methods: {
 
-        // Prende gli appartamenti sponsorizzati dal database e li inserisce in home
+        getApartmentsWithSponsorship() {
+            axios.get(store.API_URL + "/apartment-with-sponsorship")
+                .then(res => {
+
+                    const data = res.data.appartamentiSponsorizzati;
+                    this.apartmentsIdWithSponsorship = data;
+                    // console.log(this.apartmentsIdWithSponsorship, "app sponsorizzati");
+                })
+                .catch(err => console.error(err));
+
+        },
 
         getApartments() {
             axios.get(store.API_URL + "/apartment-index")
@@ -25,13 +38,30 @@ export default {
 
                     const data = res.data;
                     this.apartments = data.apartments;
-                    // this.pages = data.apartments.links;
+                    data.apartments.forEach(element => {
+                        this.apartmentsId.push(element.id);
+                    });
+                    // console.log(this.apartmentsId);
                 })
                 .catch(err => console.error(err));
         },
+
+        filterSponsorship(){
+            
+            //presenti in tutti ma non presenti in app con sponsor
+            // console.log(this.apartmentsIdWithSponsorship);
+            this.AppFiltered = this.apartmentsId.filter((valore) => {
+                return !this.apartmentsIdWithSponsorship.some((id) => id == valore);
+            });
+            console.log(this.AppFiltered);
+        },
     },
     mounted() {
+        this.getApartmentsWithSponsorship();
         this.getApartments();
+        setTimeout(this.filterSponsorship, 4000);
+    },
+    created() {
     }
 }
 </script>
@@ -43,27 +73,59 @@ export default {
 
     <h1>Appartamenti</h1>
     <ul>
-        <li v-for="apartment in apartments" :key="apartment.id">
-            {{ apartment.id }}
-            -
-            <router-link :to="{
-                name: 'apartment-show',
-                params: { id: apartment.id }
-            }">
-                {{ apartment.title }}
-            </router-link>
-            <br>
+        <li v-for="(apartment, index) in apartments" :key="index" :class="(this.AppFiltered.includes(apartment.id)) ? 'hidden' : ''">
+            <div v-if="!this.AppFiltered.includes(apartment.id)">
+                {{ apartment.id }}
+                -
+                <router-link :to="{
+                    name: 'apartment-show',
+                    params: { id: apartment.id }
+                }">
+                    {{ apartment.title }}
+                </router-link>
+                <br>
+    
+                {{ apartment.address.address }}
+    
+                <div v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <div>
+                        {{ apartmentService.name }}
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
 
-            {{ apartment.address.address }}
+    <div>-------------------------------------</div>
 
-            <div v-for="(apartmentService, index) in apartment.services" :key="index">
-                <div>
-                    {{ apartmentService.name }}
+    <ul>
+        <li v-for="(apartment, index) in apartments" :key="index" :class="!(this.AppFiltered.includes(apartment.id)) ? 'hidden' : ''">
+            <div v-if="this.AppFiltered.includes(apartment.id)">
+                {{ apartment.id }}
+                -
+                <router-link :to="{
+                    name: 'apartment-show',
+                    params: { id: apartment.id }
+                }">
+                    {{ apartment.title }}
+                </router-link>
+                <br>
+    
+                {{ apartment.address.address }}
+    
+                <div v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <div>
+                        {{ apartmentService.name }}
+                    </div>
                 </div>
             </div>
         </li>
     </ul>
 </template>
 
-<style></style>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 
