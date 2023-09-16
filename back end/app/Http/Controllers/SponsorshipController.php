@@ -9,11 +9,27 @@ use App\Models\Sponsorship;
 
 class SponsorshipController extends Controller
 {
-    public function index(Apartment $apartment)
+    public function index()
     {
-        $sponsorship = Sponsorship::all();
+        $apartment = Apartment :: all();
+        $sponsorship = Sponsorship::orderBy('id')->get();
         return view('sponsorship.index', compact('sponsorship', 'apartment'));
     }
+
+    public function ChooseSponsorship (Request $request, $id)
+        { 
+            $data = $request -> all();
+            $apartment = Apartment :: findOrFail($id);
+            dd($data);
+            $apartment -> sponsorships() -> attach($data['sponsorships']);
+
+            
+
+
+
+            
+
+        }
 }
 
 

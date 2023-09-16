@@ -15,7 +15,12 @@
             </div>
         </div>
         <div class="row d-flex justify-content-between align-content-center gap-4 gap-lg-0 my-4">
+            
+            <form method="POST" action="{{ route("sponsor_plans") }}" enctype='multipart/form-data'>
+                @csrf
             @foreach ($sponsorship as $item)
+
+            
                 <div class="col-12 col-lg-4">
                     <article class="plan card_">
                         <div class="inner">
@@ -59,16 +64,21 @@
                                         </svg>
                                     </span>
                                     <span>Più visualizzazioni</span>
+                                    {{$item->id}}
                                 </li>
+
+
+                                <input type="hidden" name="sponsorships" id="{{ $item->id }}" value ="{{ $item->id }}">
+                                <input type="submit" value ="Seleziona sponsorizzazione">
+                                
                             </ul>
-                            {{-- @if (!$isSponsored)
-                                <a class="btn button-color text-white"
-                                    href="{{ route('admin.sponsorships.show', ['apartmentSlug' => $apartmentSlug, 'id' => $item->id]) }}">Acquista</a>
-                            @endif --}}
+                           
                         </div>
                     </article>
                 </div>
             @endforeach
+            </form>
+
         </div>
         <div class="row">
             <div class="col my-3">
@@ -79,3 +89,4 @@
         </div>
     </div>
 @endsection
+

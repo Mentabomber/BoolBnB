@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Risultato Pagamento</title>
+    <title>Simulazione Pagamento</title>
 </head>
 <body>
-    <h1>Risultato della Transazione di Pagamento</h1>
-    <p>{{ $message }}</p>
+    @if ($result->success)
+        <p>Transazione riuscita. ID Transazione: {{ $result->transaction->id }}</p>
+    @else
+        <p>Transazione fallita. Errore: {{ $result->message }}</p>
+    @endif
 </body>
-</html
+</html>
