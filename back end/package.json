@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "start": "node ./bin/www"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.2",
@@ -15,6 +16,13 @@
     "dependencies": {
         "@popperjs/core": "^2.11.6",
         "bootstrap": "^5.2.2",
-        "braintree-web-drop-in": "^1.40.2"
+        "braintree": "^3.17.0",
+        "braintree-web-drop-in": "^1.40.2",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "express": "~4.16.1",
+        "hbs": "~4.0.4",
+        "http-errors": "~1.6.3",
+        "morgan": "~1.9.1"
     }
 }
