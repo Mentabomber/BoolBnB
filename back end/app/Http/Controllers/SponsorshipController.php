@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Illuminate\Support\Facades\DB;
+use Braintree\Gateway;
 
 
 use Carbon\Carbon;
@@ -14,30 +15,21 @@ class SponsorshipController extends Controller
 {
     public function index($id)
     {
+        $gateway = new Gateway([
+            "environment" => env("BRAINTREE_ENVIRONMENT"),
+            "merchantId" => env("BRAINTREE_MERCHANT_ID"),
+            "publicKey" => env("BRAINTREE_PUBLIC_KEY"),
+            "privateKey" => env("BRAINTREE_PRIVATE_KEY"),
+        ]);
+
+        $token = $gateway->clientToken()->generate();
+        
         $apartment = Apartment :: findOrFail($id);
         $sponsorship = Sponsorship::orderBy('id')->get();
-        return view('sponsorship.index', compact('apartment', 'sponsorship'));
+        return view('sponsorship.index', compact('apartment', 'sponsorship','gateway', 'token',));
     }
 
-    public function ChooseSponsorship (Request $request, $id) {
-            $data = $request -> all();
-            $apartment = Apartment :: findOrFail($id);
-
-            $nowDate = Carbon::now()->toDateString();
-            $nowDateParse = Carbon::parse($nowDate);
-
-            if ($data['sponsorships'] == 1) {
-                $endDate = $nowDateParse -> copy() -> addDays(1);
-            } else if ($data['sponsorships'] == 2) {
-                $endDate = $nowDateParse -> copy() -> addDays(3);
-            } else if ($data['sponsorships'] == 3) {
-                $endDate = $nowDateParse -> copy() -> addDays(6);
-            }
-
-            $sponsorship = Sponsorship::findOrFail($data['sponsorships']);
-            $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
-
-        }
+  
 
         public function ReturnApartmentsWithValidSponsorship() {
 
