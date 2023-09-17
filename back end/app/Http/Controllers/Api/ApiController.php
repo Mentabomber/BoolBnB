@@ -95,44 +95,60 @@ class ApiController extends Controller
 
         $apartments = $apartments->where('rooms', '>=', $data['roomsFilter']);
 
-        $apartments = $apartments->where('beds', '>=', $data['bedsFilter'])->get();
+        $apartments = $apartments->where('beds', '>=', $data['bedsFilter']);
+        if ($selectedServices) {
+            # code...
+        }
+        if(count($selectedServices) != 0) {
+            // $apartments = Apartment::whereHas('services', function ($query) use ($selectedServices) {
+            //     $query->whereIn('id', $selectedServices);})->get();
+            $apartments = $apartments->whereHas('services', function ($query) use ($selectedServices) {
+                  $query->whereIn('service_id', $selectedServices);}, '=', count($selectedServices))->get();
+        }else{
+            $apartments = $apartments->get();
+        }
+        
+        
+        
+            // $test = false;
+        // $prova2 = false;
+        // $count = 0;
+        // $count2 = 0;
+        // $sel = [];
+        // $serv = [];
+        // $contains = false;
+        // $length = count($selectedServices);
+        // $function = 0;
+        // if($length > 0) {
+        //     $test = true;
 
-
-        $test = false;
-        $prova2 = false;
-        $count = 0;
-        $count2 = 0;
-        $sel = [];
-        $serv = [];
-        $contains = false;
-        $length = count($selectedServices);
-        if($length > 0) {
-            $test = true;
-
-            foreach ($apartments as $apartment) {
-                $count = $count + 1;
-                foreach ($apartment['services'] as $service) {
-                    $count2 = $count2 +1;
-                    $sel = $selectedServices;
-                    array_push($serv,$service['id']);
-                    $selectedServices = [1, 2];
+        //     foreach ($apartments as $apartment) {
+        //         $count = $count + 1;
+        //         foreach ($apartment['services'] as $service) {
+        //             $count2 = $count2 +1;
+        //             $selectedServices = [1, 2, 3];
+        //             $sel = [1, 2];
+        //             array_push($serv,$service['id']);
                     
-                    // $function = array_diff($serv, $selectedServices);
-                    // if(in_array($service['id'], $apartment['services']['id'])) {
+                    
+                    
+        //             $function = array_diff($selectedServices, );
+                    
+        //             // if(in_array($service['id'], $apartment['services']['id'])) {
 
-                    //     if(!in_array($apartment,$filteredApartment)) {
+        //             //     if(!in_array($apartment,$filteredApartment)) {
     
-                    //         array_push($filteredApartment, $apartment); 
-                    //     }
-                    // }
-                }
-                $serv = [];
-            }
-        }
+        //             //         array_push($filteredApartment, $apartment); 
+        //             //     }
+        //             // }
+        //         }
+        //         $serv = [];
+        //     }
+        // }
 
-        if(count($filteredApartment) == 0) {
-            $filteredApartment = $apartments;
-        }
+        // if(count($filteredApartment) == 0) {
+        //     $filteredApartment = $apartments;
+        // }
         // $tipoarray = gettype($selectedServices);
         // Filtra per utilities selezionate
         // $apartments = $apartments->where('services.id','=', '1')->get();
@@ -183,8 +199,8 @@ class ApiController extends Controller
     //         ->where('apartment_service.service_id', $selectedServices)
     //         ->orderBy('distance', 'asc')
     //         ->get();
-    
-        return response()->json(['latitude' => $latitude, 'longitude' => $longitude, 'apartments' => $apartments, 'test' => $test, 'prova2' => $prova2, 'leng' => $length, 'count' => $count, 'count2' => $count2, 'sel' => $sel, 'serv' => $serv, 'contains' => $contains, 'filteredApartment' => $filteredApartment, 'selectedService' => $selectedServices]);
+    // , 'test' => $test, 'prova2' => $prova2, 'leng' => $length, 'count' => $count, 'count2' => $count2, 'sel' => $sel, 'serv' => $serv, 'contains' => $contains, 'filteredApartment' => $filteredApartment, 'selectedService' => $selectedServices, 'function' => $function
+        return response()->json(['latitude' => $latitude, 'longitude' => $longitude, 'apartments' => $apartments, 'selectedServices' => $selectedServices]);
     }
 
     public function serviceList() {

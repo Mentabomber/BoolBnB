@@ -17,6 +17,7 @@ export default {
       bedsFilter: 0,
       roomsFilter: 0,
       defaultValue: 20,
+      function: 0
     }
   },
   methods: {
@@ -41,7 +42,7 @@ export default {
         .then(res => {
           const data = res.data;
           console.log(data, 'prova');
-          this.store.apartments_filtered = data.filteredApartment;
+          this.store.apartments_filtered = data.apartments;
           // console.log(this.store.apartments_filtered, 'eccomi');
         });
 
