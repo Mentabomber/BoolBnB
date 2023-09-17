@@ -38,6 +38,11 @@
                 <label for="image">Immagine Appartamento</label>
                 <input type="file" name="image" id="image">
                 <br>
+                <label for="visible">Visibilità</label>
+                <input type="radio" class="visible"  name="visible" value="0"> no
+                <br>
+                <input type="radio" class="visible"  name="visible" value="1" checked> si
+                <br>
                 <label for="">Servizi</label>
                 <br>
                 @foreach ($services as $service)

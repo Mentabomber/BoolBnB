@@ -14,7 +14,7 @@ use App\Models\Message;
 class ApiController extends Controller
 {
     public function apartmentIndex() {
-        $apartments = Apartment :: with('address', 'services')->get();
+        $apartments = Apartment :: with('address', 'services')->where('visible', 1)->get();
         return response()->json([
             'apartments' => $apartments,
         ]);
@@ -56,6 +56,7 @@ class ApiController extends Controller
                 + sin(radians(' . $latitude . '))
                 * sin(radians(addresses.latitude)))) AS distance'
             )->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
+            ->where('visible', 1)
             ->having('distance', '<=', 20)
             ->orderBy('distance', 'asc')
             ->get();
@@ -90,6 +91,7 @@ class ApiController extends Controller
             )
             ->with('services')
             ->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
+            ->where('visible', 1)
             ->having('distance', '<=', $radius)
             ->orderBy('distance', 'asc');
 
