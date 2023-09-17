@@ -16,6 +16,7 @@ export default {
             apartmentsId: [],
             apartmentsIdWithSponsorship: [],
             AppFiltered: [],
+            store
         }
     },
     methods: {
@@ -55,6 +56,19 @@ export default {
             });
             console.log(this.AppFiltered);
         },
+
+        postApartment() {
+            const position = {
+                latitude: this.store.searched_latitude,
+                longitude: this.store.searched_longitude,
+            };
+            axios.post(store.API_URL + '/search', position)
+                .then(res => {
+                    const data = res.data;
+                    console.log(data, 'prova');
+                });
+
+        },
     },
     mounted() {
         this.getApartmentsWithSponsorship();
@@ -69,7 +83,7 @@ export default {
 
 <template>
     <h1>Hello from HOME</h1>
-    <AppSearchbarVue />
+    <AppSearchbarVue @search="postApartment" />
 
     <h1>Appartamenti</h1>
     <ul>

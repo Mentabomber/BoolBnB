@@ -14,14 +14,19 @@ export default {
       store,
       apartments: [],
       kmFilter: 20,
-      bedsFilter: '',
-      roomsFilter: '',
+      bedsFilter: 0,
+      roomsFilter: 0,
+      defaultValue: 20,
     }
   },
   methods: {
     // Chiede al db tutti gli appartamenti che corrispondono ai filtri base di ricerca (distanza <= 20)
 
     postApartment() {
+      // if (this.store.activeFilterServices.length == 0) {
+      //   this.store.activeFilterServices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      // }
+
       const filterData = {
         latitude: this.store.searched_latitude,
         longitude: this.store.searched_longitude,
@@ -31,15 +36,13 @@ export default {
         servicesFilter: this.store.activeFilterServices,
       };
 
-      // this.position.latitude = this.store.searched_latitude;
-      // this.position.longitude = this.store.searched_longitude;
-      console.log(filterData.servicesFilter[0], 'prova');
+      console.log(filterData.servicesFilter, 'prova');
       axios.post(store.API_URL + '/advanced-search', filterData)
         .then(res => {
           const data = res.data;
           console.log(data, 'prova');
-          this.store.apartments_filtered = data.apartments;
-          console.log(this.store.apartments_filtered);
+          this.store.apartments_filtered = data.filteredApartment;
+          // console.log(this.store.apartments_filtered, 'eccomi');
         });
 
     },
@@ -56,8 +59,7 @@ export default {
   <AppSearchbar @search="postApartment" />
 
   <label for="km-radius">Raggio Kilometri</label>
-  <!-- <input v-model="kmFilter" type="range" min="1" max="50" value="25" class="slider" id="myRange"
-    @change="this.postApartment()"> -->
+  <input v-model="kmFilter" type="range" min="1" max="50" class="slider" id="myRange" @change="this.postApartment()">
 
   <p>Km: <span id="demo">25</span></p>
   <br>
@@ -103,8 +105,8 @@ export default {
   <div v-for="apartment in store.apartments_filtered">
     <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
     {{ apartment.title }}
-    {{ apartment.rooms }}
-    {{ apartment.beds }}
+    stanze:{{ apartment.rooms }}
+    letti: {{ apartment.beds }}
 
   </div>
 </template>
