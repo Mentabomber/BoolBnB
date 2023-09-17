@@ -15,6 +15,7 @@ use App\Models\Service;
 use App\Models\Address;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Sponsorship;
 
 
 class LoggedController extends Controller
@@ -25,9 +26,10 @@ class LoggedController extends Controller
         // Richiama tutti gli appartamenti
 
         $apartments = Apartment :: all();
+        $sponsorships = Sponsorship :: all();
 
 
-        return view('auth.apartments.show', compact('apartments'));
+        return view('auth.apartments.show', compact('apartments', 'sponsorships'));
     }
 
 
@@ -142,7 +144,7 @@ class LoggedController extends Controller
             'bathrooms' => 'numeric|min:0',
             'square_meters' => 'numeric|min:0',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
@@ -250,6 +252,6 @@ class LoggedController extends Controller
     }
 
     public function getAuth (){
-        return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403); 
+        return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403);
     }
 }

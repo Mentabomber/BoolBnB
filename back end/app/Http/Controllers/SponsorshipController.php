@@ -20,8 +20,10 @@ class SponsorshipController extends Controller
     }
 
     public function ChooseSponsorship (Request $request, $id) {
+        $apartment = Apartment :: findOrFail($id);
+        $apartments = Apartment :: all();
+
             $data = $request -> all();
-            $apartment = Apartment :: findOrFail($id);
 
             $nowDate = Carbon::now()->toDateString();
             $nowDateParse = Carbon::parse($nowDate);
@@ -34,10 +36,17 @@ class SponsorshipController extends Controller
                 $endDate = $nowDateParse -> copy() -> addDays(6);
             }
 
+        if (!$apartment->sponsorships()->where('end_date', '>=', $nowDate)->exists()) {
             $sponsorship = Sponsorship::findOrFail($data['sponsorships']);
             $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
-
+            $message = 'Sponsorizzazione attivata correttamente.';
+        } else {
+            $message = 'Questo appartamento ha già una sponsorizzazione attiva.';
+            // dd($message);
         }
+        return view('auth.apartments.sponsorship', compact('message', 'apartments'));
+
+    }
 
         public function ReturnApartmentsWithValidSponsorship() {
 
