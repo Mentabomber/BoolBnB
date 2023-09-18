@@ -45,11 +45,10 @@ class PaymentController extends Controller
            
             if ($result->success) {
                 
-                 $nowDate = Carbon::now()->toDateString();
-                 $nowDateParse = Carbon::parse($nowDate);
-                 $sponsorship = Sponsorship::findOrFail($data['sponsor_id']);
-                 $apartment = Apartment :: findOrFail($data['apartment_id']);
-
+                $nowDate = Carbon::now()->toDateString();
+                $nowDateParse = Carbon::parse($nowDate);
+                $sponsorship = Sponsorship::findOrFail($data['sponsor_id']);
+                $apartment = Apartment::findOrFail($data['apartment_id']);
                  
                 if ($data['sponsor_id']== 1) {
                     $endDate = $nowDateParse -> copy() -> addDays(1);
@@ -60,8 +59,8 @@ class PaymentController extends Controller
                 }
 
                  $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
-                 
-                 return redirect() -> route('guest.apartments.show', $apartment->id);
+                
+                 return redirect() -> route('auth.apartments.show');
             } else {
                 $message = "Il pagamento non è andato a buon fine";
                 echo $message;

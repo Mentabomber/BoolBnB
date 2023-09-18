@@ -2,11 +2,6 @@
 import axios from 'axios';
 import { store } from '../store';
 import Swal from 'sweetalert2';
-// import map from '../js/map.js';
-// import mobile_or_tablet from '../js/mobile-or-tablet.js';
-// import '@../js/map.js';
-// import '@../js/mobile-or-tablet.js';
-
 
 export default {
     name: 'AppHome',
