@@ -55,8 +55,17 @@ export default {
     color: inherit;
     font-weight: bold;
     font-size: 25px
+
+   
+
+   }
+
+   a:hover {
+    color: $colore_primario;
    }
   }
+
   
+
 }
 </style>

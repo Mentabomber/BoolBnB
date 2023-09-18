@@ -94,7 +94,16 @@ export default {
     text-decoration: none;
     color: inherit;
     
-    font-size: 18px
+    font-size: 18px;
+
+    i {
+        margin-left: 10px;
+        font-size: 30px;
+    }  
+   }
+
+   a:hover {
+    color : $colore_primario;
    }
    
   
