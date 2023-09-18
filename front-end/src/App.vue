@@ -20,7 +20,7 @@ export default {
       axios.defaults.withCredentials = true;
       axios.get(this.store.local_host + "/auth")
         .then(response => {
-
+          
           this.store.user_email = response.data.email;
           this.store.user_name = response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1);
           this.store.user_surname = response.data.surname.charAt(0).toUpperCase() + response.data.surname.slice(1);

@@ -8,24 +8,24 @@
     }
 
 body {
-    height: 20%;
+    height: 100%;
     margin: 0;
 }
 
 .map {
-    height: 40%;
+    height: 100%;
     position: absolute;
-    width: 50%;
+    min-width: 100%;
 }
 
 .full-map {
     flex: 1;
-    height: 20vh;
+    height: 100vh;
 }
 
 .tt-foldable {
     background-color: #ffffff;
-    max-height: 999px;
+    max-height: 100%;
     max-width: 100%;
     transition: max-height .2s ease,
         max-width .2s ease;
@@ -620,11 +620,11 @@ body {
     display: flex;
     flex-direction: column;
     font-family: Gotham, Helvetica, Arial, sans-serif;
-    height: 40vh;
+    height: 100vh;
     justify-content: space-between;
     overflow: visible;
     margin: 0;
-    width: 276px;
+    width: 376px;
     z-index: 1;
 }
 
@@ -832,8 +832,8 @@ body {
     transition: border-color .2s ease;
 
     /* &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
     &:-webkit-autofill:active  {
         -webkit-box-shadow: 0 0 0 30px white inset !important;
     } */

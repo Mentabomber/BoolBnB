@@ -18,17 +18,18 @@
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/ui-library/index.css') }}" />
     <link rel="stylesheet" type="text/css"
         href="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.2.0//SearchBox.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/ui-library/icons-css/poi.css') }}" />
-    
+
     <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js'></script>
     <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/services/services-web.min.js'></script>
     <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.2.0//SearchBox-web.js'></script>
-    
-    
+
+
     <script type="text/javascript" src="{{ asset('assets/js/foldable.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/languages.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/tail-selector.js') }}"></script>

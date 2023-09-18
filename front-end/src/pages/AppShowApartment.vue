@@ -113,93 +113,146 @@ export default {
 </script>
 
 <template>
-    <!-- <h1>Hello from HOME</h1> -->
-    <!-- <h2>Go to 
-        <router-link :to="{ name: 'about' }">ABOUT</router-link>
-    </h2>
-    <br><br> -->
-    <h1>Appartamento</h1>
-
-    <br>
-    {{ apartment.title }}
-
-    {{ address.address }}
-    <br>
-    <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
-    <br>
-
-    <div v-for="(apartmentService, index) in apartment.services" :key="index">
-        <div>
-            {{ apartmentService.name }}
-
+    <div class="container">
+        <!-- <h1>Hello from HOME</h1> -->
+        <!-- <h2>Go to 
+            <router-link :to="{ name: 'about' }">ABOUT</router-link>
+        </h2>
+        <br><br> -->
+    
+        <h1>{{ apartment.title }}</h1>
+        <h5><i class="fa-solid fa-location-dot"></i>{{ address.address }}</h5>
+        
+        <div class="foto_appartamento">
+            <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
         </div>
-    </div>
 
-    <form @submit.prevent="sendMessage">
+        <div class="d-flex text-align-center justify-content-between">
+            <div>
+                <h2><span>Descrizione</span> Appartamento</h2>
+                <div class="info_appartamento">
+                    <div class="col d-flex text-align-center justify-content-between">
+                        <div>Stanze: {{ apartment.rooms }}</div>
+                        <div>Letti: {{ apartment.beds }}</div>
+                    </div>
+                    <div class="col d-flex text-align-center justify-content-between">
+                        <div>Metri quadrati: {{ apartment.square_meters }} m²</div>
+                        <div>Bagni: {{ apartment.bathrooms }}</div>
+                    </div>
+                </div>
+        
+                <h2><span>Servizi</span> Appartamento</h2>
+                <ul v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <li>
+                        {{ apartmentService.name }}
+                    </li>
+                </ul>
+            </div>
 
-        <label for="name">Nome: </label>
-        <input type="text" name="name" v-model="store.user_name">
-        <br>
-        <label for="surname">Nickname: </label>
-        <input type="text" name="surname" v-model="store.user_surname">
-        <br>
-
-        <label for="email">E-mail: </label>
-        <input type="text" name="email" v-model="store.user_email">
-        <br>
-        <label for="message">Messaggio: </label>
-        <textarea rows="4" cols="50" name="message" v-model="store.user_message"></textarea>
-        <br>
-        <input type="submit" value="Spedisci">
-        <br>
-    </form>
-
-    <div style="height: 400px; margin-left: 0%;">
-        <div id='map' class='map'>
+            <div class="map_container">
+                <div class="map_view">
+                    <div id='map' class='map'>
+                    </div>
+                </div>
+            </div>
         </div>
+    
+        <form @submit.prevent="sendMessage">
+    
+            <label for="name">Nome: </label>
+            <input type="text" name="name" v-model="store.user_name">
+            <br>
+            <label for="surname">Nickname: </label>
+            <input type="text" name="surname" v-model="store.user_surname">
+            <br>
+    
+            <label for="email">E-mail: </label>
+            <input type="text" name="email" v-model="store.user_email">
+            <br>
+            <label for="message">Messaggio: </label>
+            <textarea rows="4" cols="50" name="message" v-model="store.user_message"></textarea>
+            <br>
+            <input type="submit" value="Spedisci">
+            <br>
+        </form>
     </div>
 </template>
 
-<style >
-    .marker-icon {
-        background-position: center;
-        background-size: 22px 22px;
-        border-radius: 50%;
-        height: 22px;
-        left: 4px;
-        position: absolute;
-        text-align: center;
-        top: 3px;
-        transform: rotate(45deg);
-        width: 22px;
+<style scoped lang="scss">
+@use '../styles/partials/variables.scss' as *;
+@use '../styles/partials/mixins.scss' as *;
+
+.container {
+    padding: 0rem;
+
+    h1 {
+        font-weight: bold;
     }
 
-    .marker {
-        height: 30px;
-        width: 30px;
+    h5 .fa-solid.fa-location-dot {
+        margin-right: 0.8rem;
+        margin-bottom: .5rem;
     }
 
-    .marker-content {
-        background: #c30b82;
-        border-radius: 50% 50% 50% 0;
-        height: 30px;
-        left: 50%;
-        margin: -15px 0 0 -15px;
-        position: absolute;
-        top: 50%;
-        transform: rotate(-45deg);
-        width: 30px;
+    .foto_appartamento {
+        width: 100%;
+        border: 1px solid #15ba8f;
+        border-radius: 20px;
+
+        img {
+            min-width: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
     }
 
-    .marker-content::before {
-
-        border-radius: 50%;
-        content: "";
-        height: 24px;
-        margin: 3px 0 0 3px;
-        position: absolute;
-        width: 24px;
+    h2 {
+        margin-top: 2rem;
+        font-weight: bold;
+        span {
+            color: #15ba8f;
+        }
     }
+
+    .info_appartamento {
+        font-weight: bold;
+
+        .col {
+            width: 75%;
+            margin-bottom: 1rem;
+        }
+    }
+
+    ul {
+        padding: 0.4rem 1rem 0;
+        line-height: 0.5rem;
+
+        li {
+            font-style: italic;
+        }
+    }
+
+    .map_container {
+        border: 1px solid #15ba8f;
+        min-width: 50%;
+        height: 500px;
+        position: relative;
+
+        .mapboxgl-canvas {
+            height: 100%;
+        }
+
+        .map_view {
+            min-width: 100%;
+            height: 100%;
+
+            .map {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
 </style>
 
 
