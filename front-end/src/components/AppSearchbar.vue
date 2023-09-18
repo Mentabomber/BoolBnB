@@ -94,6 +94,7 @@ export default {
         <br>
       </span>
     </div>
+    
     <input class="my-3" type="submit" :disabled="this.submit == false" value="Cerca">
   </form>
 </template>
