@@ -41,6 +41,7 @@ class SponsorshipController extends Controller
                 ->pluck('apartment_id')
                 ->toArray();
 
+            
             // dd($apartmentsWithValidSponsorship);
 
             return response()-> json(['appartamentiSponsorizzati' => $apartmentsWithValidSponsorship]);

@@ -12,21 +12,29 @@
                         <li>
                             <a href="{{ route('guest.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
                             <a href="{{ route('auth.apartments.edit', $apartment->id) }}"> Modifica</a>
-                            <a href="{{ route('auth.apartments.show-messages', $apartment->id) }}">Lista Messaggi Appartamento</a>
-                            <a href="{{ route('sponsor_plans', $apartment->id) }}">Sponsorizza appartamento</a>
+                            <a href="{{ route('auth.apartments.show-messages', $apartment->id) }}">Lista Messaggi
+                                Appartamento</a>
 
-                            <form
-                            class="d-inline"
-                            method="POST"
-                            action="{{ route('auth.apartments.delete', $apartment -> id) }}"
-                            >
+                            @if (!in_array($apartment->id, $apartmentsWithValidSponsorship))
+                                <a href="{{ route('sponsor_plans', $apartment->id) }}">Crea sponsorizzazione</a>
+                            @else
+                                @foreach ($endDate as $date)
+                                    @if ($apartment->id == $date->apartment_id)
+                                        <span>Appartamento gia sponsorizzato fino al: {{ $date->end_date }}</span>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            <form class="d-inline" method="POST"
+                                action="{{ route('auth.apartments.delete', $apartment->id) }}">
 
                                 @csrf
-                                @method("DELETE")
+                                @method('DELETE')
 
-                                <input class="btn btn-primary" type="submit" value="Elimina" onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
+                                <input class="btn btn-primary" type="submit" value="Elimina"
+                                    onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
                             </form>
-                          
+
                         </li>
                     @endif
                 @endforeach

@@ -38,9 +38,6 @@ class PaymentController extends Controller
                     'submitForSettlement' => true,
                    
                 ],
-
-                
-             
             ]);
 
             $data = $request -> all();

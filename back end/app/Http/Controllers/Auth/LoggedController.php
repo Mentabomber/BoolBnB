@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
-
+use Carbon\Carbon;
 
 use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Address;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Sponsorship;
 
 
 class LoggedController extends Controller
@@ -25,9 +27,25 @@ class LoggedController extends Controller
         // Richiama tutti gli appartamenti
 
         $apartments = Apartment :: all();
+        $sponsorships = Sponsorship :: all();
 
+        $today = Carbon::now()->toDateString();
 
-        return view('auth.apartments.show', compact('apartments'));
+        $apartmentsWithValidSponsorship = DB::table('apartment_sponsorship')
+                ->whereDate('start_date', '<=', $today)
+                ->whereDate('end_date', '>=', $today)
+                ->pluck('apartment_id')
+                ->toArray();
+        
+        $endDate = DB::table('apartment_sponsorship')
+                ->whereDate('start_date', '<=', $today)
+                ->whereDate('end_date', '>=', $today)
+                ->select(['apartment_id', 'end_date'])
+                ->get();
+
+                
+
+        return view('auth.apartments.show', compact('apartments', 'sponsorships', 'today', 'apartmentsWithValidSponsorship', 'endDate'));
     }
 
 
@@ -142,7 +160,7 @@ class LoggedController extends Controller
             'bathrooms' => 'numeric|min:0',
             'square_meters' => 'numeric|min:0',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
@@ -233,7 +251,9 @@ class LoggedController extends Controller
 
         $apartment->delete();
 
-        return redirect() -> route('auth.apartments.show');
+        $today = Carbon::now()->toDateString();
+
+        return redirect()->route('auth.apartments.show', compact('today'));
     }
     // Mostra tutti i messaggi corrispondendti all'appartamento in pagina
     public function showMessages($id) {
@@ -250,6 +270,6 @@ class LoggedController extends Controller
     }
 
     public function getAuth (){
-        return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403); 
+        return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403);
     }
 }
