@@ -72,7 +72,7 @@ export default {
                     .setPopup(popup)
                     .addTo(map);
             }
-            createMarker([resultFieldLO, resultFieldLA], '#5327c3', 'SVG icon');
+            createMarker([resultFieldLO, resultFieldLA], '#5327c3', 'Mi trovo qui :D');
         },
 
     },
@@ -160,21 +160,21 @@ export default {
         <form @submit.prevent="sendMessage">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" v-model="store.user_name">
+                <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Inserisci Nome" v-model="store.user_name">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nickname</label>
-                <input type="text" name="surname" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" v-model="store.user_surname">
+                <label for="exampleFormControlInput1" class="form-label">Cognome</label>
+                <input type="text" name="surname" class="form-control" id="exampleFormControlInput2" placeholder="Inserisci Cognome" v-model="store.user_surname">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">E-mail</label>
-                <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" v-model="store.user_email">
+                <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="Inserisci E-mail" v-model="store.user_email">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3" v-model="store.user_message"></textarea>
+                <label for="exampleFormControlTextarea1" class="form-label">Testo messaggio</label>
+                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
             </div>
-            <input type="submit" class="btn btn-primary" value="Spedisci">
+            <input type="submit" class="btn btn-primary" value="Invia">
         </form>
     </div>
 </template>
@@ -184,7 +184,7 @@ export default {
 @use '../styles/partials/mixins.scss' as *;
 
 .container {
-    padding: 0rem;
+    padding-top: 2rem;
     background-color: #dfdedf;
     padding-bottom: 6rem;
 

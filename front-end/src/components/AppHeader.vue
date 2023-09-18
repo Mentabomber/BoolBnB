@@ -16,8 +16,8 @@ export default {
 <template>
 <header>
     <div class="container-fluid">
-        <div class="row  d-flex  align-items-center ">
-            <div class="col-6 "  id="title"><h2>BoolBnB</h2></div>
+        <div class="row d-flex align-items-center ">
+            <div class="col-6"  id="title"><h2>BoolBnB</h2></div>
             <a class="col-2 " href="http://localhost:5174/">Home</a>
             <a class="col-2" href="http://localhost:8000/login">Login</a>
             <a  class="col-2" href="http://127.0.0.1:8000/register">Signup</a>
@@ -31,6 +31,9 @@ export default {
 @use '../styles/partials/variables.scss' as *;
 @use '../styles/partials/mixins.scss' as *;
 
+header {
+  background-color: white;
+}
 .container-fluid {
   
   height: 100px;
