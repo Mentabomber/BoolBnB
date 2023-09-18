@@ -16,11 +16,16 @@ export default {
 <template>
 <header>
     <div class="container-fluid">
-        <div class="row d-flex align-items-center ">
-            <div class="col-6"  id="title"><h2>BoolBnB</h2></div>
-            <a class="col-2 " href="http://localhost:5174/">Home</a>
-            <a class="col-2" href="http://localhost:8000/login">Login</a>
-            <a  class="col-2" href="http://127.0.0.1:8000/register">Signup</a>
+        <div class="row d-flex align-items-center justify-content-between">
+            <div class="col-4"  id="title"><h2>BoolBnB</h2></div>
+            <a class="col-1 text-center" href="http://localhost:5174/">Home</a>
+            <div v-if="this.store.user_name === 'undefined' || this.store.user_name == null" class="col-3 d-flex gap-5 text-center">
+              <a class="col-2" href="http://localhost:8000/login">Login</a>
+              <a  class="col-2" href="http://127.0.0.1:8000/register">Signup</a>
+            </div>
+            <div v-else class="col-3 text-center">
+              <a href="http://127.0.0.1:8000/dashboard">{{ this.store.user_name }}</a>
+            </div>
         </div>
     </div>
 </header>
