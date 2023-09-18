@@ -3,11 +3,14 @@ import { store } from './store'
 import axios from 'axios'
 import AppHeader from './components/AppHeader.vue'
 import AppShowApartment from './pages/AppShowApartment.vue'
+import AppFooter from './components/AppFooter.vue'
+
 
 
 export default {
   components: {
     AppHeader,
+    AppFooter,
     AppShowApartment,
   },
   data() {
@@ -50,6 +53,7 @@ export default {
 <template>
   <AppHeader />
   <router-view></router-view>
+  <AppFooter />
 </template>
 
 <style lang="scss">

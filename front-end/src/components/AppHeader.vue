@@ -14,15 +14,49 @@ export default {
 </script>
 
 <template>
-  <h1>HEADER</h1>
+<header>
+    <div class="container-fluid">
+        <div class="row  d-flex  align-items-center ">
+            <div class="col-6 "  id="title"><h2>BoolBnB</h2></div>
+            <a class="col-2 " href="http://localhost:5174/">Home</a>
+            <a class="col-2" href="http://localhost:8000/login">Login</a>
+            <a  class="col-2" href="http://127.0.0.1:8000/register">Signup</a>
+        </div>
+    </div>
+</header>
 
-  <a href="http://localhost:8000/login">Accedi</a>
-
-  <br>
-  <a href="http://127.0.0.1:8000/register">Registrati</a>
 </template>
 
 <style scoped lang="scss">
 @use '../styles/partials/variables.scss' as *;
 @use '../styles/partials/mixins.scss' as *;
+
+.container-fluid {
+  
+  height: 100px;
+  border-bottom: 4px solid black;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  
+
+  .row {
+    height: 100%;
+    width: 90%;
+   
+    margin: 0 auto;
+
+   h2 {
+    color : $colore_primario;
+    font-size: 50px;
+    
+   }
+
+   a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    font-size: 25px
+   }
+  }
+  
+}
 </style>
