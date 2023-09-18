@@ -11,7 +11,7 @@
                 <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button {{ $id === 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse{{ $id }}" aria-expanded="{{ $id === 0 ? 'true' : 'false' }}" aria-controls="accordion-collapse{{ $id }}">
-                    <span class="name-nick-email">{{ $message->name }} | {{ $message->surname }} | {{ $message->email }}</span>
+                    <span class="name-nick-email">{{ $message->name }} {{ $message->surname }} | {{ $message->email }}</span>
                     </button>
                 </h2>
                 <div id="accordion-collapse{{ $id }}" class="accordion-collapse collapse {{ $id === 0 ? 'show' : '' }}">
@@ -22,7 +22,9 @@
                 </div>
             @endforeach
         </div>
+        <div class="torna_indietro">Torna a <a href="{{ route('auth.apartments.show') }}">Miei appartamenti</a></div>
     </div>
+
 
 @endif
 
@@ -62,6 +64,10 @@ h2 > span {
 .accordion-button:not(.collapsed) {
     background-color: #00000000;
     color: black;
+}
+
+.torna_indietro {
+    margin-top: 2rem;
 }
 
 </style>
