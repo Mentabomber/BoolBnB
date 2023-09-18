@@ -51,21 +51,23 @@ class PaymentController extends Controller
                  $apartment = Apartment :: findOrFail($data['apartment_id']);
 
                  
-            if ($data['sponsor_id']== 1) {
-                $endDate = $nowDateParse -> copy() -> addDays(1);
-            } else if ($data['sponsor_id'] == 2) {
-                $endDate = $nowDateParse -> copy() -> addDays(3);
-            } else if ($data['sponsor_id'] == 3) {
-                $endDate = $nowDateParse -> copy() -> addDays(6);
-            }
-                 $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
-    
+                if ($data['sponsor_id']== 1) {
+                    $endDate = $nowDateParse -> copy() -> addDays(1);
+                } else if ($data['sponsor_id'] == 2) {
+                    $endDate = $nowDateParse -> copy() -> addDays(3);
+                } else if ($data['sponsor_id'] == 3) {
+                    $endDate = $nowDateParse -> copy() -> addDays(6);
                 }
-            
 
-                
+                 $apartment -> sponsorships() -> attach($sponsorship, ['start_date'=> $nowDate, 'end_date' => $endDate]);
+                 
+                 return redirect() -> route('guest.apartments.show', $apartment->id);
+            } else {
+                $message = "Il pagamento non è andato a buon fine";
+                echo $message;
+            }
+
             
-        
 }
 
 
