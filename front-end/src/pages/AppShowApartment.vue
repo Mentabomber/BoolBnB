@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import { store } from '../store';
+import Swal from 'sweetalert2';
 // import map from '../js/map.js';
 // import mobile_or_tablet from '../js/mobile-or-tablet.js';
 // import '@../js/map.js';
@@ -31,13 +32,16 @@ export default {
         
             axios.post(store.API_URL + '/api/endpoint', formData)
                 .then(response => {
-                
+                // alert messaggio inviato tramite sweetalert2
+                Swal.fire('Messaggio inviato con successo!');
+                store.user_message = "";
                 console.log(response.data);
                 })
                 .catch(error => {
                 
                 console.error(error);
                 });
+            
         },
         mappaTomTom() {
             let resultFieldLO = this.longitude;
