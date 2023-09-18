@@ -141,9 +141,9 @@ export default {
                     </div>
                 </div>
         
-                <h2><span>Servizi</span> Appartamento</h2>
-                <ul v-for="(apartmentService, index) in apartment.services" :key="index">
-                    <li>
+                <h2 class="servizi_app"><span>Servizi</span> Appartamento</h2>
+                <ul class="contenitore_servizi d-flex flex-wrap">
+                    <li v-for="(apartmentService, index) in apartment.services" :key="index">
                         {{ apartmentService.name }}
                     </li>
                 </ul>
@@ -158,22 +158,23 @@ export default {
         </div>
     
         <form @submit.prevent="sendMessage">
-    
-            <label for="name">Nome: </label>
-            <input type="text" name="name" v-model="store.user_name">
-            <br>
-            <label for="surname">Nickname: </label>
-            <input type="text" name="surname" v-model="store.user_surname">
-            <br>
-    
-            <label for="email">E-mail: </label>
-            <input type="text" name="email" v-model="store.user_email">
-            <br>
-            <label for="message">Messaggio: </label>
-            <textarea rows="4" cols="50" name="message" v-model="store.user_message"></textarea>
-            <br>
-            <input type="submit" value="Spedisci">
-            <br>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" v-model="store.user_name">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Nickname</label>
+                <input type="text" name="surname" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" v-model="store.user_surname">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">E-mail</label>
+                <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="name@example.com" v-model="store.user_email">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3" v-model="store.user_message"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Spedisci">
         </form>
     </div>
 </template>
@@ -184,6 +185,8 @@ export default {
 
 .container {
     padding: 0rem;
+    background-color: #dfdedf;
+    padding-bottom: 6rem;
 
     h1 {
         font-weight: bold;
@@ -209,6 +212,8 @@ export default {
     h2 {
         margin-top: 2rem;
         font-weight: bold;
+        margin-bottom: 1.5rem;
+
         span {
             color: #15ba8f;
         }
@@ -218,17 +223,17 @@ export default {
         font-weight: bold;
 
         .col {
-            width: 75%;
+            width: 70%;
             margin-bottom: 1rem;
         }
     }
 
     ul {
         padding: 0.4rem 1rem 0;
-        line-height: 0.5rem;
 
         li {
             font-style: italic;
+            width: 34%;
         }
     }
 
@@ -237,6 +242,8 @@ export default {
         min-width: 50%;
         height: 500px;
         position: relative;
+        margin-top: 2.5rem;
+        border-radius: 20px;
 
         .mapboxgl-canvas {
             height: 100%;
@@ -249,10 +256,63 @@ export default {
             .map {
                 width: 100%;
                 height: 100%;
+                border-radius: 20px;
             }
         }
+    }
+
+    .servizi_app {
+        margin-top: 5rem;
+    }
+
+    .contenitore_servizi {
+        height: 140px;
+    }
+
+    .form-label {
+        font-weight: bold;
     }
 }
 </style>
 
+<style lang="scss">
+.marker-icon {
+    background-position: center;
+    background-size: 22px 22px;
+    border-radius: 50%;
+    height: 22px;
+    left: 4px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 22px;
+}
 
+.marker {
+    height: 30px;
+    width: 30px;
+}
+
+.marker-content {
+    background: #c30b82;
+    border-radius: 50% 50% 50% 0;
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    width: 30px;
+}
+
+.marker-content::before {
+
+    border-radius: 50%;
+    content: "";
+    height: 24px;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    width: 24px;
+}
+</style>

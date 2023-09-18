@@ -48,8 +48,10 @@ export default {
 </script>
 
 <template>
-  <AppHeader />
-  <router-view></router-view>
+  <div class="contenitore">
+    <AppHeader />
+    <router-view></router-view>
+  </div>
 </template>
 
 <style lang="scss">
@@ -59,5 +61,9 @@ export default {
 
 .hidden {
   display: none;
+}
+
+.contenitore {
+  background-color: #dfdedf;
 }
 </style>
