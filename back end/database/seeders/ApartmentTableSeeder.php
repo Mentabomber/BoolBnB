@@ -30,7 +30,7 @@ class ApartmentTableSeeder extends Seeder
                 "bathrooms"=> 1,
                 "square_meters"=> 150,
                 "image"=> "1694091577.jpg",
-                "visible"=> false
+                "visible"=> true
             ],
             [
                 "title" => "Appartamento 2",          
@@ -39,7 +39,7 @@ class ApartmentTableSeeder extends Seeder
                 "bathrooms"=> 2,
                 "square_meters"=> 77,
                 "image"=> "1694091651.jpg",
-                "visible"=> false
+                "visible"=> true
             ],
             [
                 "title" => "Appartamento 3",          
@@ -48,7 +48,7 @@ class ApartmentTableSeeder extends Seeder
                 "bathrooms"=> 2,
                 "square_meters"=> 124,
                 "image"=> "1694091725.jpg",
-                "visible"=> false
+                "visible"=> true
             ],
             [
                 "title" => "Appartamento 4",          
@@ -57,7 +57,7 @@ class ApartmentTableSeeder extends Seeder
                 "bathrooms"=> 1,
                 "square_meters"=> 62,
                 "image"=> "1694091783.jpg",
-                "visible"=> false
+                "visible"=> true
             ],
 
         ];
