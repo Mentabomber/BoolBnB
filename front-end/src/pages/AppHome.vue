@@ -38,9 +38,10 @@ export default {
                 .then(res => {
 
                     const data = res.data;
+                    this.store.searchResult = data.apartments;
                     this.apartments = data.apartments;
                     data.apartments.forEach(element => {
-                        this.apartmentsId.push(element.id);
+                    this.apartmentsId.push(element.id);
                     });
                     // console.log(this.apartmentsId);
                 })
@@ -74,6 +75,8 @@ export default {
         this.getApartmentsWithSponsorship();
         this.getApartments();
         setTimeout(this.filterSponsorship, 4000);
+        this.store.searchResult = this.$route.path;
+        console.log(this.store.searchResult, "rotta");
     },
     created() {
     }

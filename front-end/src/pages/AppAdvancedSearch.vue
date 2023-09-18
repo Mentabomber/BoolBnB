@@ -49,7 +49,7 @@ export default {
     },
   },
   mounted() {
-
+ 
   }
 }
 </script>
@@ -102,13 +102,22 @@ export default {
   <br>
 
   {{ store.searched_address }}
-
-  <div v-for="apartment in store.apartments_filtered">
-    <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
-    {{ apartment.title }}
-    stanze:{{ apartment.rooms }}
-    letti: {{ apartment.beds }}
-
+  <div v-if="store.apartments_filtered.length == 0">
+    <div v-for="apartment in store.searchResult">
+      <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
+      {{ apartment.title }}
+      stanze:{{ apartment.rooms }}
+      letti: {{ apartment.beds }}
+    </div>
   </div>
+  <div v-else>
+    <div v-for="apartment in store.apartments_filtered">
+      <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
+      {{ apartment.title }}
+      stanze:{{ apartment.rooms }}
+      letti: {{ apartment.beds }}
+    </div>
+  </div>
+ 
 </template>
 

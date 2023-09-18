@@ -19,7 +19,6 @@ export default {
   methods: {
 
     // Aspetta che l'utente inserisca un valore nella ricerca ed effettua una chiamata axios per restituire eventuali suggerimenti simili all'input dell'utente
-
     async searchbar() {
       this.suggestions = [];
       this.isActive = false;
@@ -94,6 +93,9 @@ export default {
         <br>
       </span>
     </div>
-    <input class="my-3" type="submit" :disabled="this.submit == false" value="Cerca">
+    <router-link :to="{name: 'advanced-search'}">
+      <input class="my-3" type="submit" :disabled="this.submit == false" value="Cerca">
+    </router-link>
+    
   </form>
 </template>
