@@ -69,6 +69,12 @@ Route::post('/apartments/messages/{id}', [GuestController::class, 'message'])->n
 Route::get('/apartments/show-messages/{id}', [LoggedController::class, 'showMessages'])
 ->middleware(['auth', 'verified'])->name('auth.apartments.show-messages');
 
+// Rotta che porta alle statistiche dell'appartamento selezionato
+
+Route::get('/apartments/statistics/{id}', [LoggedController::class, 'visits'])
+->middleware(['auth', 'verified'])->name('auth.apartments.statistics');
+
+
 // Gruppo di rotte che modificano, aggiornano ed eliminano il profilo dell'utente
 
 Route::middleware('auth')->group(function () {

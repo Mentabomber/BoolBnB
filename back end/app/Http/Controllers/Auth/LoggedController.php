@@ -17,6 +17,7 @@ use App\Models\Address;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\Sponsorship;
+use App\Models\Visit;
 
 
 class LoggedController extends Controller
@@ -271,5 +272,20 @@ class LoggedController extends Controller
 
     public function getAuth (){
         return Auth::check() ? response()->json(['email' => Auth::user()->email, 'name' => Auth::user()->name, 'surname' => Auth::user()->surname ?? 'User' ]) : response()->json(['error' => 'User not authenticated'], 403);
+    }
+    public function visits($id){
+
+        $apartment = Apartment::findOrFail($id)->with('visit');
+        // $apartments = Apartment::all();
+        $visits = Visit::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(visit_date, '%m-%Y') new_date"),  DB::raw('YEAR(visit_date) year, MONTH(visit_date) month'))
+        ->where('apartment_id', $id)
+        ->groupBy('year','month')
+        ->get();
+            
+
+            
+
+        return view('auth.apartments.statistics', compact('visits'));
+
     }
 }
