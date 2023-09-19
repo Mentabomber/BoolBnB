@@ -18,7 +18,7 @@ class VisitTableSeeder extends Seeder
      */
     public function run()
     {
-        $visits = Visit :: factory()->count(100)->make();
+        $visits = Visit :: factory()->count(1000)->make();
             
         foreach ($visits as $visit) {
 

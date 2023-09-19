@@ -275,17 +275,23 @@ class LoggedController extends Controller
     }
     public function visits($id){
 
-        $apartment = Apartment::findOrFail($id)->with('visit');
-        // $apartments = Apartment::all();
-        $visits = Visit::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(visit_date, '%m-%Y') new_date"),  DB::raw('YEAR(visit_date) year, MONTH(visit_date) month'))
-        ->where('apartment_id', $id)
-        ->groupBy('year','month')
-        ->get();
-            
+        $yearVisit = [];
+        for ($year=2013; $year < 2024; $year++) { 
+            $yearVisit[] = Visit::where('apartment_id', $id)->whereYear('visit_date', $year)->count();
+        }
 
-            
+       
 
-        return view('auth.apartments.statistics', compact('visits'));
+        
+            $monthVisit = Visit::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(visit_date, '%m-%Y') new_date"),  DB::raw('YEAR(visit_date) year, MONTH(visit_date) month'))
+            ->where('apartment_id', $id)
+            ->groupBy('year','month')
+            ->get();
+    
+        
+
+
+        return view('auth.apartments.statistics.stats')->with('yearVisit',json_encode($yearVisit,JSON_NUMERIC_CHECK))->with('monthVisit',json_encode($monthVisit,JSON_NUMERIC_CHECK));
 
     }
 }

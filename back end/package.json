@@ -17,6 +17,7 @@
         "@popperjs/core": "^2.11.6",
         "bootstrap": "^5.2.2",
         "braintree": "^3.17.0",
-        "braintree-web-drop-in": "^1.40.2"
+        "braintree-web-drop-in": "^1.40.2",
+        "chart.js": "^4.4.0"
     }
 }

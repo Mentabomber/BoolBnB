@@ -14,7 +14,7 @@
                             <a href="{{ route('auth.apartments.edit', $apartment->id) }}"> Modifica</a>
                             <a href="{{ route('auth.apartments.show-messages', $apartment->id) }}">Lista Messaggi
                                 Appartamento</a>
-                            <a href="{{ route('auth.apartments.statistics', $apartment->id) }}">Statistiche</a>
+                            <a href="{{ route('stats', $apartment->id) }}">Statistiche</a>
 
                             @if (!in_array($apartment->id, $apartmentsWithValidSponsorship))
                                 <a href="{{ route('sponsor_plans', $apartment->id) }}">Crea sponsorizzazione</a>
