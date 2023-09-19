@@ -79,12 +79,12 @@ export default {
 </script>
 
 <template>
-  <form method="POST" @submit.prevent="$emit('search')" enctype='multipart/form-data' autocomplete="off">
+  <form method="POST" @submit.prevent="$emit('search')" enctype='multipart/form-data' autocomplete="off" class="d-flex align-items-center">
 
     <div class="autocomplete">
-      <label for="address">Indirizzo</label>
+      
       <input onkeydown="return event.key != 'Enter';" type="text" name="address" v-model="store.searched_address"
-        id="searchInput" placeholder="Cerca indirizzo" @input="searchbar()">
+        id="searchInput" placeholder="Ricerca indirizzo" @input="searchbar()">
 
     </div>
     <div :class="[isActive ? 'hidden' : '']">
@@ -94,8 +94,29 @@ export default {
       </span>
     </div>
     <router-link :to="{name: 'advanced-search'}">
-      <input class="my-3" type="submit" :disabled="this.submit == false" value="Cerca">
+      <input class="my-3 bottone-cerca" type="submit" :disabled="this.submit == false" value="Cerca">
     </router-link>
     
   </form>
 </template>
+
+<style>
+
+#searchInput {
+  width: 40rem;
+  height: 60px;
+  padding-left: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+.bottone-cerca {
+  
+  margin-left: 3rem;
+  padding: 15px 120px;
+  border-radius: 40px;
+  background-color: #0D233D;
+  color:white;
+  font-size: 1.3rem;
+}
+</style>
