@@ -10,6 +10,7 @@ use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Address;
 use App\Models\Message;
+use Carbon\Carbon;
 
 class ApiController extends Controller
 {
@@ -21,13 +22,14 @@ class ApiController extends Controller
     }
 
     public function receiveMessage(Request $request) {
-
+            $request['send_date'] = $today = Carbon::now();
         $data = [
 
             'message' => $request['message'],
             'name' => $request['name'],
             'surname' => $request['surname'],
             'email' => $request['email'],
+            'send_date' => $request['send_date'],
             'apartment_id' => $request['apartment_id'],
         ];
 

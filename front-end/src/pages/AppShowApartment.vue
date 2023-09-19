@@ -18,25 +18,26 @@ export default {
         sendMessage() {
             const apartmentId = this.$route.params.id;
             const formData = {
-               email: store.user_email,
-               name: store.user_name,
-               surname: store.user_surname,
-               message: store.user_message,
-               apartment_id: apartmentId,
+                email: store.user_email,
+                name: store.user_name,
+                surname: store.user_surname,
+                message: store.user_message,
+                apartment_id: apartmentId,
+                send_date: ''
             };
-        
+
             axios.post(store.API_URL + '/api/endpoint', formData)
                 .then(response => {
-                // alert messaggio inviato tramite sweetalert2
-                Swal.fire('Messaggio inviato con successo!');
-                store.user_message = "";
-                console.log(response.data);
+                    // alert messaggio inviato tramite sweetalert2
+                    Swal.fire('Messaggio inviato con successo!');
+                    store.user_message = "";
+                    console.log(response.data);
                 })
                 .catch(error => {
-                
-                console.error(error);
+
+                    console.error(error);
                 });
-            
+
         },
         mappaTomTom() {
             let resultFieldLO = this.longitude;
@@ -64,9 +65,9 @@ export default {
                 }).setText(popupText);
 
                 new tt.Marker({
-                        element: markerElement,
-                        anchor: 'bottom'
-                    })
+                    element: markerElement,
+                    anchor: 'bottom'
+                })
                     .setLngLat(position)
                     .setPopup(popup)
                     .addTo(map);
@@ -99,12 +100,12 @@ export default {
             "../js/mobile-or-tablet.js",
         ];
         scripts.forEach(script => {
-            let tag = document.head.querySelector(`[src="${ script }"`);
+            let tag = document.head.querySelector(`[src="${script}"`);
             if (!tag) {
                 tag = document.createElement("script");
                 tag.setAttribute("src", script);
                 tag.setAttribute("type", 'text/javascript');
-                document.head.appendChild(tag); 
+                document.head.appendChild(tag);
             }
         });
     }
@@ -160,45 +161,45 @@ export default {
 </template>
 
 <style >
-    .marker-icon {
-        background-position: center;
-        background-size: 22px 22px;
-        border-radius: 50%;
-        height: 22px;
-        left: 4px;
-        position: absolute;
-        text-align: center;
-        top: 3px;
-        transform: rotate(45deg);
-        width: 22px;
-    }
+.marker-icon {
+    background-position: center;
+    background-size: 22px 22px;
+    border-radius: 50%;
+    height: 22px;
+    left: 4px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 22px;
+}
 
-    .marker {
-        height: 30px;
-        width: 30px;
-    }
+.marker {
+    height: 30px;
+    width: 30px;
+}
 
-    .marker-content {
-        background: #c30b82;
-        border-radius: 50% 50% 50% 0;
-        height: 30px;
-        left: 50%;
-        margin: -15px 0 0 -15px;
-        position: absolute;
-        top: 50%;
-        transform: rotate(-45deg);
-        width: 30px;
-    }
+.marker-content {
+    background: #c30b82;
+    border-radius: 50% 50% 50% 0;
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    width: 30px;
+}
 
-    .marker-content::before {
+.marker-content::before {
 
-        border-radius: 50%;
-        content: "";
-        height: 24px;
-        margin: 3px 0 0 3px;
-        position: absolute;
-        width: 24px;
-    }
+    border-radius: 50%;
+    content: "";
+    height: 24px;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    width: 24px;
+}
 </style>
 
 
