@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container ">
     <h2 class="titolo text-center"><span class="color-green">Sponsorizza</span> {{$apartment->title}}</h2>
     <h3 class="subtitle text-center">Scegli il <span class="color-green" >piano</span> più adatto alle tue esigenze</h3>
 
@@ -36,13 +36,13 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <div id="dropin-wrapper" class="mt-3">
+        <div id="dropin-wrapper" class="mt-3 text-center my-4 ">
             <div id="checkout-message"></div>
             <div id="dropin-container"></div>
             <input id="nonce" name="payment_method_nonce" type="hidden" />
             <input id="apartment_id" name="apartment_id" type="hidden" value="{{ $apartment->id }}" />
 
-            <button id="submit-button" class="btn btn-primary btn-block">Paga</button>
+            <button id="submit-button " class="btn btn-primary btn-block" style="background-color: #0D233D">Paga</button>
         </div>
 
     </form>
@@ -58,6 +58,9 @@
         authorization: client_token,
         container: '#dropin-container'
     }, function (createErr, instance) {
+        var titolo = document.querySelector(".braintree-sheet__text").innerHTML = "Paga con carta";
+        var scadenza = document.querySelector(".braintree-form__flexible-fields > div:nth-child(1) > label:nth-child(1) > div:nth-child(1)").innerHTML = "Scadenza";
+        var carta = document.querySelector(".braintree-form__label").innerHTML = "Numero Carta";
         if (createErr) {
             console.error(createErr);
             return;
@@ -89,6 +92,8 @@
             });
         });
     });
+
+    
 </script>
 @endsection
 
@@ -153,6 +158,29 @@
     font-size: 1.4rem
    }
 
+   #dropin-container {
+    width: 60%;
+    margin: 0 auto
+   }
  
+   .braintree-card {
+    border: 1px solid #15ba8f
+   }
+
+   #submit-button {
+
+
+
+   }
+
+   .braintree-form__hosted-field {
+    border: 2px solid #15ba8f;
+    border-radius: 15px;
+    
+   }
+  
+  .braintree-sheet__header {
+    border: 1px solid #15ba8f
+  }
 </style>
 
