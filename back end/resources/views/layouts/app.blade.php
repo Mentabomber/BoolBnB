@@ -130,3 +130,9 @@
 </style>
 
 </html>
+
+<style>
+    body {
+        background-color: #dfdedf;
+    }
+</style>
