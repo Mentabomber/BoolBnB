@@ -47,7 +47,7 @@ export default {
                 key: 'tjBiGEAUGDCzaAZB0pAlxSemjpDfgVP1',
                 container: 'map',
                 center: [resultFieldLO, resultFieldLA],
-                zoom: 20,
+                zoom: 17,
                 dragPan: !isMobileOrTablet()
             });
             map.addControl(new tt.FullscreenControl());

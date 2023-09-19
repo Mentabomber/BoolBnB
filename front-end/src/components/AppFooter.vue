@@ -35,8 +35,8 @@ export default {
                         <div><a href="https://github.com/DanieleCorrado">GitHub <i class="fa-brands fa-github"></i></a></div>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="name">Fabio di Giacomo Pepe</div>
+                <div class="col-3">
+                    <div class="name">Fabio Di Giacomo Pepe</div>
                     <div class="profile-links">
                         <div><a href="https://www.linkedin.com/in/fabio-di-giacomo-pepe">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
                         <div><a href="https://github.com/fabiodigiacomopepe">GitHub <i class="fa-brands fa-github"></i></a></div>
@@ -106,7 +106,14 @@ export default {
     color : $colore_primario;
    }
    
-  
+  .name,
+  .profile-links {
+    font-size: 1rem;
+
+        a, i {
+            font-size: 0.85rem;
+        }
+  }
 
   }
   
