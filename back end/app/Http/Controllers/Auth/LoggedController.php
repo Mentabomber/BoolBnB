@@ -119,7 +119,8 @@ class LoggedController extends Controller
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
 
-        return redirect() -> route('guest.apartments.show', $user_apartment -> id);
+        return redirect('http://localhost:5173/apartment/' . $user_apartment -> id);
+        
     }
 
     // Mostra i dettagli di un appartamento
@@ -129,7 +130,8 @@ class LoggedController extends Controller
 
         $address = Address ::where('apartment_id', $apartment->id)->firstOrFail();
 
-        return view('guest.apartments.show', compact('apartment', 'address'));
+        return redirect()->route('apartment/' . $apartment->id)->with( ['apartment' => $apartment, 'address' => $address ] );
+        // return view('guest.apartments.show', compact('apartment', 'address'));
     }
 
     // Permette di accedere alla modifica dell'appartamento
@@ -210,7 +212,7 @@ class LoggedController extends Controller
         }
 
 
-        return redirect() -> route('guest.apartments.show', $apartment -> id);
+        return redirect('http://localhost:5173/apartment/' . $apartment -> id);
     }
 
     // Permette la rimozione di un appartamento
