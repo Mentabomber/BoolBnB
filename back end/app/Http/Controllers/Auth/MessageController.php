@@ -3,38 +3,39 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Message;
 use App\Models\Apartment;
+use App\Models\Message;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         $user = Auth::user();
-        $userApartments = Apartment::where('user_id', $user->id)->get();
-        $userApartmentIds = $userApartments->pluck('id')->toArray();
+        $userApartment = Apartment::findOrFail($id);
+        
+        $userApartmentIds = $userApartment->pluck('id')->toArray();
 
-        $messages = Message::whereIn('apartment_id', $userApartmentIds)->get();
+        $Messages = Message::whereIn('apartment_id', $userApartmentIds)->get();
 
         // Calcola le visualizzazioni totali per ciascun appartamento
-        $apartmentmessages = $messages->groupBy('apartment_id')->map(function ($messages) {
+        $apartmentMessages = $Messages->groupBy('apartment_id')->map(function ($Messages) {
             // calcola le visualizzazioni per ogni anno e mese per ciascun appartamento
-            $messagesByYear = $messages->groupBy(function ($message) {
-                $visitDate = $message->visit_date;
-                if (is_string($visitDate)) {
-                    $visitDate = Carbon::parse($visitDate);
+            $MessagesByYear = $Messages->groupBy(function ($message) {
+                $sendDate = $message->send_date;
+                if (is_string($sendDate)) {
+                    $sendDate = Carbon::parse($sendDate);
                 }
-                return $visitDate->format('Y');
+                return $sendDate->format('Y');
             });
 
-            $yearlymessages = $messagesByYear->map(function ($messages) {
-                return count($messages);
+            $yearlyMessages = $MessagesByYear->map(function ($Messages) {
+                return count($Messages);
             });
 
             // calcola le visualizzazioni per ogni mese per ciascun appartamento
-            $messagesByMonth = $messages->groupBy(function ($message) {
+            $MessagesByMonth = $Messages->groupBy(function ($message) {
                 $createdAt = $message->created_at;
                 if (is_string($createdAt)) {
                     $createdAt = Carbon::parse($createdAt);
@@ -42,77 +43,77 @@ class MessageController extends Controller
                 return $createdAt->format('F Y');
             });
 
-            $monthlymessages = $messagesByMonth->map(function ($messages) {
-                return count($messages);
+            $monthlyMessages = $MessagesByMonth->map(function ($Messages) {
+                return count($Messages);
             });
 
             // calcola le visualizzazioni per ogni anno e mese per ciascun appartamento
-            $yearlyMonthlymessages = $messagesByYear->map(function ($messages) use ($messagesByMonth) {
-                $yearlyMonthlymessages = [];
-                foreach ($messagesByMonth as $month => $monthmessages) {
-                    $yearlyMonthlymessages[$month] = count($monthmessages);
+            $yearlyMonthlyMessages = $MessagesByYear->map(function ($Messages) use ($MessagesByMonth) {
+                $yearlyMonthlyMessages = [];
+                foreach ($MessagesByMonth as $month => $monthMessages) {
+                    $yearlyMonthlyMessages[$month] = count($monthMessages);
                 }
-                return $yearlyMonthlymessages;
+                return $yearlyMonthlyMessages;
             });
 
             return [
-                'total_messages' => count($messages),
-                'yearly_messages' => $yearlymessages,
-                'monthly_messages' => $monthlymessages,
-                'yearly_monthly_messages' => $yearlyMonthlymessages,
+                'total_Messages' => count($Messages),
+                'yearly_Messages' => $yearlyMessages,
+                'monthly_Messages' => $monthlyMessages,
+                'yearly_monthly_Messages' => $yearlyMonthlyMessages,
             ];
         });
 
-        $messagesByApartmentAndYear = $messages->groupBy('apartment_id')
-            ->map(function ($apartmentmessages) {
-                return $apartmentmessages->groupBy(function ($message) {
-                    $visitDate = $message->visit_date;
-                    if (is_string($visitDate)) {
-                        $visitDate = Carbon::parse($visitDate);
+        $MessagesByApartmentAndYear = $Messages->groupBy('apartment_id')
+            ->map(function ($apartmentMessages) {
+                return $apartmentMessages->groupBy(function ($message) {
+                    $sendDate = $message->send_date;
+                    if (is_string($sendDate)) {
+                        $sendDate = Carbon::parse($sendDate);
                     }
-                    return $visitDate->format('Y'); // Raggruppa per anno
-                })->map(function ($messagesByYear) {
-                    return $messagesByYear->groupBy(function ($message) {
-                        $visitDate = $message->visit_date;
-                        if (is_string($visitDate)) {
-                            $visitDate = Carbon::parse($visitDate);
+                    return $sendDate->format('Y'); // Raggruppa per anno
+                })->map(function ($MessagesByYear) {
+                    return $MessagesByYear->groupBy(function ($message) {
+                        $sendDate = $message->send_date;
+                        if (is_string($sendDate)) {
+                            $sendDate = Carbon::parse($sendDate);
                         }
-                        return $visitDate->format('F Y'); // Raggruppa per mese e anno
-                    })->map(function ($messagesByMonth) {
-                        return count($messagesByMonth);
+                        return $sendDate->format('F Y'); // Raggruppa per mese e anno
+                    })->map(function ($MessagesByMonth) {
+                        return count($MessagesByMonth);
                     });
                 });
             });
 
         // / calcola le visualizzazioni per ogni anno e mese per ciascun appartamento
-        $yearlyMonthlymessages = $apartmentmessages->map(function ($apartmentmessages) {
-            $yearlyMonthlymessages = [];
-            foreach ($apartmentmessages['yearly_monthly_messages'] as $yearlyMonthlymessage) {
-                foreach ($yearlyMonthlymessage as $month => $messages) {
-                    if (!isset($yearlyMonthlymessages[$month])) {
-                        $yearlyMonthlymessages[$month] = 0;
+        $yearlyMonthlyMessages = $apartmentMessages->map(function ($apartmentMessages) {
+            $yearlyMonthlyMessages = [];
+            foreach ($apartmentMessages['yearly_monthly_Messages'] as $yearlyMonthlymessage) {
+                foreach ($yearlyMonthlymessage as $month => $Messages) {
+                    if (!isset($yearlyMonthlyMessages[$month])) {
+                        $yearlyMonthlyMessages[$month] = 0;
                     }
-                    $yearlyMonthlymessages[$month] += $messages;
+                    $yearlyMonthlyMessages[$month] += $Messages;
                 }
             }
-            return $yearlyMonthlymessages;
+            return $yearlyMonthlyMessages;
         });
 
 
-        $messagesByYear = $messages->groupBy(function ($message) {
-            $visitDate = $message->visit_date;
-            if (is_string($visitDate)) {
-                $visitDate = Carbon::parse($visitDate);
+        $MessagesByYear = $Messages->groupBy(function ($message) {
+            $sendDate = $message->send_date;
+            if (is_string($sendDate)) {
+                $sendDate = Carbon::parse($sendDate);
             }
-            return $visitDate->format('Y');
+            return $sendDate->format('Y');
         });
 
-        $yearlymessages = $messagesByYear->map(function ($messages) {
-            return count($messages);
+        $yearlyMessages = $MessagesByYear->map(function ($Messages) {
+            return count($Messages);
         });
 
 
-        $messagesByMonth = $messages->groupBy(function ($message) {
+        $MessagesByMonth = $Messages->groupBy(function ($message) {
             $createdAt = $message->created_at;
             if (is_string($createdAt)) {
                 $createdAt = Carbon::parse($createdAt);
@@ -120,19 +121,19 @@ class MessageController extends Controller
             return $createdAt->format('F Y');
         });
 
-        $monthlymessages = $messagesByMonth->map(function ($messages) {
-            return count($messages);
+        $monthlyMessages = $MessagesByMonth->map(function ($Messages) {
+            return count($Messages);
         });
 
         $years = [];
 
         // Loop per ogni visualizzazione per trovare l'anno
-        foreach ($messages as $message) {
-            $visitDate = $message->visit_date;
-            if (is_string($visitDate)) {
-                $visitDate = Carbon::parse($visitDate);
+        foreach ($Messages as $message) {
+            $sendDate = $message->send_date;
+            if (is_string($sendDate)) {
+                $sendDate = Carbon::parse($sendDate);
             }
-            $year = $visitDate->format('Y');
+            $year = $sendDate->format('Y');
 
             // Se l'anno non è già stato aggiunto, aggiungilo
             if (!in_array($year, $years)) {
@@ -143,6 +144,6 @@ class MessageController extends Controller
         // Ordina gli anni in ordine crescente
         rsort($years);
 
-        return message('auth.apartments.statistics.stats', compact('messages', 'user', 'years', 'userApartmentIds', 'apartmentmessages', 'userApartments', 'yearlymessages', 'monthlymessages', 'yearlyMonthlymessages',  'messagesByApartmentAndYear'));
+        return view('auth.apartments.statistics.stats', compact('Messages', 'user', 'years', 'userApartmentIds', 'apartmentMessages', 'userApartment', 'yearlyMessages', 'monthlyMessages', 'yearlyMonthlyMessages',  'MessagesByApartmentAndYear'));
     }
 }

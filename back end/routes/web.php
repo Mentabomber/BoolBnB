@@ -8,6 +8,7 @@ use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\SponsorshipController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Auth\ViewController;
+use App\Http\Controllers\Auth\MessageController;
 
 
 // Rotta che porta alla home del sito
@@ -76,6 +77,7 @@ Route::get('/apartments/statistics/{id}', [LoggedController::class, 'visits'])
 ->middleware(['auth', 'verified'])->name('auth.apartments.statistics');
 
 Route::get('/stats/{id}', [ViewController::class, 'index'])->name('stats');
+// Route::get('/stats/{id}', [MessageController::class, 'index'])->name('stats');
 
 // Gruppo di rotte che modificano, aggiornano ed eliminano il profilo dell'utente
 
