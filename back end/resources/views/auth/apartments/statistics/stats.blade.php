@@ -22,13 +22,18 @@
                 </div>
             </div>
         @else
+            <div class="d-flex justify-content-center pb-2 title">
+                <h2 class="green-text">Statitiche: </h2>
+                <h2 class="text-gradient"> {{ $userApartment->title }}</h2>
+            </div>
+
+            <div class="d-flex justify-content-center pb-2 subtitle">
+                <h3 class="green-text">Visualizzazioni: </h3>
+            </div>
             <div class="col-12">
                 <input type="hidden" id="userApartment" value="{{ $userApartment->id }}">
                 <div class="col-12 col-lg-8 col-xxl-5 mx-auto text-center my-5">
                     <div class="card p-2 my-3 shadow my_bg_chart">
-                        <div class="d-flex justify-content-center pb-2">
-                            <h2 class="text-gradient">Visualizzazioni per: {{ $userApartment->title }}</h2>
-                        </div>
                         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
                             <select id="yearViewsFilter" class="my_select">
                                 <option value="all">Tutti gli anni</option>
@@ -43,13 +48,13 @@
                 </div>
             </div>
 
+            <div class="d-flex justify-content-center pb-2 subtitle">
+                <h3 class="green-text">Messaggi: </h3>
+            </div>
             <div class="col-12">
 
                 <div class="col-12 col-lg-8 col-xxl-5 mx-auto text-center my-5">
                     <div class="card p-2 my-3 shadow my_bg_chart">
-                        <div class="d-flex justify-content-center pb-2">
-                            <h2 class="text-gradient">Messaggi per: {{ $userApartment->title }}</h2>
-                        </div>
                         <div class="d-flex flex-column justify-content-center align-items-center gap-3">
 
                             <select id="yearMessageFilter" class="my_select">
@@ -84,8 +89,8 @@
                 datasets: [{
                     label: 'Visualizzazioni',
                     data: [],
-                    backgroundColor: '#ff7210',
-                    borderColor: '#424172',
+                    backgroundColor: '#15BA8F',
+                    borderColor: '#0D233D',
                     borderWidth: 2
                 }]
             },
@@ -94,11 +99,16 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            // forces step size to be 50 units
+
                             stepSize: 1
                         }
                     }
                 },
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                }
             }
         });
 
@@ -110,10 +120,10 @@
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Visualizzazioni',
+                    label: 'Messaggi',
                     data: [],
-                    backgroundColor: '#ff7210',
-                    borderColor: '#424172',
+                    backgroundColor: '#15BA8F',
+                    borderColor: '#0D233D',
                     borderWidth: 2
                 }]
             },
@@ -127,10 +137,13 @@
                         }
                     }
                 },
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                }
             }
         });
-
-
 
         // Event listeners per cambiare anno alle visualizzazioni
         document.getElementById('yearViewsFilter').addEventListener('change', function() {
@@ -224,6 +237,10 @@
 @endsection
 
 <style>
+    section {
+        background-color: #DFDEDF;
+    }
+
     .container-top {
         display: flex;
         flex-direction: column;
@@ -234,5 +251,17 @@
         display: flex;
         justify-content: center;
         padding-top: 3rem;
+    }
+
+    .title {
+        padding-top: 3rem;
+    }
+
+    .text-gradient {
+        margin-left: 1rem;
+    }
+
+    .green-text {
+        color: #15BA8F;
     }
 </style>
