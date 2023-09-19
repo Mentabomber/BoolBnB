@@ -123,4 +123,10 @@
     </div>
 </body>
 
+<style>
+    body {
+        background-color: #dfdedf;
+    }
+</style>
+
 </html>
