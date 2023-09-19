@@ -14,5 +14,6 @@ export const store = reactive({
     apartments_filtered: [],
     services_list: [],
     activeFilterServices: [],
-    searchResult: []
+    searchResult: [],
+    token: "",
 });

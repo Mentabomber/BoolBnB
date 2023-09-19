@@ -1,5 +1,6 @@
 <script>
 import { store } from "../store"
+import axios from 'axios'
 
 export default {
   name: "AppHeader",
@@ -8,7 +9,17 @@ export default {
       store
     }
   },
-
+  methods: {
+    logout() {
+    var token = this.store.token;
+    console.log(token);
+      axios.post('http://127.0.0.1:8000/logout', token)
+        .then(res => {
+          this.store.user_name = undefined;
+        })
+        .catch(err => console.error(err));
+    },
+  }
 }
 
 </script>
@@ -23,13 +34,35 @@ export default {
               <a class="col-2" href="http://localhost:8000/login">Login</a>
               <a  class="col-2" href="http://127.0.0.1:8000/register">Signup</a>
             </div>
-            <div v-else class="col-3 text-center">
-              <a href="http://127.0.0.1:8000/dashboard">{{ this.store.user_name }}</a>
+            <div v-else class="col-3 text-left" style="position: relative; right: 90px;">
+
+
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-weight: bold; font-size: 1.5rem;">
+                        {{ this.store.user_name }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a style="font-size: 1rem; font-weight: normal; height: 42px;" class="dropdown-item" href="http://localhost:8000/dashboard">Dashboard</a></li>
+                        <li><a style="font-size: 1rem; font-weight: normal; height: 42px;" class="dropdown-item" href="http://localhost:8000/profile">Profilo</a></li>
+                        <li>
+                            <a style="font-size: 1rem; font-weight: normal; height: 42px;" class="dropdown-item" onclick="event.preventDefault();" @click="logout()">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                 </div>
+
+
+
+
+
+
             </div>
         </div>
     </div>
-</header>
 
+            
+</header>
 </template>
 
 <style scoped lang="scss">

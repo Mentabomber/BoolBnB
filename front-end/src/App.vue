@@ -22,18 +22,23 @@ export default {
     getAuth() {
       axios.defaults.withCredentials = true;
       axios.get(this.store.local_host + "/auth")
-        .then(response => {
-          
-          this.store.user_email = response.data.email;
-          this.store.user_name = response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1);
-          this.store.user_surname = response.data.surname.charAt(0).toUpperCase() + response.data.surname.slice(1);
-          axios.defaults.withCredentials = false;
-        })
-        .catch(err => {
-          axios.defaults.withCredentials = false;
-        });
-    },
+      .then(response => {
+        
+        this.store.user_email = response.data.email;
+        this.store.user_name = response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1);
+        this.store.user_surname = response.data.surname.charAt(0).toUpperCase() + response.data.surname.slice(1);
+        axios.defaults.withCredentials = false;
+      })
+      .catch(err => {
+        axios.defaults.withCredentials = false;
+      });
 
+      fetch('http://localhost:8000/sanctum/csrf-cookie')
+      .then(data => {
+        this.store.token = data;
+        console.log(this.store.token);
+      });
+    },
     getServices() {
       console.log(this.store.activeFilterServices, 'filtri funzione');
       axios.get(this.store.API_URL + "/services").then(res => {
