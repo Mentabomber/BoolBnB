@@ -38,12 +38,12 @@ export default {
             };
             let isValid = true;
             // Validazione del campo "Name"
-            if (this.store.user_name === "" || this.store.user_name == undefined) {
+            if (this.store.name === "" || this.store.name == undefined) {
                 isValid = false;
                 document.getElementById("name-error").innerHTML = "Il campo 'Nome' è obbligatorio.";
                 nameField.classList.add("is-invalid");
             } 
-            else if (this.store.user_name.length < 3){
+            else if (this.store.name.length < 3){
                 isValid = false;
                 document.getElementById("name-error").innerHTML = "Il campo 'Nome' deve contenere almeno 3 caratteri";
                 nameField.classList.add("is-invalid");
