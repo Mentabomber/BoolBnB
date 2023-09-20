@@ -18,8 +18,8 @@ export default {
     },
     methods: {
         isValidEmail(email) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(email);
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
         },
         sendMessage() {
             const emailField = document.getElementById("email");
@@ -42,8 +42,8 @@ export default {
                 isValid = false;
                 document.getElementById("name-error").innerHTML = "Il campo 'Nome' è obbligatorio.";
                 nameField.classList.add("is-invalid");
-            } 
-            else if (this.store.name.length < 3){
+            }
+            else if (this.store.name.length < 3) {
                 isValid = false;
                 document.getElementById("name-error").innerHTML = "Il campo 'Nome' deve contenere almeno 3 caratteri";
                 nameField.classList.add("is-invalid");
@@ -57,8 +57,8 @@ export default {
                 isValid = false;
                 document.getElementById("surname-error").innerHTML = "Il campo 'Cognome' è obbligatorio.";
                 surnameField.classList.add("is-invalid");
-            } 
-            else if(this.store.user_surname.length < 3){
+            }
+            else if (this.store.user_surname.length < 3) {
                 isValid = false;
                 document.getElementById("surname-error").innerHTML = "Il campo 'Cognome' deve contenere almeno 3 caratteri";
                 surnameField.classList.add("is-invalid");
@@ -86,8 +86,8 @@ export default {
                 isValid = false;
                 document.getElementById("message-error").innerHTML = "Il campo 'Messaggio' è obbligatorio.";
                 messageField.classList.add("is-invalid");
-            } 
-            else if (this.store.user_message.length < 10){
+            }
+            else if (this.store.user_message.length < 10) {
                 isValid = false;
                 document.getElementById("message-error").innerHTML = "Il campo 'Messaggio' deve contenere almeno 10 caratteri";
                 messageField.classList.add("is-invalid");
@@ -96,7 +96,7 @@ export default {
                 document.getElementById("message-error").innerHTML = "";
                 messageField.classList.remove("is-invalid");
             }
-            if(isValid){
+            if (isValid) {
                 axios.post(store.API_URL + '/api/endpoint', formData)
                     .then(response => {
                         // alert messaggio inviato tramite sweetalert2
@@ -105,9 +105,9 @@ export default {
                         console.log(response.data);
                     })
                     .catch(error => {
-    
+
                         console.error(error);
-                    }); 
+                    });
             }
 
         },
@@ -146,7 +146,7 @@ export default {
             }
             createMarker([resultFieldLO, resultFieldLA], '#5327c3', 'Mi trovo qui :D');
         },
-      
+
 
     },
     mounted() {
@@ -184,8 +184,8 @@ export default {
         this.name = store.user_name;
         console.log(this.name);
     },
-    created(){
-        
+    created() {
+
     }
 }
 </script>
@@ -197,10 +197,10 @@ export default {
             <router-link :to="{ name: 'about' }">ABOUT</router-link>
         </h2>
         <br><br> -->
-    
+
         <h1>{{ apartment.title }}</h1>
         <h5><i class="fa-solid fa-location-dot"></i>{{ address.address }}</h5>
-        
+
         <div class="foto_appartamento">
             <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
         </div>
@@ -218,10 +218,10 @@ export default {
                         <div>Bagni: {{ apartment.bathrooms }}</div>
                     </div>
                 </div>
-        
+
                 <h2 class="servizi_app"><span>Servizi</span> Appartamento</h2>
                 <ul class="contenitore_servizi d-flex flex-wrap">
-                    <li v-for="(apartmentService, index) in apartment.services" :key="index" >
+                    <li v-for="(apartmentService, index) in apartment.services" :key="index">
                         {{ apartmentService.name }}
                     </li>
                 </ul>
@@ -234,26 +234,30 @@ export default {
                 </div>
             </div>
         </div>
-    
+
         <form @submit.prevent="sendMessage">
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome" v-model="store.name">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome"
+                    v-model="store.name">
                 <span id="name-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="surname" class="form-label">Cognome</label>
-                <input type="text" name="surname" class="form-control" id="surname" placeholder="Inserisci Cognome" v-model="store.user_surname">
+                <input type="text" name="surname" class="form-control" id="surname" placeholder="Inserisci Cognome"
+                    v-model="store.user_surname">
                 <span id="surname-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="text" name="email" class="form-control" id="email" placeholder="Inserisci E-mail" v-model="store.user_email">
+                <input type="text" name="email" class="form-control" id="email" placeholder="Inserisci E-mail"
+                    v-model="store.user_email">
                 <span id="email-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="message" class="form-label">Messaggio</label>
-                <textarea class="form-control" name="message" id="message" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
+                <textarea class="form-control" name="message" id="message" placeholder="Inserisci Messaggio" rows="7"
+                    v-model="store.user_message"></textarea>
                 <span id="message-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <input type="submit" class="btn btn-primary" value="Invia">
@@ -285,7 +289,7 @@ export default {
         border-radius: 20px;
 
         img {
-            max-width: 100%;
+            width: 100%;
             object-fit: cover;
             border-radius: 20px;
         }

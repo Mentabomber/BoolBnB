@@ -159,7 +159,7 @@
                 }
 
                  // Validazione del campo "indirizzo"
-                 const addressValue = addressField.value;
+                const addressValue = addressField.value;
                 if (addressValue == "" || addressValue == null) {
                     isValid = false;
                     document.getElementById("address-error").innerHTML = "Il campo 'Indirizzo' è obbligatorio.";
