@@ -140,7 +140,7 @@ class ApartmentTableSeeder extends Seeder
 
             $sponsorships = Sponsorship::inRandomOrder() -> limit(rand(0, 1)) -> get();
 
-            $date = ["2021-10-05","2022-05-03","2023-01-20"];
+            $date = ["2023-09-20","2023-09-20","2023-09-20"];
 
             $randomDate = $date[array_rand($date)];
 

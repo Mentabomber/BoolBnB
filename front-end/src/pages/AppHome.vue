@@ -131,7 +131,7 @@ export default {
                         </div>
 
                         <div class="d-flex justify-content-between service">
-                            <div>{{ apartment.square_meters }} m2</div>
+                            <div>{{ apartment.square_meters }} m²</div>
                             <div> Letti:{{ apartment.beds }} </div>
                             <div> Bagni:{{ apartment.bathrooms }} </div>
                         </div>
@@ -154,7 +154,7 @@ export default {
                             <p class="card-text">{{ apartment.address.address }}</p>
                         </div>
                         <div class="d-flex justify-content-between service">
-                            <div>{{ apartment.square_meters }} m2</div>
+                            <div>{{ apartment.square_meters }} m²</div>
                             <div> Letti: {{ apartment.beds }} </div>
                             <div> Bagni: {{ apartment.bathrooms }} </div>
                         </div>
@@ -235,7 +235,7 @@ ul {
 }
 
 .card {
-    height: 300px;
+    height: 380px;
     border: 2px solid #15BA8F;
     margin-bottom: 10px;
     display: flex;

@@ -161,7 +161,7 @@ export default {
                             <div class="pulsante_info">
                                 <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }"
                                     style="text-decoration: none;">
-                                    <span style="color: white; text-decoration: none;">Maggiori informazioni</span>
+                                    <div style="color: white; text-decoration: none;">Maggiori informazioni</div>
                                 </router-link>
                             </div>
                         </div>
@@ -180,10 +180,10 @@ export default {
 .card_appartamento {
     background-color: white;
     margin-bottom: 2rem;
-    width: 90%;
+    width: 95%;
     border: 1px solid #15ba8f;
     border-radius: 10px;
-    height: 320px;
+    height: 380px;
 }
 
 img {

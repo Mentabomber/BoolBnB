@@ -28,7 +28,7 @@ class AddressTableSeeder extends Seeder
             [    
                 "latitude" => 44.98283,
                 "longitude" => 8.98879,
-                "address"=> "Via Carlo Porta, 1, 27058, Voghera,	PV",
+                "address"=> "Via Carlo Porta, 1, 27058, Voghera, PV",
                 "floor"=> 2,
             ],
             [    
@@ -76,7 +76,7 @@ class AddressTableSeeder extends Seeder
             [    
                 "latitude" => 37.30752,
                 "longitude" => 13.65435,
-                "address"=> "Viale John Fitzgerald Kennedy, 42, 92026 Favara AG  5527355665, 3823882383",
+                "address"=> "Viale John Fitzgerald Kennedy, 42, 92026 Favara AG",
                 "floor"=> 6,
             ],
 
