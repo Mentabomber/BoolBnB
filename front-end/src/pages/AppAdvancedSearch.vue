@@ -104,7 +104,7 @@ export default {
                     @change="this.postApartment()" style="margin: 0 10px;">
                 <span>50</span>
 
-                <p>km selezionati: <span id="demo" style="font-weight: bold; font-size: 20px;">25</span></p>
+                <p>km selezionati: <span id="demo" style="font-weight: bold; font-size: 20px;"> {{ kmFilter }}</span></p>
             </div>
         </div>
 
@@ -129,8 +129,9 @@ export default {
                                 </div>
                             </div>
                             <div class="pulsante_info">
-                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }" style="text-decoration: none;">
-                                    <span style="color: white; text-decoration: none;">Maggiori informazioni</span> 
+                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }"
+                                    style="text-decoration: none;">
+                                    <span style="color: white; text-decoration: none;">Maggiori informazioni</span>
                                 </router-link>
                             </div>
                         </div>
@@ -158,7 +159,8 @@ export default {
                                 </div>
                             </div>
                             <div class="pulsante_info">
-                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }" style="text-decoration: none;">
+                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }"
+                                    style="text-decoration: none;">
                                     <span style="color: white; text-decoration: none;">Maggiori informazioni</span>
                                 </router-link>
                             </div>
