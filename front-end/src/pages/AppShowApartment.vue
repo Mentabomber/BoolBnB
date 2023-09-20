@@ -221,7 +221,7 @@ export default {
         
                 <h2 class="servizi_app"><span>Servizi</span> Appartamento</h2>
                 <ul class="contenitore_servizi d-flex flex-wrap">
-                    <li v-for="(apartmentService, index) in apartment.services" :key="index">
+                    <li v-for="(apartmentService, index) in apartment.services" :key="index" >
                         {{ apartmentService.name }}
                     </li>
                 </ul>
@@ -237,22 +237,22 @@ export default {
     
         <form @submit.prevent="sendMessage">
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                <label for="name" class="form-label">Nome</label>
                 <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome" v-model="store.name">
                 <span id="name-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Cognome</label>
+                <label for="surname" class="form-label">Cognome</label>
                 <input type="text" name="surname" class="form-control" id="surname" placeholder="Inserisci Cognome" v-model="store.user_surname">
                 <span id="surname-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">E-mail</label>
+                <label for="email" class="form-label">E-mail</label>
                 <input type="text" name="email" class="form-control" id="email" placeholder="Inserisci E-mail" v-model="store.user_email">
                 <span id="email-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Testo messaggio</label>
+                <label for="message" class="form-label">Testo messaggio</label>
                 <textarea class="form-control" name="message" id="message" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
                 <span id="message-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
@@ -315,7 +315,7 @@ export default {
 
         li {
             font-style: italic;
-            width: 34%;
+            width: 50%;
         }
     }
 

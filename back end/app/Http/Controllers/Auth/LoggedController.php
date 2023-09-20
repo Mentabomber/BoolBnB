@@ -70,7 +70,7 @@ class LoggedController extends Controller
             "beds" => "required | integer",
             "bathrooms" => "required | integer",
             "square_meters" => "required | integer",
-            "image" => "required | image | mimes:jpg,jpeg,png,svg",
+            "image" => "required | image | mimes:jpg,jpeg,png,svg,webp",
             "visible" => "boolean",
             "services" => "required | array",
         ]);
