@@ -12,8 +12,8 @@
 
                 <div class="container text-center">
                     <div class="row">
-                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Descrizione</label></div>
-                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="description" placeholder="Inserisci Descrizione"  value="{{ $apartment->title }}">
+                       <div class="col-sm-2"><label for="title" class="form-label">Descrizione</label></div>
+                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="apartment-title" placeholder="Inserisci Descrizione"  value="{{ $apartment->title }}">
                        <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span></div>
                     </div>
                     <br>
@@ -26,10 +26,9 @@
                         <input type="hidden" name="address" id="resultField">
                         <input type="hidden" name="latitude" id="resultFieldLA">
                         <input type="hidden" name="longitude" id="resultFieldLO">
-                        <div class="col-sm-10"><input type="text" name="address" class="form-control @error('indirizzo')  is-invalid @enderror" id="address" placeholder="Inserisci Indirizzo"  value="{{ $address->address }}">
+                        <div class="col-sm-10"><input type="text" name="address" class="form-control @error('indirizzo')  is-invalid @enderror" id="searchInput" placeholder="Inserisci Indirizzo"  value="{{ $address->address }}">
                          <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
                         </div>
-                        <input type="text" name="address" id="searchInput" value="{{ $address->address }}">
                         <input type="hidden" name="latitude" id="latitude" value="{{ $address->latitude }}">
                         <input type="hidden" name="longitude" id="longitude" value="{{ $address->longitude }}">
                         <ul style="list-style-type: none;"id="suggestions"></ul>
@@ -37,7 +36,7 @@
                     <br>
 
                    <div class="row">
-                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
+                      <div class="col-sm-2"><label for="floor" class="form-label">Piano</label></div>
                       <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano"  value="{{ $address->floor }}">
                        <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
@@ -45,15 +44,15 @@
                    <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Dimensioni</label></div>
-                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati"  value="{{ $apartment->square_meters }}">
-                      <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                     <div class="col-sm-2"><label for="square_meters" class="form-label">Dimensioni</label></div>
+                     <div class="col-sm-10"><input type="number" name="square_meters" class="form-control @error('square_meters')  is-invalid @enderror" id="square_meters" placeholder="Inserisci Metri Quadrati"  value="{{ $apartment->square_meters }}">
+                      <span id="square_meters-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
                     <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Stanze</label></div>
+                     <div class="col-sm-2"><label for="rooms" class="form-label">Stanze</label></div>
                      <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze"  value="{{ $apartment->rooms }}">
                        <span id="rooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
@@ -61,7 +60,7 @@
                     <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Letti</label></div>
+                     <div class="col-sm-2"><label for="beds" class="form-label">Letti</label></div>
                      <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti"  value="{{ $apartment->beds }}">
                       <span id="beds-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
@@ -69,7 +68,7 @@
                     <br>
                 
                    <div class="row">
-                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Bagni</label></div>
+                      <div class="col-sm-2"><label for="bathrooms" class="form-label">Bagni</label></div>
                       <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni"  value="{{ $apartment->bathrooms }}">
                           <span id="bathrooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
@@ -83,10 +82,13 @@
                     </div>
                     <br>
                     <div class="row">
-                      <div class="col-sm-2"><label for="visible">Visibilità</label></div>
-                      <div class="col-sm-10"><input type="radio" class="visible"  name="visible" value="0"> no
-                           <input type="radio" class="visible"  name="visible" value="1" checked> si     
-                      </div>
+                        <div class="col-sm-2">
+                            <label for="visible">Visibilità</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <input type="radio" class="visible"  name="visible" value="1" checked> si 
+                            <input type="radio" class="visible"  name="visible" value="0"> no
+                        </div>
                     </div>
                     <br>
                     <br>
@@ -107,25 +109,24 @@
                     
                     
                 @endforeach
-                <div class="row">
-                      <div class="col-sm-6"><button type="button" class="btn btn-primary" id="submit-button">update</button></div>
-                      <div class="col-sm-6"><form class="d-inline" method="POST" action="{{ route('auth.apartments.delete', $apartment->id) }}">
-
-                       @csrf
-                       @method('DELETE')
-
-                      <input class="btn btn-primary" type="submit" value="DELETE"
-                       onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
-                      </form>  
-                      </div>
-                      </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-6 my-5">
+                        <button type="button" class="btn btn-primary" id="submit-button">Modifica</button>
+                    </div>
+                </div>
                 
                 <br>
-                
-
             </form>
-           
-            <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
+            <div class="row d-flex justify-content-center">
+                        <form class="d-inline col-sm-6 " method="POST" action="{{ route('auth.apartments.delete', $apartment->id) }}">
+
+                        @csrf
+                        @method('DELETE')
+
+                            <input  id="delete-button" class="btn btn-primary" type="submit" value="DELETE" onclick="return confirm('Sei sicuro di voler eliminare questo appartamento?')">
+                        </form>  
+            </div>
+            <a id="redirect-button" href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
     <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
@@ -274,15 +275,18 @@
         font-weight: bold;
         
     }
-    
-       
-    
-
-
-
-
-
-
-
+    #delete-button{
+        background-color: red;
+        padding: 10 40;
+        
+    }
+    #submit-button{
+        padding: 10 40;
+        background-color: #0D233D;
+    }
+    #redirect-button{
+        font-size: 22px;
+        color: #15ba8f;
+    }
 </style>
 

@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<script src="../../../public/assets/js/main.js"></script>
-<div class="container">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div class="text-center">
 
-            <h1><span>Aggiungi</span> un nuovo appartamento</h1>
+            
+            <h1><span>Crea</span> nuovo appartamento</h1>
             <form id="update-form" method="POST" action="{{ route('apartment.store') }}" enctype='multipart/form-data'>
 
                 @csrf
@@ -13,56 +12,64 @@
 
                 <div class="container text-center">
                     <div class="row">
-                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Descrizione</label></div>
-                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="description" placeholder="Inserisci Descrizione">
+                       <div class="col-sm-2"><label for="title" class="form-label">Descrizione</label></div>
+                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="apartment-title" placeholder="Inserisci Descrizione">
                        <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span></div>
                     </div>
                     <br>
                 
                    
                     <div class="row">
-                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Indirizzo</label></div>
-                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo">
-                         <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                       </div>
+                        <div class="col-sm-2">
+                         <label for="address" class="form-label">Indirizzo</label>
+                        </div>
+                        <input type="hidden" name="address" id="resultField">
+                        <input type="hidden" name="latitude" id="resultFieldLA">
+                        <input type="hidden" name="longitude" id="resultFieldLO">
+                        <div class="col-sm-10">
+                            <input type="text" name="address" class="form-control @error('indirizzo')  is-invalid @enderror" id="searchInput" placeholder="Inserisci Indirizzo" >
+                            <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                        </div>
+                     
+                        <ul style="list-style-type: none;"id="suggestions"></ul>
                     </div>
                     <br>
-                
+
                    <div class="row">
-                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
-                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano">
+                      <div class="col-sm-2"><label for="floor" class="form-label">Piano</label></div>
+                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano" >
                        <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
                    </div>
                    <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Dimensioni</label></div>
-                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati">
-                      <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                     <div class="col-sm-2"><label for="square_meters" class="form-label">Dimensioni</label></div>
+                     <div class="col-sm-10"><input type="number" name="square_meters" class="form-control @error('square_meters')  is-invalid @enderror" id="square_meters" placeholder="Inserisci Metri Quadrati" >
+                      <span id="square_meters-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
                     <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Stanze</label></div>
-                     <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze">
+                     <div class="col-sm-2"><label for="rooms" class="form-label">Stanze</label></div>
+                     <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze" >
                        <span id="rooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
                     <br>
                 
                    <div class="row">
-                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Letti</label></div>
-                     <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti">
+                     <div class="col-sm-2"><label for="beds" class="form-label">Letti</label></div>
+                     <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti" >
                       <span id="beds-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
                     <br>
                 
                    <div class="row">
-                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Bagni</label></div>
-                      <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni">
+                      <div class="col-sm-2"><label for="bathrooms" class="form-label">Bagni</label></div>
+                      <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni" >
                           <span id="bathrooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
                     </div>
@@ -75,40 +82,43 @@
                     </div>
                     <br>
                     <div class="row">
-                      <div class="col-sm-2"><label for="visible">Visibilità</label></div>
-                      <div class="col-sm-10"><input type="radio" class="visible"  name="visible" value="0"> no
-                           <input type="radio" class="visible"  name="visible" value="1" checked> si     
-                      </div>
+                        <div class="col-sm-2">
+                            <label for="visible">Visibilità</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <input type="radio" class="visible"  name="visible" value="1" checked> si 
+                            <input type="radio" class="visible"  name="visible" value="0"> no
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+        
+                <label for="">Servizi</label>
+                <br>
+                @foreach ($services as $service)
+                    <div class="form-check mx-auto" style="max-width: 300px">
+                        <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
+                            id="service{{ $service->id }}">
+                        <label class="form-check-label" for="service{{ $service->id }}">
+                            {{ $service->name }}
+                        </label>
+                    </div>
+                @endforeach
+                <div class="row d-flex justify-content-center my-5">
+                    <div class="col-sm-6 ">
+                        <button type="button" class="btn btn-primary" id="submit-button">Crea</button>
                     </div>
                 </div>
-
-            
-
                 
-                
-                       <div class="col">
-                       <label for="">Servizi</label>
-                       <br>
-                         @foreach ($services as $service)
-                       <div class="form-check mx-auto" style="max-width: 300px">
-                          <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                              id="service{{ $service->id }}">
-                          <label class="form-check-label" for="service{{ $service->id }}">
-                            {{ $service->name }}
-                          </label>
-                       </div>
-                         @endforeach
-                        <br>
-                        <button type="button" class="btn btn-primary" id="submit-button">Crea</button>
+                <br>
             </form>
-            
+    
+            <a id="redirect-button" href="{{ route('dashboard') }}">Torna alla Dashboard</a>
         </div>
     </div>
-</div>
-
- <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+       document.addEventListener("DOMContentLoaded", function() {
             const updateForm = document.getElementById("update-form");
             const submitButton = document.getElementById("submit-button");
             const titleField = document.getElementById("apartment-title");
@@ -228,7 +238,6 @@
     </script>
 @endsection
 
-
 <style>
     .container {
     padding-top: 2rem;
@@ -253,14 +262,14 @@
         font-weight: bold;
         
     }
-    
-       
-    
-
-
-
-
-
-
-
+    #submit-button{
+        background-color: #0D233D;
+        padding: 10 40;
+        
+    }
+    #redirect-button{
+        font-size: 22px;
+        color: #15ba8f;
+    }
 </style>
+
