@@ -105,12 +105,13 @@ export default {
 
 
 
-    <h1>Appartamenti</h1>
-    <ul>
+    <div class="container-card-house">
+        <h2>Case in <span class="color-green">Evidenza</span></h2>
+        <ul>
         <li v-for="(apartment, index) in apartments" :key="index" :class="(this.AppFiltered.includes(apartment.id)) ? 'hidden' : ''">
             <div v-if="!this.AppFiltered.includes(apartment.id)">
-                {{ apartment.id }}
-                -
+               
+                
                 <router-link :to="{
                     name: 'apartment-show',
                     params: { id: apartment.id }
@@ -135,12 +136,14 @@ export default {
     <ul>
         <li v-for="(apartment, index) in apartments" :key="index" :class="!(this.AppFiltered.includes(apartment.id)) ? 'hidden' : ''">
             <div v-if="this.AppFiltered.includes(apartment.id)">
-                {{ apartment.id }}
-                -
+                
                 <router-link :to="{
                     name: 'apartment-show',
                     params: { id: apartment.id }
                 }">
+                 <div class="foto_appartamento">
+                <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
+                </div>
                     {{ apartment.title }}
                 </router-link>
                 <br>
@@ -153,8 +156,10 @@ export default {
                     </div>
                 </div>
             </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+    
 </template>
 <style scoped lang="scss">
     .hidden {
@@ -201,6 +206,28 @@ export default {
         border-bottom: 3px solid #0D233D;
         
     }
+
+    h2 {
+            font-size: 2rem;
+
+            span {
+                color:#15ba8f
+            }
+        }
+
+        .container-card-house {
+            width: 90%;
+            margin: 2rem auto;
+            
+        }
+
+        ul {
+            list-style-type: none;
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
 
 </style>
 

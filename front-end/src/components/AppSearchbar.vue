@@ -85,14 +85,15 @@ export default {
       
       <input onkeydown="return event.key != 'Enter';" type="text" name="address" v-model="store.searched_address"
         id="searchInput" placeholder="Ricerca indirizzo" @input="searchbar()">
-
+        <div :class="['dropdown' , isActive ? 'hidden' : '']">
+            <span class="suggerimenti" v-for="(suggestion, i) in suggestions" :key="i" @click="changeAddress(suggestion)">
+              {{ suggestion.address.freeformAddress }}
+              <br>
+            </span>
+        </div>
     </div>
-    <div :class="[isActive ? 'hidden' : '']">
-      <span v-for="(suggestion, i) in suggestions" :key="i" @click="changeAddress(suggestion)">
-        {{ suggestion.address.freeformAddress }}
-        <br>
-      </span>
-    </div>
+    
+    
     <router-link :to="{name: 'advanced-search'}">
       <input class="my-3 bottone-cerca" type="submit" :disabled="this.submit == false" value="Cerca">
     </router-link>
@@ -101,13 +102,18 @@ export default {
 </template>
 
 <style>
-
 #searchInput {
-  width: 40rem;
+  width: 20rem;
   height: 60px;
   padding-left: 10px;
   border-radius: 20px;
   border: 1px solid black;
+ 
+}
+
+.autocomplete {
+  
+  position: relative;
 }
 
 .bottone-cerca {
@@ -119,4 +125,28 @@ export default {
   color:white;
   font-size: 1.3rem;
 }
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 999; 
+  border-radius: 10px;
+
+}
+
+.suggerimenti {
+  border-bottom: 2px solid black;
+  
+}
+
+
+
+
 </style>
