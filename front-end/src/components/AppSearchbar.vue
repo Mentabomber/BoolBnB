@@ -88,10 +88,11 @@ export default {
         <input onkeydown="return event.key != 'Enter';" type="text" name="address" v-model="store.searched_address"
           id="searchInput" placeholder="Ricerca indirizzo" @input="searchbar()">
         <div :class="['dropdown', isActive ? 'hidden' : '']">
-          <span class="suggerimenti" v-for="(suggestion, i) in suggestions" :key="i" @click="changeAddress(suggestion)">
-            {{ suggestion.address.freeformAddress }}
-            <br>
-          </span>
+          <div class="suggerimenti" v-for="(suggestion, i) in suggestions" :key="i" @click="changeAddress(suggestion)">
+            <span class="address">{{ suggestion.address.freeformAddress }}</span>
+
+
+          </div>
         </div>
       </div>
       <input class="my-3 bottone-cerca" type="submit" :disabled="this.submit == false" value="Cerca">
@@ -105,12 +106,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 4px solid black;
 }
 
 #searchInput {
   width: 20rem;
-  height: 60px;
+  height: 45px;
   padding-left: 10px;
   border-radius: 20px;
   border: 1px solid black;
@@ -125,7 +125,7 @@ export default {
 .bottone-cerca {
 
   margin-left: 3rem;
-  padding: 15px 40px;
+  padding: 5px 40px;
   border-radius: 40px;
   background-color: #0D233D;
   color: white;
@@ -148,7 +148,17 @@ export default {
 }
 
 .suggerimenti {
+  padding: 2px 0;
   border-bottom: 2px solid black;
 
+  .address {
+    margin-left: 5px;
+  }
+
+}
+
+.suggerimenti:hover {
+  background-color: #15ba8f;
+  cursor: pointer;
 }
 </style>
