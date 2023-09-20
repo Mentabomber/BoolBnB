@@ -20,13 +20,22 @@
                 
                    
                     <div class="row">
-                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Indirizzo</label></div>
-                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo"  value="{{ $address->address }}">
+                        <div class="col-sm-2">
+                         <label for="address" class="form-label">Indirizzo</label>
+                        </div>
+                        <input type="hidden" name="address" id="resultField">
+                        <input type="hidden" name="latitude" id="resultFieldLA">
+                        <input type="hidden" name="longitude" id="resultFieldLO">
+                        <div class="col-sm-10"><input type="text" name="address" class="form-control @error('indirizzo')  is-invalid @enderror" id="address" placeholder="Inserisci Indirizzo"  value="{{ $address->address }}">
                          <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                       </div>
+                        </div>
+                        <input type="text" name="address" id="searchInput" value="{{ $address->address }}">
+                        <input type="hidden" name="latitude" id="latitude" value="{{ $address->latitude }}">
+                        <input type="hidden" name="longitude" id="longitude" value="{{ $address->longitude }}">
+                        <ul style="list-style-type: none;"id="suggestions"></ul>
                     </div>
                     <br>
-                
+
                    <div class="row">
                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
                       <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano"  value="{{ $address->floor }}">
