@@ -285,7 +285,7 @@ export default {
         border-radius: 20px;
 
         img {
-            min-width: 100%;
+            max-width: 100%;
             object-fit: cover;
             border-radius: 20px;
         }
