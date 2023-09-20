@@ -15,7 +15,7 @@
                     <div class="info">
                         <div class="d-flex justify-content-between align-items-center">
                             <div style="max-width: 215px">
-                                <a class="titolo" href="{{ route('guest.apartments.show', $apartment->id) }}">
+                                <a class="titolo" href="http://localhost:5174/apartment/{{ $apartment->id }}">
                                     <span>{{ $apartment->title }}</span><br>
                                     <i class="fa-solid fa-location-dot"></i> {{ $apartment->address->address }}
                                 </a>
@@ -37,7 +37,7 @@
 
                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <a class="bottone btn-dark" href="{{ route('auth.apartments.show-messages', $apartment->id) }}">Messaggi</a>
-                             <a class="bottone btn-dark" href="#">Statistiche</a> {{-- aggiungere reindirizzamento a statistiche --}}
+                             <a class="bottone btn-dark" href="{{ route('stats', $apartment->id) }}">Statistiche</a>
                             <a class="bottone btn-dark" href="{{ route('auth.apartments.edit', $apartment->id) }}"> Modifica</a>
 
                             <form class="d-inline" method="POST"

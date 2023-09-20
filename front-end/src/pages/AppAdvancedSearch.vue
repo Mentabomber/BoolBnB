@@ -24,9 +24,7 @@ export default {
     // Chiede al db tutti gli appartamenti che corrispondono ai filtri base di ricerca (distanza <= 20)
 
     postApartment() {
-      // if (this.store.activeFilterServices.length == 0) {
-      //   this.store.activeFilterServices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      // }
+      this.store.apartmentsSearch = [];
 
       const filterData = {
         latitude: this.store.searched_latitude,
@@ -103,7 +101,7 @@ export default {
 
   {{ store.searched_address }}
   <div v-if="store.apartments_filtered.length == 0">
-    <div v-for="apartment in store.searchResult">
+    <div v-for="apartment in store.apartmentsSearch">
       <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
       {{ apartment.title }}
       stanze:{{ apartment.rooms }}
@@ -116,8 +114,8 @@ export default {
       {{ apartment.title }}
       stanze:{{ apartment.rooms }}
       letti: {{ apartment.beds }}
+
     </div>
   </div>
- 
 </template>
 

@@ -66,7 +66,9 @@ export default {
             axios.post(store.API_URL + '/search', position)
                 .then(res => {
                     const data = res.data;
-                    console.log(data, 'prova');
+                    this.store.apartmentsSearch = res.data.apartments;
+                    this.$router.push({name: 'advanced-search' });
+                    console.log(this.store.apartmentsSearch, 'store apartments Search');
                 });
 
         },

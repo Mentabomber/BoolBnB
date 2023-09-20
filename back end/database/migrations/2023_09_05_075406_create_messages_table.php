@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name', 32)->nullable(false);
             $table->string('surname', 32)->nullable(false);
             $table->string('email', 64)->nullable(false);
+            $table->date('send_date')->nullable(false);
+
 
             
             $table->timestamps();

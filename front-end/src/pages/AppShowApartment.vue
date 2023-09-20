@@ -1,11 +1,7 @@
 <script>
 import axios from 'axios';
 import { store } from '../store';
-// import map from '../js/map.js';
-// import mobile_or_tablet from '../js/mobile-or-tablet.js';
-// import '@../js/map.js';
-// import '@../js/mobile-or-tablet.js';
-
+import Swal from 'sweetalert2';
 
 export default {
     name: 'AppHome',
@@ -22,22 +18,26 @@ export default {
         sendMessage() {
             const apartmentId = this.$route.params.id;
             const formData = {
-               email: store.user_email,
-               name: store.user_name,
-               surname: store.user_surname,
-               message: store.user_message,
-               apartment_id: apartmentId,
+                email: store.user_email,
+                name: store.user_name,
+                surname: store.user_surname,
+                message: store.user_message,
+                apartment_id: apartmentId,
+                send_date: ''
             };
-        
+
             axios.post(store.API_URL + '/api/endpoint', formData)
                 .then(response => {
-                
-                console.log(response.data);
+                    // alert messaggio inviato tramite sweetalert2
+                    Swal.fire('Messaggio inviato con successo!');
+                    store.user_message = "";
+                    console.log(response.data);
                 })
                 .catch(error => {
-                
-                console.error(error);
+
+                    console.error(error);
                 });
+
         },
         mappaTomTom() {
             let resultFieldLO = this.longitude;
@@ -65,9 +65,9 @@ export default {
                 }).setText(popupText);
 
                 new tt.Marker({
-                        element: markerElement,
-                        anchor: 'bottom'
-                    })
+                    element: markerElement,
+                    anchor: 'bottom'
+                })
                     .setLngLat(position)
                     .setPopup(popup)
                     .addTo(map);
@@ -100,12 +100,12 @@ export default {
             "../js/mobile-or-tablet.js",
         ];
         scripts.forEach(script => {
-            let tag = document.head.querySelector(`[src="${ script }"`);
+            let tag = document.head.querySelector(`[src="${script}"`);
             if (!tag) {
                 tag = document.createElement("script");
                 tag.setAttribute("src", script);
                 tag.setAttribute("type", 'text/javascript');
-                document.head.appendChild(tag); 
+                document.head.appendChild(tag);
             }
         });
     }

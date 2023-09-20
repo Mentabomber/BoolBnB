@@ -13,6 +13,7 @@ export const store = reactive({
     searched_longitude: undefined,
     apartments_filtered: [],
     services_list: [],
+    apartmentsSearch: [],
     activeFilterServices: [],
     searchResult: [],
     token: "",

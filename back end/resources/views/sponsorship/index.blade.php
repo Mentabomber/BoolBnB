@@ -53,6 +53,12 @@
     var form = document.querySelector('#payment-form');
     var client_token = "{{ $token }}";
     var cards = document.querySelectorAll('.card');
+        //funzione usata per far sparire il tasto paga al momento del successo
+        function block_none() {
+            console.log("ciao");
+            document.getElementById('submit-button').classList.add('hide');
+        }
+       
 
     braintree.dropin.create({
         authorization: client_token,
@@ -80,6 +86,7 @@
 
                 // Invia il form al server
                 form.submit();
+                    block_none();
             });
         });
 
@@ -95,6 +102,11 @@
 
     
 </script>
+    <style>
+        .hide{
+            display: none;
+        }
+    </style>
 @endsection
 
 <style scoped>
