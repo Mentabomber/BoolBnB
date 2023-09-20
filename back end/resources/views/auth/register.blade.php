@@ -26,20 +26,6 @@
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email">
-                                    <span id="email-error" class="invalid-feedback" role="alert">
-                                        <strong></strong>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="mb-4 row">
                                 <label for="surname"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
 
@@ -48,6 +34,20 @@
                                         class="form-control @error('surname') is-invalid @enderror" name="surname"
                                         value="{{ old('surname') }}" required minlength="3" autocomplete="surname" autofocus>
                                     <span id="surname-error" class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4 row">
+                                <label for="email"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email">
+                                    <span id="email-error" class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
                                 </div>
@@ -148,21 +148,6 @@
                     nameField.classList.remove("is-invalid");
                 }
 
-                // Validazione del campo "Email"
-                const emailValue = emailField.value.trim();
-                if (emailValue === "") {
-                    isValid = false;
-                    document.getElementById("email-error").innerHTML = "Il campo 'E-Mail Address' è obbligatorio.";
-                    emailField.classList.add("is-invalid");
-                } else if (!isValidEmail(emailValue)) {
-                    isValid = false;
-                    document.getElementById("email-error").innerHTML = "Inserisci un indirizzo email valido.";
-                    emailField.classList.add("is-invalid");
-                } else {
-                    document.getElementById("email-error").innerHTML = "";
-                    emailField.classList.remove("is-invalid");
-                }
-
                 // Validazione del campo "Surname"
                 const surnameValue = surnameField.value.trim();
                 if (surnameValue === "") {
@@ -210,6 +195,20 @@
                         document.getElementById("date_of_birth-error").innerHTML = "";
                         dateOfBirthField.classList.remove("is-invalid");
                     }
+                }
+                // Validazione del campo "Email"
+                const emailValue = emailField.value.trim();
+                if (emailValue === "") {
+                    isValid = false;
+                    document.getElementById("email-error").innerHTML = "Il campo 'E-Mail Address' è obbligatorio.";
+                    emailField.classList.add("is-invalid");
+                } else if (!isValidEmail(emailValue)) {
+                    isValid = false;
+                    document.getElementById("email-error").innerHTML = "Inserisci un indirizzo email valido.";
+                    emailField.classList.add("is-invalid");
+                } else {
+                    document.getElementById("email-error").innerHTML = "";
+                    emailField.classList.remove("is-invalid");
                 }
 
                 // Validazione del campo "Password"
