@@ -119,7 +119,7 @@ export default {
 .bottone-cerca {
   
   margin-left: 3rem;
-  padding: 15px 120px;
+  padding: 15px 40px;
   border-radius: 40px;
   background-color: #0D233D;
   color:white;

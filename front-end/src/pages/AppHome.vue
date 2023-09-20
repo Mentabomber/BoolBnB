@@ -107,7 +107,7 @@ export default {
 
 
 
-    <div class="container-card-house">
+    <div class="container">
         <h2>Case in <span class="color-green">Evidenza</span></h2>
         
     
@@ -210,8 +210,10 @@ export default {
 
     h2 {
             font-size: 2rem;
+            margin: 1%;
+            font-weight: bolder
             
-            margin-left: 4%;
+         ;
 
             span {
                 color:#15ba8f
