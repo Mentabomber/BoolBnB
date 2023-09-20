@@ -27,8 +27,8 @@
                         <input type="hidden" name="latitude" id="resultFieldLA">
                         <input type="hidden" name="longitude" id="resultFieldLO">
                         <div class="col-sm-10">
-                            <input type="text" name="address" class="form-control @error('indirizzo')  is-invalid @enderror" id="searchInput" placeholder="Inserisci Indirizzo" >
-                            <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                            <input type="text" name="address" class="form-control @error('indirizzo') is-invalid @enderror" id="searchInput" placeholder="Inserisci Indirizzo">
+                            <span id="address-error" class="invalid-feedback" role="alert"><strong></strong></span>
                         </div>
                      
                         <ul style="list-style-type: none;"id="suggestions"></ul>
@@ -122,20 +122,23 @@
             const updateForm = document.getElementById("update-form");
             const submitButton = document.getElementById("submit-button");
             const titleField = document.getElementById("apartment-title");
+            const addressField = document.getElementById("searchInput");
             const roomsField = document.getElementById("rooms");
             const bedsField = document.getElementById("beds");
             const bathroomsField = document.getElementById("bathrooms");
             const square_metersField = document.getElementById("square_meters");
             const floorField = document.getElementById("floor");
 
+            
             submitButton.addEventListener("click", function() {
                 if (validateForm()) {
                     // Se la validazione è riuscita, invia il form
                     updateForm.submit();
                 }
             });
-
+            
             function validateForm() {
+                console.log(addressField.value, 'address');
                 let isValid = true;
 
                 // Validazione del campo "title"
@@ -155,11 +158,23 @@
                     titleField.classList.remove("is-invalid");
                 }
 
+                 // Validazione del campo "indirizzo"
+                 const addressValue = addressField.value;
+                if (addressValue == "" || addressValue == null) {
+                    isValid = false;
+                    document.getElementById("address-error").innerHTML = "Il campo 'Indirizzo' è obbligatorio.";
+                    addressField.classList.add("is-invalid");
+                }
+                else {
+                    document.getElementById("address-error").innerHTML = "";
+                    addressField.classList.remove("is-invalid");
+                }
+
                 // Validazione del campo "rooms"
                 const roomsValue = roomsField.value;
                 if (roomsValue === "") {
                     isValid = false;
-                    document.getElementById("rooms-error").innerHTML = "Il campo 'stanze' è obbligatorio.";
+                    document.getElementById("rooms-error").innerHTML = "Il campo 'Stanze' è obbligatorio.";
                     roomsField.classList.add("is-invalid");
                 } 
                 else if (roomsValue < 1){
