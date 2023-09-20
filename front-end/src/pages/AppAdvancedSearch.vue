@@ -104,18 +104,37 @@ export default {
                     @change="this.postApartment()" style="margin: 0 10px;">
                 <span>50</span>
 
-                <p>km selezionati: <span id="demo" style="font-weight: bold; font-size: 20px;">25</span></p>
+                <p>km selezionati: <span id="demo" style="font-weight: bold; font-size: 20px;"> {{ kmFilter }}</span></p>
             </div>
         </div>
 
         <div class="col-8" style="overflow-y:scroll; max-height: 700px;">
             <div v-if="store.apartments_filtered.length == 0">
                 <div v-for="apartment in store.apartmentsSearch">
-                    <div class="card_appartamento">
-                        <img :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
-                        {{ apartment.title }}
-                        stanze:{{ apartment.rooms }}
-                        letti: {{ apartment.beds }}
+                    <div class="card_appartamento d-flex justify-content-between">
+                        <div class="col-5">
+                            <img style="width: 100%; object-fit: cover;"
+                                :src="'http://localhost:8000/storage/uploads/' + apartment.image" alt="immagine">
+                        </div>
+                        <div class="col-7" style="padding-left: 20px; padding-top: 20px;">
+                            <div style="font-weight: bold; font-size: 1.5rem;">{{ apartment.title }}</div>
+                            <div style="font-weight: bold; font-size: 0.8rem;"><i class="fa-solid fa-location-dot"
+                                    style="margin-right: 10px;"></i>{{
+                                        apartment.address }}</div>
+                            <div class="d-flex gap-3 flex-wrap" style="margin-top: 10px;">
+                                <div v-for="service in apartment.services">
+                                    <div class="d-flex align-items-center justify-content-center servizio">
+                                        {{ service.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pulsante_info">
+                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }"
+                                    style="text-decoration: none;">
+                                    <span style="color: white; text-decoration: none;">Maggiori informazioni</span>
+                                </router-link>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -140,7 +159,10 @@ export default {
                                 </div>
                             </div>
                             <div class="pulsante_info">
-                                Maggiori informazioni
+                                <router-link :to="{ name: 'apartment-show', params: { id: apartment.id } }"
+                                    style="text-decoration: none;">
+                                    <span style="color: white; text-decoration: none;">Maggiori informazioni</span>
+                                </router-link>
                             </div>
                         </div>
                     </div>
