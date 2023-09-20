@@ -21,7 +21,7 @@
                    
                     <div class="row">
                        <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Indirizzo</label></div>
-                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo"  value="{{ $apartment->adress }}">
+                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo"  value="{{ $address->address }}">
                          <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
                        </div>
                     </div>
@@ -29,7 +29,7 @@
                 
                    <div class="row">
                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
-                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano"  value="{{ $apartment->floor }}">
+                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano"  value="{{ $address->floor }}">
                        <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
                    </div>
@@ -37,7 +37,7 @@
                 
                    <div class="row">
                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Dimensioni</label></div>
-                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati"  value="{{ $apartment->metres }}">
+                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati"  value="{{ $apartment->square_meters }}">
                       <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>

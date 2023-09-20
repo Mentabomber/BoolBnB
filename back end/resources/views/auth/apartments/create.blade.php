@@ -14,7 +14,7 @@
                 <div class="container text-center">
                     <div class="row">
                        <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Descrizione</label></div>
-                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="description" placeholder="Inserisci Descrizione" v-model="store.user_name">
+                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="description" placeholder="Inserisci Descrizione">
                        <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span></div>
                     </div>
                     <br>
@@ -22,7 +22,7 @@
                    
                     <div class="row">
                        <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Indirizzo</label></div>
-                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo" v-model="store.user_name">
+                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo">
                          <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
                        </div>
                     </div>
@@ -30,7 +30,7 @@
                 
                    <div class="row">
                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
-                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano" v-model="store.user_name">
+                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano">
                        <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
                    </div>
@@ -38,7 +38,7 @@
                 
                    <div class="row">
                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Dimensioni</label></div>
-                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati" v-model="store.user_name">
+                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati">
                       <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
@@ -46,7 +46,7 @@
                 
                    <div class="row">
                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Stanze</label></div>
-                     <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze" v-model="store.user_name">
+                     <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze">
                        <span id="rooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
@@ -54,7 +54,7 @@
                 
                    <div class="row">
                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Letti</label></div>
-                     <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti" v-model="store.user_name">
+                     <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti">
                       <span id="beds-error" class="invalid-feedback" role="alert"><strong></strong></span>
                      </div>
                     </div>
@@ -62,7 +62,7 @@
                 
                    <div class="row">
                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Bagni</label></div>
-                      <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni" v-model="store.user_name">
+                      <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni">
                           <span id="bathrooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
                       </div>
                     </div>
