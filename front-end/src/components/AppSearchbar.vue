@@ -101,7 +101,7 @@ export default {
   </form>
 </template>
 
-<style>
+<style scoped>
 #searchInput {
   width: 20rem;
   height: 60px;
