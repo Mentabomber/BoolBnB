@@ -1,3 +1,4 @@
+
 <script>
 import axios from 'axios';
 import { store } from '../store';
@@ -12,6 +13,7 @@ export default {
             store,
             latitude: "",
             longitude: "",
+            name: "",
         }
     },
     methods: {
@@ -28,7 +30,7 @@ export default {
             const apartmentId = this.$route.params.id;
             const formData = {
                 email: store.user_email,
-                name: store.user_name,
+                name: store.name,
                 surname: store.user_surname,
                 message: store.user_message,
                 apartment_id: apartmentId,
@@ -179,6 +181,11 @@ export default {
                 document.head.appendChild(tag);
             }
         });
+        this.name = store.user_name;
+        console.log(this.name);
+    },
+    created(){
+        
     }
 }
 </script>
@@ -231,7 +238,7 @@ export default {
         <form @submit.prevent="sendMessage">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome" v-model="store.user_name">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome" v-model="store.name">
                 <span id="name-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
@@ -391,3 +398,4 @@ export default {
     width: 24px;
 }
 </style>
+

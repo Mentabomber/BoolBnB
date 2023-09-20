@@ -17,4 +17,6 @@ export const store = reactive({
     activeFilterServices: [],
     searchResult: [],
     token: "",
+    // variabile per identificare nome in show message form senza cambiare user_name in pagina 
+    name: undefined
 });
