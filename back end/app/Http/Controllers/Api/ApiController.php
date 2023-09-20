@@ -60,9 +60,9 @@ class ApiController extends Controller
             )->join('addresses', 'addresses.apartment_id', '=', 'apartments.id')
             ->where('visible', 1)
             ->having('distance', '<=', 20)
-            ->orderBy('distance', 'asc')
-            ->get();
-    
+            ->orderBy('distance', 'asc');
+            
+            $apartments = $apartments->with('services')->get();
         return response()->json(['apartments' => $apartments]);
 
     }

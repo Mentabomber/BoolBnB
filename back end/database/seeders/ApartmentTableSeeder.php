@@ -33,7 +33,7 @@ class ApartmentTableSeeder extends Seeder
                 "visible"=> true
             ],
             [
-                "title" => "Appartamento 2",          
+                "title" => "Casa Frontemare con accesso al mare esclusivo",          
                 "rooms"=> 6,      
                 "beds"=> 3,       
                 "bathrooms"=> 2,
@@ -42,7 +42,7 @@ class ApartmentTableSeeder extends Seeder
                 "visible"=> true
             ],
             [
-                "title" => "Appartamento 3",          
+                "title" => "Villa indipendente con discesa privata al mare",          
                 "rooms"=> 8,      
                 "beds"=> 3,       
                 "bathrooms"=> 2,
@@ -51,7 +51,7 @@ class ApartmentTableSeeder extends Seeder
                 "visible"=> true
             ],
             [
-                "title" => "Appartamento 4",          
+                "title" => "Le Lagore - Incredibile fattoria CinqueTerre restaurata",          
                 "rooms"=> 3,      
                 "beds"=> 1,       
                 "bathrooms"=> 1,
@@ -59,6 +59,62 @@ class ApartmentTableSeeder extends Seeder
                 "image"=> "1694091783.jpg",
                 "visible"=> true
             ],
+            [
+                "title" => "SUBLIME 2 VANI DESIGN, NUOVO, TERRAZZA E GARAGE",          
+                "rooms"=> 3,      
+                "beds"=> 1,       
+                "bathrooms"=> 1,
+                "square_meters"=> 62,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+            [
+                "title" => "La Piazzetta sul Mare",          
+                "rooms"=> 6,      
+                "beds"=> 3,       
+                "bathrooms"=> 2,
+                "square_meters"=> 100,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+            [
+                "title" => "Casa con vista Pietra Ligure",          
+                "rooms"=> 6,      
+                "beds"=> 3,       
+                "bathrooms"=> 2,
+                "square_meters"=> 121,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+            [
+                "title" => "In un uliveto sul mare con piscina",          
+                "rooms"=> 4,      
+                "beds"=> 3,       
+                "bathrooms"=> 2,
+                "square_meters"=> 75,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+            [
+                "title" => "SanFra home/ Chiavari 5 min a piedi dal lungomare",          
+                "rooms"=> 4,      
+                "beds"=> 2,       
+                "bathrooms"=> 1,
+                "square_meters"=> 62,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+            [
+                "title" => "Zion EcoCabin: vasca idromassaggio privata, vista sullo Zion Canyon",          
+                "rooms"=> 5,      
+                "beds"=> 2,       
+                "bathrooms"=> 1,
+                "square_meters"=> 80,
+                "image"=> "1694091783.jpg",
+                "visible"=> true
+            ],
+
+            
 
         ];
 
@@ -82,7 +138,7 @@ class ApartmentTableSeeder extends Seeder
             $services = Service::inRandomOrder() -> limit(rand(1, 10)) -> get();
             $apartment -> services() -> attach($services);
 
-            $sponsorships = Sponsorship::inRandomOrder() -> limit(rand(1, 1)) -> get();
+            $sponsorships = Sponsorship::inRandomOrder() -> limit(rand(0, 1)) -> get();
 
             $date = ["2021-10-05","2022-05-03","2023-01-20"];
 

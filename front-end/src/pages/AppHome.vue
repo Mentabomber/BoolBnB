@@ -109,7 +109,7 @@ export default {
 
 
 
-    <div class="container">
+    <div class="container" style="min-height: 400px;">
         <h2>Case in <span class="color-green">Evidenza</span></h2>
 
 
