@@ -92,12 +92,7 @@ export default {
             </span>
         </div>
     </div>
-    
-    
-    <router-link :to="{name: 'advanced-search'}">
-      <input class="my-3 bottone-cerca" type="submit" :disabled="this.submit == false" value="Cerca">
-    </router-link>
-    
+    <input class="my-3 bottone-cerca" type="submit" :disabled="this.submit == false" value="Cerca">
   </form>
 </template>
 
