@@ -31,7 +31,7 @@ export default {
         <div class="col-4" id="title">
           <h2>BoolBnB</h2>
         </div>
-        <a class="col-1 text-center" href="http://localhost:5174/">Home</a>
+        <router-link class="col-1 text-center" :to="{name:'home'}">Home</router-link>
         <div v-if="this.store.user_name === 'undefined' || this.store.user_name == null"
           class="col-3 d-flex gap-5 text-center">
           <a class="col-2" href="http://localhost:8000/login">Login</a>
