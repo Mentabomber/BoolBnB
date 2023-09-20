@@ -5,7 +5,7 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div class="text-center">
 
-            <h2><span>Aggiungi</span> un nuovo appartamento</h2>
+            <h1><span>Aggiungi</span> un nuovo appartamento</h1>
             <form id="update-form" method="POST" action="{{ route('apartment.store') }}" enctype='multipart/form-data'>
 
                 @csrf
@@ -236,7 +236,7 @@
     padding-bottom: 6rem;
     }
 
-    h2 {
+    h1 {
         margin-top: 2rem;
         font-weight: bold;
         margin-bottom: 1.5rem;
@@ -262,5 +262,5 @@
 
 
 
-}
+
 </style>
