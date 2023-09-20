@@ -1,82 +1,112 @@
 @extends('layouts.app')
 @section('content')
 <script src="../../../public/assets/js/main.js"></script>
+<div class="container">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div class="text-center">
 
-            <h1>Aggiungi nuov Appartamento</h1>
+            <h1><span>Aggiungi</span> un nuovo appartamento</h1>
             <form id="update-form" method="POST" action="{{ route('apartment.store') }}" enctype='multipart/form-data'>
 
                 @csrf
                 @method('POST')
 
-                <label for="title">Descrizione</label>
-                <br>
-                <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror">
-                <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
-                <label for="rooms">Stanze</label>
-                <br>
-                <input type="number" name="rooms" id="rooms" class="form-control @error('rooms') is-invalid @enderror">
-                <span id="rooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
-                <label for="beds">Letti</label>
-                <br>
-                <input type="number" name="beds" id="beds" class="form-control @error('beds') is-invalid @enderror">
-                <span id="beds-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
-                <label for="bathrooms">Bagni</label>
-                <br>
-                <input type="number" name="bathrooms" id="bathrooms" class="form-control @error('bathrooms') is-invalid @enderror">
-                <span id="bathrooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
-                <label for="square_meters">Metri Quadrati</label>
-                <br>
-                <input type="number" name="square_meters" id="square_meters" class="form-control @error('square_meters') is-invalid @enderror">
-                <span id="square_meters-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
-                <label for="image">Immagine Appartamento</label>
-                <input type="file" name="image" id="image">
-                <br>
-                <label for="visible">Visibilità</label>
-                <input type="radio" class="visible"  name="visible" value="0"> no
-                <br>
-                <input type="radio" class="visible"  name="visible" value="1" checked> si
-                <br>
-                <label for="">Servizi</label>
-                <br>
-                @foreach ($services as $service)
-                    <div class="form-check mx-auto" style="max-width: 300px">
-                        <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
-                            id="service{{ $service->id }}">
-                        <label class="form-check-label" for="service{{ $service->id }}">
-                            {{ $service->name }}
-                        </label>
+                <div class="container text-center">
+                    <div class="row">
+                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Descrizione</label></div>
+                    <div class="col-sm-10"><input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="description" placeholder="Inserisci Descrizione" v-model="store.user_name">
+                       <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span></div>
                     </div>
-                @endforeach
-                <br>
-                <h2>Indirizzo</h2>
-                <input type="hidden" name="address" id="resultField">
-                <input type="hidden" name="latitude" id="resultFieldLA">
-                <input type="hidden" name="longitude" id="resultFieldLO">
-                <br>
-                <label for="address">Indirizzo</label>
-                <br>
-                <input type="text" name="address" id="searchInput" placeholder="Cerca indirizzo">
-                <ul style="list-style-type: none;"id="suggestions"></ul>
+                    <br>
+                
+                   
+                    <div class="row">
+                       <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Indirizzo</label></div>
+                       <div class="col-sm-10"><input type="text" name="adress" class="form-control @error('indirizzo')  is-invalid @enderror" id="adress" placeholder="Inserisci Indirizzo" v-model="store.user_name">
+                         <span id="adress-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                       </div>
+                    </div>
+                    <br>
+                
+                   <div class="row">
+                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Piano</label></div>
+                      <div class="col-sm-10"><input type="number" name="floor" class="form-control @error('floor')  is-invalid @enderror" id="floor" placeholder="Inserisci Piano" v-model="store.user_name">
+                       <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                      </div>
+                   </div>
+                   <br>
+                
+                   <div class="row">
+                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Dimensioni</label></div>
+                     <div class="col-sm-10"><input type="number" name="metres" class="form-control @error('metres')  is-invalid @enderror" id="metres" placeholder="Inserisci Metri Quadrati" v-model="store.user_name">
+                      <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                     </div>
+                    </div>
+                    <br>
+                
+                   <div class="row">
+                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Stanze</label></div>
+                     <div class="col-sm-10"><input type="number" name="rooms" class="form-control @error('rooms')  is-invalid @enderror" id="rooms" placeholder="Inserisci Stanze" v-model="store.user_name">
+                       <span id="rooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                     </div>
+                    </div>
+                    <br>
+                
+                   <div class="row">
+                     <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Letti</label></div>
+                     <div class="col-sm-10"><input type="number" name="beds" class="form-control @error('beds')  is-invalid @enderror" id="beds" placeholder="Inserisci Letti" v-model="store.user_name">
+                      <span id="beds-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                     </div>
+                    </div>
+                    <br>
+                
+                   <div class="row">
+                      <div class="col-sm-2"><label for="exampleFormControlInput1" class="form-label">Bagni</label></div>
+                      <div class="col-sm-10"><input type="number" name="bathrooms" class="form-control @error('bathrooms')  is-invalid @enderror" id="bathrooms" placeholder="Inserisci Bagni" v-model="store.user_name">
+                          <span id="bathrooms-error" class="invalid-feedback" role="alert"><strong></strong></span>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-2"> <label for="image">Immagine</label></div>
+                      <div class="col-sm-10"> <input type="file" name="image" id="image">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-2"><label for="visible">Visibilità</label></div>
+                      <div class="col-sm-10"><input type="radio" class="visible"  name="visible" value="0"> no
+                           <input type="radio" class="visible"  name="visible" value="1" checked> si     
+                      </div>
+                    </div>
+                </div>
 
-              
-                <label for="floor" id="floor-label" style="display: block;">Piano</label>
-                <input type="number" name="floor" id="floor" class="form-control @error('floor') is-invalid @enderror">
-                <span id="floor-error" class="invalid-feedback" role="alert"><strong></strong></span>
-                <br>
+            
 
-                <button type="button" class="btn btn-primary" id="submit-button">Crea</button>
+                
+                
+                       <div class="col">
+                       <label for="">Servizi</label>
+                       <br>
+                         @foreach ($services as $service)
+                       <div class="form-check mx-auto" style="max-width: 300px">
+                          <input class="form-check-input" type="checkbox" value="{{ $service->id }}" name="services[]"
+                              id="service{{ $service->id }}">
+                          <label class="form-check-label" for="service{{ $service->id }}">
+                            {{ $service->name }}
+                          </label>
+                       </div>
+                         @endforeach
+                        <br>
+                        <button type="button" class="btn btn-primary" id="submit-button">Crea</button>
             </form>
-            <a href="{{ route('dashboard') }}">Torna alla Dashboard</a>
+            
         </div>
     </div>
-    <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
+</div>
+
+ <script type="text/javascript" src="{{ asset('assets/js/search-bar-update-create.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const updateForm = document.getElementById("update-form");
@@ -197,3 +227,40 @@
         });
     </script>
 @endsection
+
+
+<style>
+    .container {
+    padding-top: 2rem;
+    background-color: #dfdedf;
+    padding-bottom: 6rem;
+    }
+
+    h1 {
+        margin-top: 2rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        
+    }
+
+    span {
+            color: #15ba8f;
+            font-weight: bold;
+        }
+
+    label{
+        color: black;
+        font-weight: bold;
+        
+    }
+    
+       
+    
+
+
+
+
+
+
+
+</style>
