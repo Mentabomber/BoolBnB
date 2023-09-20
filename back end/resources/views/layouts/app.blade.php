@@ -97,7 +97,7 @@
         </main>
 
         <footer>
-            <div class="container-fluid text-align-center" style="height: 250px; padding-top: 1.5rem;">
+            <div class="container-fluid text-align-center" style="height: 200px; padding-top: 1.5rem;">
                 <div class="row text-center" style="margin-bottom: 1rem;">
                     <div class="col-12" id="title">
                         <h2>BoolBnB</h2>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="container">
+<div class="container" style="min-height: 660px;">
     <h2 class="miei_appartamenti">Miei <span>Appartamenti</span></h2>
 
     <ul class="list-unstyled d-flex justify-content-center align-items-center flex-wrap">

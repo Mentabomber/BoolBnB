@@ -235,7 +235,7 @@ ul {
 }
 
 .card {
-    height: 300px;
+    height: 350px;
     border: 2px solid #15BA8F;
     margin-bottom: 10px;
     display: flex;
