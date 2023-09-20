@@ -99,37 +99,37 @@
                     <div class="col-2">
                         <div class="name">Alessandro Belfiore</div>
                         <div class="profile-links">
-                            <div><a href="https://www.linkedin.com/in/alessandro-belfiore-695a5328a/">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
-                            <div><a href="https://github.com/Alecpu92">GitHub <i class="fa-brands fa-github"></i></a></div>
+                            <div><a href="https://www.linkedin.com/in/alessandro-belfiore-695a5328a/">LinkedIn <i style="margin-left:10px;" class="fa-brands fa-linkedin"></i> </a></div>
+                            <div><a href="https://github.com/Alecpu92">GitHub <i style="margin-left:10px;" class="fa-brands fa-github"></i></a></div>
                         </div>
                     </div>
 
                     <div class="col-2">
                         <div class="name">Daniele Corrado</div>
                         <div class="profile-links">
-                            <div><a href="https://www.linkedin.com/in/daniele-corrado-7217b628a/">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
-                            <div><a href="https://github.com/DanieleCorrado">GitHub <i class="fa-brands fa-github"></i></a></div>
+                            <div><a href="https://www.linkedin.com/in/daniele-corrado-7217b628a/">LinkedIn <i style="margin-left:10px;" class="fa-brands fa-linkedin"></i> </a></div>
+                            <div><a href="https://github.com/DanieleCorrado">GitHub <i style="margin-left:10px;" class="fa-brands fa-github"></i></a></div>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="name">Fabio Di Giacomo Pepe</div>
                         <div class="profile-links">
-                            <div><a href="https://www.linkedin.com/in/fabio-di-giacomo-pepe">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
-                            <div><a href="https://github.com/fabiodigiacomopepe">GitHub <i class="fa-brands fa-github"></i></a></div>
+                            <div><a href="https://www.linkedin.com/in/fabio-di-giacomo-pepe">LinkedIn <i style="margin-left:10px;" class="fa-brands fa-linkedin"></i> </a></div>
+                            <div><a href="https://github.com/fabiodigiacomopepe">GitHub <i style="margin-left:10px;" class="fa-brands fa-github"></i></a></div>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="name">Tilen Simcic</div>
                         <div class="profile-links">
-                            <div><a href="https://www.linkedin.com/in/tilen-simcic-043419265/">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
-                            <div><a href="https://github.com/Mentabomber">GitHub <i class="fa-brands fa-github"></i></a></div>
+                            <div><a href="https://www.linkedin.com/in/tilen-simcic-043419265/">LinkedIn <i style="margin-left:10px;" class="fa-brands fa-linkedin"></i> </a></div>
+                            <div><a href="https://github.com/Mentabomber">GitHub <i style="margin-left:10px;" class="fa-brands fa-github"></i></a></div>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="name">Antonino Troìa</div>
                         <div class="profile-links">
-                            <div><a href="https://www.linkedin.com/in/antonino-troia-140884207">LinkedIn <i class="fa-brands fa-linkedin"></i> </a></div>
-                            <div><a href="https://github.com/Ninotro">GitHub <i class="fa-brands fa-github"></i></a></div>
+                            <div><a href="https://www.linkedin.com/in/antonino-troia-140884207">LinkedIn <i style="margin-left:10px;" class="fa-brands fa-linkedin"></i> </a></div>
+                            <div><a href="https://github.com/Ninotro">GitHub <i style="margin-left:10px;" class="fa-brands fa-github"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -185,7 +185,6 @@ a {
 }
 
 i {
-    margin-left: 10px;
     font-size: 30px;
 }
 

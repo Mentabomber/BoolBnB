@@ -1,3 +1,4 @@
+
 <script>
 import axios from 'axios';
 import { store } from '../store';
@@ -12,31 +13,102 @@ export default {
             store,
             latitude: "",
             longitude: "",
+            name: "",
         }
     },
     methods: {
+        isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+        },
         sendMessage() {
+            const emailField = document.getElementById("email");
+            const nameField = document.getElementById("name");
+            const surnameField = document.getElementById("surname");
+            const messageField = document.getElementById("message");
+            console.log(emailField);
             const apartmentId = this.$route.params.id;
             const formData = {
                 email: store.user_email,
-                name: store.user_name,
+                name: store.name,
                 surname: store.user_surname,
                 message: store.user_message,
                 apartment_id: apartmentId,
                 send_date: ''
             };
-
-            axios.post(store.API_URL + '/api/endpoint', formData)
-                .then(response => {
-                    // alert messaggio inviato tramite sweetalert2
-                    Swal.fire('Messaggio inviato con successo!');
-                    store.user_message = "";
-                    console.log(response.data);
-                })
-                .catch(error => {
-
-                    console.error(error);
-                });
+            let isValid = true;
+            // Validazione del campo "Name"
+            if (this.store.user_name === "") {
+                isValid = false;
+                document.getElementById("name-error").innerHTML = "Il campo 'Nome' è obbligatorio.";
+                nameField.classList.add("is-invalid");
+            } 
+            else if (this.store.user_name.length < 3){
+                isValid = false;
+                document.getElementById("name-error").innerHTML = "Il campo 'Nome' deve contenere almeno 3 caratteri";
+                nameField.classList.add("is-invalid");
+            }
+            else {
+                document.getElementById("name-error").innerHTML = "";
+                nameField.classList.remove("is-invalid");
+            }
+            // Validazione del campo "Surname"
+            if (this.store.user_surname === "") {
+                isValid = false;
+                document.getElementById("surname-error").innerHTML = "Il campo 'Cognome' è obbligatorio.";
+                surnameField.classList.add("is-invalid");
+            } 
+            else if(this.store.user_surname.length < 3){
+                isValid = false;
+                document.getElementById("surname-error").innerHTML = "Il campo 'Cognome' deve contenere almeno 3 caratteri";
+                surnameField.classList.add("is-invalid");
+            }
+            else {
+                document.getElementById("surname-error").innerHTML = "";
+                surnameField.classList.remove("is-invalid");
+            }
+            // Validazione del campo "Email"
+            if (this.store.user_email === "") {
+                console.log(isValid);
+                isValid = false;
+                document.getElementById("email-error").innerHTML = "Il campo 'E-Mail Address' è obbligatorio.";
+                emailField.classList.add("is-invalid");
+            } else if (!this.isValidEmail(this.store.user_email)) {
+                isValid = false;
+                document.getElementById("email-error").innerHTML = "Inserisci un indirizzo email valido.";
+                emailField.classList.add("is-invalid");
+            } else {
+                document.getElementById("email-error").innerHTML = "";
+                emailField.classList.remove("is-invalid");
+            }
+            // Validazione del campo "Messaggio"
+            if (this.store.user_message === "") {
+                isValid = false;
+                document.getElementById("message-error").innerHTML = "Il campo 'Messaggio' è obbligatorio.";
+                messageField.classList.add("is-invalid");
+            } 
+            else if (this.store.user_message.length < 10){
+                isValid = false;
+                document.getElementById("message-error").innerHTML = "Il campo 'Messaggio' deve contenere almeno 10 caratteri";
+                messageField.classList.add("is-invalid");
+            }
+            else {
+                document.getElementById("message-error").innerHTML = "";
+                messageField.classList.remove("is-invalid");
+            }
+            if(isValid){
+                axios.post(store.API_URL + '/api/endpoint', formData)
+                    .then(response => {
+                        // alert messaggio inviato tramite sweetalert2
+                        Swal.fire('Messaggio inviato con successo!');
+                        store.user_message = "";
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+    
+                        console.error(error);
+                    }); 
+            }
 
         },
         mappaTomTom() {
@@ -74,6 +146,7 @@ export default {
             }
             createMarker([resultFieldLO, resultFieldLA], '#5327c3', 'Mi trovo qui :D');
         },
+      
 
     },
     mounted() {
@@ -108,6 +181,11 @@ export default {
                 document.head.appendChild(tag);
             }
         });
+        this.name = store.user_name;
+        console.log(this.name);
+    },
+    created(){
+        
     }
 }
 </script>
@@ -160,19 +238,23 @@ export default {
         <form @submit.prevent="sendMessage">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Inserisci Nome" v-model="store.user_name">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Inserisci Nome" v-model="store.name">
+                <span id="name-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Cognome</label>
-                <input type="text" name="surname" class="form-control" id="exampleFormControlInput2" placeholder="Inserisci Cognome" v-model="store.user_surname">
+                <input type="text" name="surname" class="form-control" id="surname" placeholder="Inserisci Cognome" v-model="store.user_surname">
+                <span id="surname-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">E-mail</label>
-                <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="Inserisci E-mail" v-model="store.user_email">
+                <input type="text" name="email" class="form-control" id="email" placeholder="Inserisci E-mail" v-model="store.user_email">
+                <span id="email-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Testo messaggio</label>
-                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
+                <textarea class="form-control" name="message" id="message" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
+                <span id="message-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <input type="submit" class="btn btn-primary" value="Invia">
         </form>
@@ -316,3 +398,4 @@ export default {
     width: 24px;
 }
 </style>
+
