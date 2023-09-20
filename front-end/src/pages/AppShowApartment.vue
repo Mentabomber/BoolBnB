@@ -38,7 +38,7 @@ export default {
             };
             let isValid = true;
             // Validazione del campo "Name"
-            if (this.store.user_name === "") {
+            if (this.store.user_name === "" || this.store.user_name == undefined) {
                 isValid = false;
                 document.getElementById("name-error").innerHTML = "Il campo 'Nome' è obbligatorio.";
                 nameField.classList.add("is-invalid");
@@ -53,7 +53,7 @@ export default {
                 nameField.classList.remove("is-invalid");
             }
             // Validazione del campo "Surname"
-            if (this.store.user_surname === "") {
+            if (this.store.user_surname === "" || this.store.user_surname == undefined) {
                 isValid = false;
                 document.getElementById("surname-error").innerHTML = "Il campo 'Cognome' è obbligatorio.";
                 surnameField.classList.add("is-invalid");
@@ -68,10 +68,10 @@ export default {
                 surnameField.classList.remove("is-invalid");
             }
             // Validazione del campo "Email"
-            if (this.store.user_email === "") {
+            if (this.store.user_email === "" || this.store.user_email == undefined) {
                 console.log(isValid);
                 isValid = false;
-                document.getElementById("email-error").innerHTML = "Il campo 'E-Mail Address' è obbligatorio.";
+                document.getElementById("email-error").innerHTML = "Il campo 'E-mail' è obbligatorio.";
                 emailField.classList.add("is-invalid");
             } else if (!this.isValidEmail(this.store.user_email)) {
                 isValid = false;
@@ -82,7 +82,7 @@ export default {
                 emailField.classList.remove("is-invalid");
             }
             // Validazione del campo "Messaggio"
-            if (this.store.user_message === "") {
+            if (this.store.user_message === "" || this.store.user_message == undefined) {
                 isValid = false;
                 document.getElementById("message-error").innerHTML = "Il campo 'Messaggio' è obbligatorio.";
                 messageField.classList.add("is-invalid");
@@ -252,7 +252,7 @@ export default {
                 <span id="email-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
             <div class="mb-3">
-                <label for="message" class="form-label">Testo messaggio</label>
+                <label for="message" class="form-label">Messaggio</label>
                 <textarea class="form-control" name="message" id="message" placeholder="Inserisci Messaggio" rows="7" v-model="store.user_message"></textarea>
                 <span id="message-error" class="invalid-feedback" role="alert"><strong></strong></span>
             </div>
