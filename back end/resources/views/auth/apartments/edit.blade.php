@@ -11,7 +11,7 @@
 
                 <label for="title">Descrizione</label>
                 <br>
-                <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ $apartment->title }}">
+                <input type="text" name="title" id="apartment-title" class="form-control @error('title') is-invalid @enderror" value="{{ $apartment->title }}">
                 <span id="title-error" class="invalid-feedback" role="alert"><strong></strong></span>
                 <br>
                 <label for="rooms">Stanze</label>
@@ -92,7 +92,7 @@
        document.addEventListener("DOMContentLoaded", function() {
             const updateForm = document.getElementById("update-form");
             const submitButton = document.getElementById("submit-button");
-            const titleField = document.getElementById("title");
+            const titleField = document.getElementById("apartment-title");
             const roomsField = document.getElementById("rooms");
             const bedsField = document.getElementById("beds");
             const bathroomsField = document.getElementById("bathrooms");

@@ -119,7 +119,7 @@ class LoggedController extends Controller
         $address['apartment_id'] = $user_apartment['id'];
         $address = Address :: create($address);
 
-        return redirect('http://localhost:5173/apartment/' . $user_apartment -> id);
+        return redirect('http://localhost:5174/apartment/' . $user_apartment -> id);
         
     }
 
@@ -156,7 +156,7 @@ class LoggedController extends Controller
 
     // Permette l'aggiornamento dei dati di un appartamento
     public function update(Request $request, $id) {
-
+      
         $validator = Validator::make($request->all(), [
             'rooms' => 'numeric|min:0',
             'beds' => 'numeric|min:0',
@@ -195,9 +195,8 @@ class LoggedController extends Controller
         }
 
         //  Aggiorna i dati dell'appartamento
-
         $apartment -> update($data);
-
+        
         // Se la chiave "services" esiste sincronizza i servizi dell'appartamento con i servizi nell'array altrimenti li sincronizza con un array vuoto
 
         $apartment -> services() -> sync(
@@ -212,7 +211,7 @@ class LoggedController extends Controller
         }
 
 
-        return redirect('http://localhost:5173/apartment/' . $apartment -> id);
+        return redirect('http://localhost:5174/apartment/' . $apartment -> id);
     }
 
     // Permette la rimozione di un appartamento
