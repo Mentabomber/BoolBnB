@@ -49,7 +49,7 @@
     <div id="app">
 
         <header class="header">
-            <div class="container-fluid" style="background-color: white; color:black">
+            <div class="container-fluid" style="background-color: white; color:black;">
                 <div class="row d-flex align-items-center justify-content-everly" style="line-height: 100px">
                     <div class="col-5" id="title"><h2>BoolBnB</h2></div>
                     <a class="col-3 text-center navbar-header" href="{{ url('http://localhost:5174/') }}">{{ __('Home') }}</a>

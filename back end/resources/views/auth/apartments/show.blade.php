@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <h2>Miei <span>Appartamenti</span></h2>
+    <h2 class="miei_appartamenti">Miei <span>Appartamenti</span></h2>
 
     <ul class="list-unstyled d-flex justify-content-center align-items-center flex-wrap">
         @foreach ($apartments as $apartment)
@@ -90,9 +90,15 @@ a {
 h2 {
     font-weight: bold;
     font-size: 3rem;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
+    /* padding-top: 2rem; */
+}
+
+.miei_appartamenti {
+     margin-bottom: 3rem;
     padding-top: 2rem;
 }
+
 h2 > span {
     color: #15ba8f;
 }
